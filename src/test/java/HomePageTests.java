@@ -8,9 +8,10 @@ public class HomePageTests extends BaseTest {
     @Test /*TC_1: to verify that at least from 1 to 7 one way flights found for a single adult person*/
     public void oneWay_OneUser_Flight_IsFound(){
 
+
+
+
         HomePage homePage = new HomePage(driver);
-
-
 
         if (homePage.whereToGoWindowIsDisplayed())
         {
