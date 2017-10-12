@@ -56,7 +56,7 @@ public class HomePage {
     private WebElement returnOnCheckBox;
 
     @FindBy (id = "dateSelection_OutboundDate-datepicker")
-    protected WebElement departOnDateField;
+    private WebElement departOnDateField;
 
     @FindBy (id = "dateSelection_IsReturnFlight-datepicker")
     private WebElement returnOnDateField;
