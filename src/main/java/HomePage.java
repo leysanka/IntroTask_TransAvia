@@ -1,18 +1,36 @@
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+
+import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
 
 public class HomePage {
 
     WebDriver driver;
 
+
     public static Logger logger = LogManager.getLogger();
+
+    @FindBy(xpath = "//a[@href='/en-UK/home/']")
+    private WebElement welcomeOtherCountries;
+
+   /* @FindBy(xpath = "//div[@class=\"cookie-consent\"]/div/div/button")
+    private WebElement acceptCookiesButton;*/
 
     @FindBy (xpath = "//form[@id = 'desktop']/parent::section")
     private WebElement whereToGoWindow;
@@ -33,7 +51,8 @@ public class HomePage {
     @FindBy(xpath = "//ol[@class='results']//ol/li")
     private List<WebElement> dropdownDestinationValuesTo;
 
-    @FindBy(xpath = "//div[@class='checkfield-wrapper']/label[@for = 'dateSelection_IsReturnFlight']")
+   // @FindBy(xpath = "//div[@class='checkfield-wrapper']/label[@for = 'dateSelection_IsReturnFlight']")
+    @FindBy(xpath = "//label[@for = 'dateSelection_IsReturnFlight']")
     private WebElement returnOnCheckBox;
 
     @FindBy (id = "dateSelection_OutboundDate-datepicker")
@@ -60,26 +79,31 @@ public class HomePage {
         PageFactory.initElements(driver, this);
     }
 
-    public boolean whereToGoWindowIsDisplayed(){
-      return whereToGoWindow.isDisplayed();
+    public void selectOtherCountriesLocale(){
+        welcomeOtherCountries.click();
     }
 
-    public void fromFieldActivate(){
-        fromField.click();
+    public boolean whereToGoWindowIsDisplayed(){
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.visibilityOf(whereToGoWindow));
+        return whereToGoWindow.isDisplayed();
+    }
+
+    public void fromFieldActivate(){        fromField.click();
     }
     public void toFieldActivate(){
         toField.click();
     }
+    public String getDestinationItemText(int item){
+       return dropdownDestinationValuesFrom.get(item).getText();
+    }
 
- /*   public String getDestinationItemText(int item){
-       return dropdownDestinationValues.get(item).getText();
-    }*/
-
-    public void setFromDestinationByText (String airport){
+    public void setFromDestinationByKeys(String airport){
         fromField.sendKeys(airport);
     }
-    public void setToDestinationByText (String airport){
+    public void setToDestinationByKeys(String airport){
        toField.sendKeys(airport);
+
     }
 
     public boolean isMatchFromDestinationFieldText(String airportValue){
@@ -99,11 +123,14 @@ public class HomePage {
             }
         }
     }
-
     public int getFromDestinationsCount(){
        return dropdownDestinationValuesFrom.size();
     }
-
+    ///Not working because isSelected does not return rpoper result, always False.
+    // Need to use ::after and ::before marks from verstka, don't know how to identify them
+    public boolean returnOnCheckBoxState(){
+        return returnOnCheckBox.isSelected();
+    }
     public void checkReturnOnCheckBox(){
         if (!returnOnCheckBox.isSelected()) {
             returnOnCheckBox.click();
@@ -115,7 +142,35 @@ public class HomePage {
         }
     }
 
-    public void submitSearchBtn(){
+    public void returnOnCheckBoxClick() {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.elementToBeClickable(returnOnCheckBox)).click();
+        Actions action = new Actions(driver);
+        action.moveToElement(returnOnCheckBox).click();
+    }
+
+    protected static String calculateStartDate(long startDateLag){
+        LocalDate date = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
+        String startDate = date.plusDays(startDateLag).format(formatter);
+        return startDate.toString();
+    }
+
+    public void setDepartOnDateField(long startDateLag){
+
+        departOnDateField.clear();
+        departOnDateField.sendKeys(calculateStartDate(startDateLag).toString());
+    }
+
+    public String getSelectedDepartOnDate(){
+        return departOnDateField.getAttribute("value");
+    }
+
+    public boolean isCorrectPassengersCountShown(String passengersNumber){
+        return passengersField.getAttribute("value").startsWith(passengersNumber);
+    }
+
+    public void searchBtnSubmit(){
         searchBtn.click();
     }
 
