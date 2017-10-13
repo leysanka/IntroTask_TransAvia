@@ -11,11 +11,10 @@ import java.util.List;
 
 public class BookingPage {
 
-    protected WebDriver driver;
+    private WebDriver driver;
 
-    public static Logger logger = LogManager.getLogger();
-
-    public static String bookingPageTitle = "Book a flight";
+    static Logger logger = LogManager.getLogger();
+    private final String bookingPageTitle = "Book a flight";
 
     @FindBy(xpath = "//ol[@class = 'HV-gc bulletless days']//div[(contains(@class, 'day'))]")
     private List<WebElement> allDatesIcons;
@@ -23,8 +22,11 @@ public class BookingPage {
     @FindBy(xpath = "//ol[@class = 'HV-gc bulletless days']//span[@class='price']")
     private List<WebElement> datesWithFlights;
 
+    @FindBy(xpath = "//div[(contains(@class, 'notification-error'))]")
+    private WebElement unsupportedFlightDestinationError;
 
-    protected BookingPage(WebDriver driver) throws WrongPageException {
+
+    public BookingPage(WebDriver driver) throws WrongPageException {
         this.driver = driver;
         if (!bookingPageTitle.equals(driver.getTitle())) {
             throw new WrongPageException("Not a Booking page is opened: title " + driver.getTitle() + " does not meet to the expected " + bookingPageTitle);
@@ -32,20 +34,26 @@ public class BookingPage {
         PageFactory.initElements(driver, this);
     }
 
-    protected int getFoundFlightsCount(){
+    public int getFoundFlightsCount(){
        return datesWithFlights.size();
     }
 
-    protected boolean isFlightsFounds(){
+    public boolean isFlightsFounds(){
         WebDriverWait wait = new WebDriverWait(driver, 5);
         wait.until(ExpectedConditions.visibilityOfAllElements(allDatesIcons));
         return !datesWithFlights.isEmpty();
     }
 
-    protected int getAllDatesShownCount(){
+    public int getAllDatesShownCount(){
         WebDriverWait wait = new WebDriverWait(driver, 5);
         wait.until(ExpectedConditions.visibilityOfAllElements(allDatesIcons));
         return allDatesIcons.size();
+    }
+
+    public boolean isUnsupportedFlightErrorShown (String expError){
+
+        return unsupportedFlightDestinationError.isDisplayed() &&
+                unsupportedFlightDestinationError.getText().equals(expError);
     }
 
 

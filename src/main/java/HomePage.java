@@ -21,16 +21,12 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
 public class HomePage {
 
-    WebDriver driver;
+    private WebDriver driver;
 
+    static Logger logger = LogManager.getLogger();
 
-    public static Logger logger = LogManager.getLogger();
-
-    @FindBy(xpath = "//a[@href='/en-UK/home/']")
+    @FindBy(xpath = "//a[@href='/en-EU/home']")
     private WebElement welcomeOtherCountries;
-
-   /* @FindBy(xpath = "//div[@class=\"cookie-consent\"]/div/div/button")
-    private WebElement acceptCookiesButton;*/
 
     @FindBy (xpath = "//form[@id = 'desktop']/parent::section")
     private WebElement whereToGoWindow;
@@ -51,7 +47,6 @@ public class HomePage {
     @FindBy(xpath = "//ol[@class='results']//ol/li")
     private List<WebElement> dropdownDestinationValuesTo;
 
-   // @FindBy(xpath = "//div[@class='checkfield-wrapper']/label[@for = 'dateSelection_IsReturnFlight']")
     @FindBy(xpath = "//label[@for = 'dateSelection_IsReturnFlight']")
     private WebElement returnOnCheckBox;
 
@@ -62,7 +57,7 @@ public class HomePage {
     private WebElement returnOnDateField;
 
     @FindBy (id = "booking-passengers-input")
-    private WebElement passengersField;   //<div style="position: absolute; z-index: -1; visibility: hidden;">3 Adults</div>
+    private WebElement passengersField;
 
     @FindBy (xpath = "//div[@class='selectfield adults']//button[@class='button button-secondary increase']")
     private WebElement adultsPlusBtn;
@@ -89,11 +84,8 @@ public class HomePage {
         return whereToGoWindow.isDisplayed();
     }
 
-    public void fromFieldActivate(){        fromField.click();
-    }
-    public void toFieldActivate(){
-        toField.click();
-    }
+    public void fromFieldActivate() {       fromField.click();    }
+    public void toFieldActivate(){        toField.click();    }
     public String getDestinationItemText(int item){
        return dropdownDestinationValuesFrom.get(item).getText();
     }
