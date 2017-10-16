@@ -24,54 +24,43 @@ public class HomePage {
     private WebDriver driver;
 
     static Logger logger = LogManager.getLogger();
+    static Logger testLogger = LogManager.getLogger("test");
 
-    @FindBy(xpath = "//a[@href='/en-EU/home']")
-    private WebElement welcomeOtherCountries;
+    private final String homePageTitle = "Welcome to Transavia!";
 
-    @FindBy (xpath = "//form[@id = 'desktop']/parent::section")
-    private WebElement whereToGoWindow;
+    //Better to use this for checking whether the Home, Booking etc. pages were loaded.
+    //@FindBy(xpath = "//span[@class = 'icon-font icon-house']") WebElement houseBtn;
 
-    @FindBy(id = "routeSelection_DepartureStation-input")
-    private WebElement fromField;
-
-    @FindBy(id="routeSelection_ArrivalStation-input")
-    private WebElement toField;
-
+    @FindBy(xpath = "//a[@href='/en-EU/home']")    private WebElement welcomeOtherCountries;
+    @FindBy (xpath = "//form[@id = 'desktop']/parent::section")    private WebElement whereToGoWindow;
+    @FindBy(id = "routeSelection_DepartureStation-input")    private WebElement fromField;
+    @FindBy(id="routeSelection_ArrivalStation-input")    private WebElement toField;
     /*If drop-down is not opened, the attribute "style="display: none;" is set; if it's opened -no such attribute is set.*/
-    @FindBy(xpath = "//div[@class = 'autocomplete-results' and not(@style)]")
-    private WebElement destinationDropDown;
-
-    @FindBy(xpath = "//ol[@class='results']/li")
-    private List<WebElement> dropdownDestinationValuesFrom;
-
-    @FindBy(xpath = "//ol[@class='results']//ol/li")
-    private List<WebElement> dropdownDestinationValuesTo;
-
-    @FindBy(xpath = "//label[@for = 'dateSelection_IsReturnFlight']")
-    private WebElement returnOnCheckBox;
-
-    @FindBy (id = "dateSelection_OutboundDate-datepicker")
-    private WebElement departOnDateField;
-
-    @FindBy (id = "dateSelection_IsReturnFlight-datepicker")
-    private WebElement returnOnDateField;
-
-    @FindBy (id = "booking-passengers-input")
-    private WebElement passengersField;
-
-    @FindBy (xpath = "//div[@class='selectfield adults']//button[@class='button button-secondary increase']")
-    private WebElement adultsPlusBtn;
-
-    @FindBy(className = "button button-secondary close")
-    private WebElement savePassengersBtn;
-
-    @FindBy (xpath = "//form[@id='desktop']//button[@class = 'button button-primary']")
-    private WebElement searchBtn;
+    @FindBy(xpath = "//div[@class = 'autocomplete-results' and not(@style)]")  private WebElement destinationDropDown;
+    @FindBy(xpath = "//ol[@class='results']/li") private List<WebElement> dropdownDestinationValuesFrom;
+    @FindBy(xpath = "//ol[@class='results']//ol/li")  private List<WebElement> dropdownDestinationValuesTo;
+    @FindBy(xpath = "//label[@for = 'dateSelection_IsReturnFlight']")  private WebElement returnOnCheckBox;
+    @FindBy(css = "input#dateSelection_IsReturnFlight") private WebElement returnOnCheckBoxCssState;
+    @FindBy (id = "dateSelection_OutboundDate-datepicker")    private WebElement departOnDateField;
+    @FindBy (id = "dateSelection_IsReturnFlight-datepicker")    private WebElement returnOnDateField;
+    @FindBy (id = "booking-passengers-input")    private WebElement passengersField;
+    @FindBy (xpath = "//div[@class='selectfield adults']//button[@class='button button-secondary increase']")    private WebElement adultsPlusBtn;
+    @FindBy(className = "button button-secondary close")    private WebElement savePassengersBtn;
+    @FindBy (xpath = "//form[@id='desktop']//button[@class = 'button button-primary']")    private WebElement searchBtn;
 
 
     public HomePage(WebDriver driver) {
         this.driver = driver;
-        PageFactory.initElements(driver, this);
+
+        if(homePageTitle.equals(driver.getTitle())) {
+            PageFactory.initElements(driver, this);
+            testLogger.info("HomePage initialized successfully.");
+        }
+        else try {
+            throw new WrongPageException("HomePage title does not meet to the expected \"" + homePageTitle + "\". Or page is not loaded.");
+        } catch (WrongPageException e) {
+            logger.error(e.getMessage());
+        }
     }
 
     public void selectOtherCountriesLocale(){
@@ -118,18 +107,27 @@ public class HomePage {
     public int getFromDestinationsCount(){
        return dropdownDestinationValuesFrom.size();
     }
-    ///Not working because isSelected does not return rpoper result, always False.
-    // Need to use ::after and ::before marks from verstka, don't know how to identify them
+
+    //State can be verified with css selector, xpath does not work for this:
+    // attribute "checked" is "true" when selected and !!!NULL when not selected.
     public boolean returnOnCheckBoxState(){
-        return returnOnCheckBox.isSelected();
+        try {
+            if(returnOnCheckBoxCssState.getAttribute("checked").equals("true")){
+                return true;        }
+        }
+        catch (NullPointerException e) {
+            logger.info("Return On checkbox 'Checked' attribute is null, ie checkbox is unchecked.");
+            return false;
+        }
+        return false;
     }
     public void checkReturnOnCheckBox(){
-        if (!returnOnCheckBox.isSelected()) {
+        if (!returnOnCheckBoxState()) {
             returnOnCheckBox.click();
         }
     }
     public void uncheckReturnOnCheckBox(){
-        if (returnOnCheckBox.isSelected()) {
+        if (returnOnCheckBoxState()) {
             returnOnCheckBox.click();
         }
     }

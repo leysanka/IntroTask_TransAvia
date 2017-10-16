@@ -26,7 +26,9 @@ public class HomePageTests extends BaseTest {
         Assert.assertEquals(actualDepartOnDate,expectedDepartOnDate ,
                 "DepartOn date does not meet: set "+actualDepartOnDate+ ", while expected is " + expectedDepartOnDate);
 
+        Assert.assertTrue(homePage.returnOnCheckBoxState(), "Return On checkbox is unchecked, while expected to be checked by default.");
         homePage.returnOnCheckBoxClick();
+        Assert.assertTrue(!homePage.returnOnCheckBoxState(), "Return On checkbox should be checked.");
         Assert.assertTrue(homePage.isCorrectPassengersCountShown(expPassengersNumber), "Passengers count shown does not meet to the expected: " + expPassengersNumber + ".");
         homePage.searchBtnSubmit();
 
