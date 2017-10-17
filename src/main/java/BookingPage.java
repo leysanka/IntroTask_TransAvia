@@ -34,6 +34,7 @@ public class BookingPage {
         PageFactory.initElements(driver, this);
     }
 
+
     public int getFoundFlightsCount(){
        return datesWithFlights.size();
     }

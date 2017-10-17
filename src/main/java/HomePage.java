@@ -1,22 +1,16 @@
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-
-import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
 
 public class HomePage {
@@ -26,7 +20,8 @@ public class HomePage {
     static Logger logger = LogManager.getLogger();
     static Logger testLogger = LogManager.getLogger("test");
 
-    private final String homePageTitle = "Welcome to Transavia!";
+    private static final String HOME_PAGE_TITLE = "Welcome to Transavia!";
+    private static final int MAX_PASSENGERS_TO_FILL = 10;
 
     //Better to use this for checking whether the Home, Booking etc. pages were loaded.
     //@FindBy(xpath = "//span[@class = 'icon-font icon-house']") WebElement houseBtn;
@@ -43,21 +38,35 @@ public class HomePage {
     @FindBy(css = "input#dateSelection_IsReturnFlight") private WebElement returnOnCheckBoxCssState;
     @FindBy (id = "dateSelection_OutboundDate-datepicker")    private WebElement departOnDateField;
     @FindBy (id = "dateSelection_IsReturnFlight-datepicker")    private WebElement returnOnDateField;
+
     @FindBy (id = "booking-passengers-input")    private WebElement passengersField;
-    @FindBy (xpath = "//div[@class='selectfield adults']//button[@class='button button-secondary increase']")    private WebElement adultsPlusBtn;
-    @FindBy(className = "button button-secondary close")    private WebElement savePassengersBtn;
+
+    @FindBy(className = "passengers") private WebElement passengersPopUp;
+    @FindBy (xpath = "//div[@class='selectfield adults']//button[contains(@class,'increase')]")    private WebElement adultsIncreaseBtn;
+    @FindBy (xpath = "//div[@class='selectfield adults']//button[contains(@class,'decrease')]")    private WebElement adultsDecreaseBtn;
+    @FindBy (xpath = "//div[@class='selectfield adults']//input")    private WebElement adultsCountBox;
+
+    @FindBy (xpath = "//div[@class='selectfield children']//button[contains(@class,'increase')]")    private WebElement childrenIncreaseBtn;
+    @FindBy (xpath = "//div[@class='selectfield children']//button[contains(@class,'decrease')]")    private WebElement childrenDecreaseBtn;
+    @FindBy (xpath = "//div[@class='selectfield children']//input")    private WebElement childrenCountBox;
+
+    @FindBy (xpath = "//div[@class='selectfield babies']//button[contains(@class,'increase')]")    private WebElement babiesIncreaseBtn;
+    @FindBy (xpath = "//div[@class='selectfield babies']//button[contains(@class,'decrease')]")    private WebElement babiesDecreaseBtn;
+    @FindBy (xpath = "//div[@class='selectfield babies']//input")    private WebElement babiesCountBox;
+
+    @FindBy(xpath = "//button[contains(.,'Save')]") private WebElement savePassengersBtn;
     @FindBy (xpath = "//form[@id='desktop']//button[@class = 'button button-primary']")    private WebElement searchBtn;
 
 
     public HomePage(WebDriver driver) {
         this.driver = driver;
 
-        if(homePageTitle.equals(driver.getTitle())) {
+        if(HOME_PAGE_TITLE.equals(driver.getTitle())) {
             PageFactory.initElements(driver, this);
             testLogger.info("HomePage initialized successfully.");
         }
         else try {
-            throw new WrongPageException("HomePage title does not meet to the expected \"" + homePageTitle + "\". Or page is not loaded.");
+            throw new WrongPageException("HomePage title does not meet to the expected \"" + HOME_PAGE_TITLE + "\". Or page is not loaded.");
         } catch (WrongPageException e) {
             logger.error(e.getMessage());
         }
@@ -109,8 +118,8 @@ public class HomePage {
     }
 
     //State can be verified with css selector, xpath does not work for this:
-    // attribute "checked" is "true" when selected and !!!NULL when not selected.
-    public boolean returnOnCheckBoxState(){
+    // attribute "checked" is "true" when checked and !!!NULL when not checked.
+    public boolean returnOnIsChecked(){
         try {
             if(returnOnCheckBoxCssState.getAttribute("checked").equals("true")){
                 return true;        }
@@ -122,12 +131,12 @@ public class HomePage {
         return false;
     }
     public void checkReturnOnCheckBox(){
-        if (!returnOnCheckBoxState()) {
+        if (!returnOnIsChecked()) {
             returnOnCheckBox.click();
         }
     }
     public void uncheckReturnOnCheckBox(){
-        if (returnOnCheckBoxState()) {
+        if (returnOnIsChecked()) {
             returnOnCheckBox.click();
         }
     }
@@ -139,25 +148,71 @@ public class HomePage {
         action.moveToElement(returnOnCheckBox).click();
     }
 
-    protected static String calculateStartDate(long startDateLag){
+    protected static String calculateDateNowPlusLag(long lagDays){
         LocalDate date = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
-        String startDate = date.plusDays(startDateLag).format(formatter);
+        String startDate = date.plusDays(lagDays).format(formatter);
         return startDate.toString();
     }
 
-    public void setDepartOnDateField(long startDateLag){
+    public void setDepartOnDateFieldPlusLag(long lagDays){
 
         departOnDateField.clear();
-        departOnDateField.sendKeys(calculateStartDate(startDateLag).toString());
+        departOnDateField.sendKeys(calculateDateNowPlusLag(lagDays).toString());
+    }
+
+    public void setReturnOnDateFieldPlusLag(long lagDays){
+
+        returnOnDateField.clear();
+        returnOnDateField.sendKeys(calculateDateNowPlusLag(lagDays).toString());
+    }
+    public boolean returnOnDateIsSet(){
+        return !getSelectedReturnOnDate().isEmpty();
     }
 
     public String getSelectedDepartOnDate(){
         return departOnDateField.getAttribute("value");
     }
 
-    public boolean isCorrectPassengersCountShown(String passengersNumber){
-        return passengersField.getAttribute("value").startsWith(passengersNumber);
+    public String getSelectedReturnOnDate(){
+        return returnOnDateField.getAttribute("value");
+    }
+
+    public boolean isCorrectPassengersCountShown(String expPassengers){
+        return passengersField.getAttribute("value").contains(expPassengers);
+    }
+
+    public void passengersFieldClick(){
+        passengersField.click();
+    }
+
+    public boolean isSelectPassengersPopupVisible(){
+        return passengersPopUp.isDisplayed();
+    }
+
+    public void addAdultPassengers(int adultsCount){
+        //TODO rewrite so the pop up is not closed
+        if (adultsIncreaseBtn.isEnabled() && adultsCount>=0 && adultsCount <= MAX_PASSENGERS_TO_FILL){
+            for (int i = 0; i <adultsCount ; i++) {
+
+                adultsIncreaseBtn.click();
+            }
+        } else {
+            //TODO add InvalidTestInputData exception
+            logger.error("Invalid input for adults count to add, or adultsIncrease button is not enabled.");
+        }
+    }
+
+    public void addAdultPassengers(){
+        if(adultsIncreaseBtn.isEnabled()){
+            adultsIncreaseBtn.click();
+        }else {
+            logger.error("AdultsIncrease button is not enabled.");
+        }
+    }
+
+    public String getAdultPassengersCountBoxValue(){
+        return adultsCountBox.getAttribute("value");
     }
 
     public void searchBtnSubmit(){

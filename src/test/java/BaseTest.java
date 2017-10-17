@@ -13,6 +13,7 @@ public class BaseTest {
 
     WebDriver driver;
     HomePage homePage;
+    BookingPage bookingPage;
     private static String homePageUrl = "https://www.transavia.com/";
 
     static Logger testLogger = LogManager.getLogger("test");
