@@ -1,0 +1,1 @@
+Currently all tests are placed in HomePageTests -should be reorganized further to separate classes.
