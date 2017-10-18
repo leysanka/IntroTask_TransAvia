@@ -3,6 +3,8 @@ import org.testng.Assert;
 
 public class BookingPageTests extends BaseTest{
 
+
+
     public  BookingPage createBookingPageIfValid(WebDriver driver){
         try {
             bookingPage = new BookingPage(driver);
@@ -31,6 +33,15 @@ public class BookingPageTests extends BaseTest{
         Assert.assertTrue((foundFlightsCount >=1 && foundFlightsCount<=7),
                 foundFlightsCount +" flights found does not meet to the expected for a week (1-7)." );
     }
+
+    public void testSelectFirstInboundOutboundFlights(){
+        bookingPage.selectInboundFlight(1);
+        bookingPage.selectOutboundFlight(1);
+        Assert.assertEquals(2, bookingPage.getSelectedFlightsCount(),"Selected flights count must equal 2");
+
+    }
+
+
 
 
 }

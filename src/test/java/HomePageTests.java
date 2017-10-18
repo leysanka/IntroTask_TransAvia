@@ -117,6 +117,11 @@ public class HomePageTests extends BaseTest {
         testAddChildrenPassenger();
         testAddBabiesPassenger();
         verifyExpectedPassengersCountIsShown(TOTAL_PASSENGERS);
+        homePage.searchBtnSubmit();
+        bookingPage = bookingPageTests.createBookingPageIfValid(driver);
+        bookingPageTests.testSelectFirstInboundOutboundFlights();
+
+
 
 
 
