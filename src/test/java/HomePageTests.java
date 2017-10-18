@@ -54,7 +54,7 @@ public class HomePageTests extends BaseTest {
         Assert.assertTrue(!homePage.returnOnIsChecked(), "Return On checkbox should be checked.");
     }
 
-    public void testExpectedPassengersCountIsShown(String expPassengers){
+    public void verifyExpectedPassengersCountIsShown(String expPassengers){
         Assert.assertTrue(homePage.isCorrectPassengersCountShown(expPassengers),
                 "Passengers count shown does not meet to the expected: " + expPassengers + ".");
     }
@@ -63,13 +63,13 @@ public class HomePageTests extends BaseTest {
    // TC_1: to verify that at least from 1 to 7 one way flights found for a single adult person
     @Test (priority=0, dataProvider = "TC1_Provider")
     public void oneWay_OneUser_Flight_ShouldBeFound(String destFrom, String destTo, long departDaysLag, String expPassengersNumber){
-        this.testFromDestinationFillsCorrectly(destFrom);
-        this.testToDestinationFillsCorrectly(destTo);
-        this.testDepartOnDateFillsCorrectly(departDaysLag);
-        this.verifyReturnOnIsChecked();
+        testFromDestinationFillsCorrectly(destFrom);
+        testToDestinationFillsCorrectly(destTo);
+        testDepartOnDateFillsCorrectly(departDaysLag);
+        verifyReturnOnIsChecked();
         homePage.returnOnCheckBoxClick();
-        this.verifyReturnOnIsUnchecked();
-        this.testExpectedPassengersCountIsShown(expPassengersNumber);
+        verifyReturnOnIsUnchecked();
+        verifyExpectedPassengersCountIsShown(expPassengersNumber);
         homePage.searchBtnSubmit();
         bookingPage = bookingPageTests.createBookingPageIfValid(driver);
         bookingPageTests.testExpectedDatesSpinnersCountShown(7);
@@ -88,8 +88,8 @@ public class HomePageTests extends BaseTest {
         final String ERROR_MSG = "Unfortunately we do not fly from Dubai, United Arab Emirates to Agadir, Morocco." +
                                  " However, we do fly from Dubai, United Arab Emirates to other destinations." +
                                  " Please change your destination and try again.";
-        this.testFromDestinationFillsCorrectly(DEST_FROM);
-        this.testToDestinationFillsCorrectly(DEST_TO);
+        testFromDestinationFillsCorrectly(DEST_FROM);
+        testToDestinationFillsCorrectly(DEST_TO);
         homePage.searchBtnSubmit();
         bookingPage = bookingPageTests.createBookingPageIfValid(driver);
         Assert.assertTrue(bookingPage.isUnsupportedFlightErrorShown(ERROR_MSG), ERROR_MSG.substring(0,40)+"... is not displayed or does not meet to the expected.");
@@ -100,8 +100,9 @@ public class HomePageTests extends BaseTest {
     public void totalPrice_Calculation_IsCorrect(){
         final String DEST_FROM = "Edinburgh, United Kingdom";
         final String DEST_TO = "Paris (Orly South), France";
-        final long RETURN_DAYS_LAG = 7;
-        final int ADULTS_TO_ADD = 3;
+        final String DEFAULT_PASSENGERS = "1 Adult";
+        final int ADULTS_TO_ADD = 1;
+        final String TOTAL_PASSENGERS = "2 Adults , 1 Child and 1 Baby";
 
 
         testFromDestinationFillsCorrectly(DEST_FROM);
@@ -109,25 +110,56 @@ public class HomePageTests extends BaseTest {
         verifyDefaultDepartOnDateIsCorrect();
         verifyReturnOnIsChecked();
         verifyReturnOnDateIsSet();
-        testExpectedPassengersCountIsShown("1 Adult");
+        verifyExpectedPassengersCountIsShown(DEFAULT_PASSENGERS);
         homePage.passengersFieldClick();
         verifyPassengersPopUpIsDisaplyed();
-        homePage.addAdultPassengers();
-        //testAddAdultPassengers(ADULTS_TO_ADD);
-        //TODO To finish
-        //String s ="";
+        testAddAdultPassengers(ADULTS_TO_ADD);
+        testAddChildrenPassenger();
+        testAddBabiesPassenger();
+        verifyExpectedPassengersCountIsShown(TOTAL_PASSENGERS);
+
+
+
+        String s ="";
 
     }
 
-    public void testAddAdultPassengers(int adults_count) {
-        //TODO add try/catch for InvalidTestInputData
-        homePage.addAdultPassengers();
-        //Assert.assertEquals(((Integer)(adults_count-1)).toString(), homePage.getAdultPassengersCountBoxValue(), "Unexpected adult passengers set, expected: " +(adults_count-1)+ "." );
-        Assert.assertEquals("2", homePage.getAdultPassengersCountBoxValue(), "Unexpected adult passengers set, expected: " +(adults_count-1)+ "." );
+    public void testAddAdultPassengers(int adultsToAdd) {
+        try {
+            homePage.addAdultPassengers(adultsToAdd);
+        } catch (InvalidTestDataException e) {
+            testLogger.error(e.getMessage());
+        }
+        //1 adult is set by default, so total added passenger will be adultsToAdd + 1
+        Assert.assertEquals(((Integer)(adultsToAdd+1)).toString(), getPassengersCountBoxValue("adults"),
+                "Unexpected adult passengers set, expected: " +(adultsToAdd+1)+ "." );
+
+    }
+    public void testAddChildrenPassenger(){
+        if (homePage.isVisiblePassengersPopup()){}
+        homePage.addChildrenPassenger();
+        testLogger.info("Child added");
+    }
+
+    public void testAddBabiesPassenger(){
+        if (homePage.isVisiblePassengersPopup()){}
+        homePage.addBabyPassenger();
+        testLogger.info("Baby added");
+    }
+
+    public String getPassengersCountBoxValue(String passengerType){
+        String value = "";
+        try{
+            value = homePage.getPassengersCountBoxValue(passengerType);
+        }
+        catch (IllegalArgumentException e){
+        testLogger.error(e.getMessage());
+        }
+           return value;
     }
 
     public void verifyPassengersPopUpIsDisaplyed() {
-        Assert.assertTrue(homePage.isSelectPassengersPopupVisible(), "Passengers pop up is not displayed.");
+        Assert.assertTrue(homePage.isVisiblePassengersPopup(), "Passengers pop up is not displayed.");
     }
 
     public void verifyReturnOnDateIsSet() {

@@ -186,33 +186,60 @@ public class HomePage {
         passengersField.click();
     }
 
-    public boolean isSelectPassengersPopupVisible(){
+    public boolean isVisiblePassengersPopup(){
         return passengersPopUp.isDisplayed();
     }
-
-    public void addAdultPassengers(int adultsCount){
-        //TODO rewrite so the pop up is not closed
-        if (adultsIncreaseBtn.isEnabled() && adultsCount>=0 && adultsCount <= MAX_PASSENGERS_TO_FILL){
+//TODO may be can be done as one method for any passenger add child, baby, adult-> need to think how
+    public void addAdultPassengers(int adultsCount) throws InvalidTestDataException{
+        if (adultsCount>=0 && adultsCount <= MAX_PASSENGERS_TO_FILL){
             for (int i = 0; i <adultsCount ; i++) {
-
-                adultsIncreaseBtn.click();
+                if(adultsIncreaseBtn.isEnabled()){
+                    adultsIncreaseBtn.click();
+                    testLogger.info((i+1) + " passenger added.");
+                    passengersField.click();
+                } else break;
             }
         } else {
-            //TODO add InvalidTestInputData exception
-            logger.error("Invalid input for adults count to add, or adultsIncrease button is not enabled.");
+            throw new InvalidTestDataException("Invalid input for adults count to add, or adultsIncrease button is not enabled.");
         }
     }
 
-    public void addAdultPassengers(){
-        if(adultsIncreaseBtn.isEnabled()){
-            adultsIncreaseBtn.click();
-        }else {
-            logger.error("AdultsIncrease button is not enabled.");
+    public void addChildrenPassenger(){
+        if (childrenIncreaseBtn.isEnabled()){
+            childrenIncreaseBtn.click();
+            passengersField.click();
         }
     }
 
-    public String getAdultPassengersCountBoxValue(){
-        return adultsCountBox.getAttribute("value");
+    public void addBabyPassenger(){
+        if(babiesIncreaseBtn.isEnabled()){
+            babiesIncreaseBtn.click();
+            passengersField.click();
+        }
+    }
+
+
+    public String getPassengersCountBoxValue(String type)throws IllegalArgumentException{
+
+        passengersTypes pt = passengersTypes.valueOf(type.toUpperCase()); //throws exc here
+
+        switch (pt){
+            case ADULTS:
+                return adultsCountBox.getAttribute("value");
+            case CHILDREN:
+                return childrenCountBox.getAttribute("value");
+            case BABIES:
+                return babiesCountBox.getAttribute("value");
+            default:
+                throw new IllegalArgumentException(); //doesn't get there
+                //throw new InvalidTestDataException(pt + " is unknown type of passenger. Please specify one of the valid: " + passengersTypes.values());
+        }
+    }
+
+    public enum passengersTypes{
+        ADULTS,
+        CHILDREN,
+        BABIES
     }
 
     public void searchBtnSubmit(){

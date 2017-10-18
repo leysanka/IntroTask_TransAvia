@@ -2,7 +2,7 @@ public class WrongPageException extends Throwable {
    private String pageMessage;
 
 
-    public WrongPageException(String pageMessage) {
+    WrongPageException(String pageMessage) {
         this.pageMessage = pageMessage;
     }
 
