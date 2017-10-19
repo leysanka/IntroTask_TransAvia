@@ -219,7 +219,7 @@ public class HomePage {
     }
 
 
-    public String getPassengersCountBoxValue(String type)throws IllegalArgumentException{
+    public String getPassengersCountBoxValue(String type)throws IllegalArgumentException {
 
         passengersTypes pt = passengersTypes.valueOf(type.toUpperCase()); //throws exc here
 
@@ -235,7 +235,6 @@ public class HomePage {
                 //throw new InvalidTestDataException(pt + " is unknown type of passenger. Please specify one of the valid: " + passengersTypes.values());
         }
     }
-
     public enum passengersTypes{
         ADULTS,
         CHILDREN,

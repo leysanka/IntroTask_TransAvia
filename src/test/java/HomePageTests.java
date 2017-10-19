@@ -120,10 +120,9 @@ public class HomePageTests extends BaseTest {
         homePage.searchBtnSubmit();
         bookingPage = bookingPageTests.createBookingPageIfValid(driver);
         bookingPageTests.testSelectFirstInboundOutboundFlights();
-
-
-
-
+        bookingPage.pressNextButton();
+        bookingPage.pressSelectBClassBtn();
+        bookingPageTests.verifyTotalPriceIsCorrect(1,1,1);
 
         String s ="";
 
