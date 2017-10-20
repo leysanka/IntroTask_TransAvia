@@ -45,8 +45,6 @@ public class BookingPageTests extends BaseTest{
 
     }
 
-    //public void getTotalPrice
-
     public void verifyTotalPriceIsCorrect(int adults, int children, int babies){
         double priceClass, pricePerAdult, pricePerChild, pricePerBaby, totalPrice;
 

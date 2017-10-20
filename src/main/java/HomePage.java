@@ -18,7 +18,7 @@ public class HomePage {
     private WebDriver driver;
 
     static Logger logger = LogManager.getLogger();
-    static Logger testLogger = LogManager.getLogger("test");
+    //static Logger testLogger = LogManager.getLogger("test");
 
     private static final String HOME_PAGE_TITLE = "Welcome to Transavia!";
     private static final int MAX_PASSENGERS_TO_FILL = 10;
@@ -63,7 +63,7 @@ public class HomePage {
 
         if(HOME_PAGE_TITLE.equals(driver.getTitle())) {
             PageFactory.initElements(driver, this);
-            testLogger.info("HomePage initialized successfully.");
+            logger.info("HomePage initialized successfully.");
         }
         else try {
             throw new WrongPageException("HomePage title does not meet to the expected \"" + HOME_PAGE_TITLE + "\". Or page is not loaded.");
@@ -195,7 +195,7 @@ public class HomePage {
             for (int i = 0; i <adultsCount ; i++) {
                 if(adultsIncreaseBtn.isEnabled()){
                     adultsIncreaseBtn.click();
-                    testLogger.info((i+1) + " passenger added.");
+                    logger.info((i+1) + " passenger added.");
                     passengersField.click();
                 } else break;
             }

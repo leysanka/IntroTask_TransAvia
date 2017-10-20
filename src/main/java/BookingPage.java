@@ -8,38 +8,34 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
-import static java.lang.Double.valueOf;
-
 public class BookingPage {
 
     private WebDriver driver;
-   // private WebDriverWait wait = new WebDriverWait(driver, 5);
+    private final String bookingPageTitle = "Book a flight";
 
     static Logger logger = LogManager.getLogger();
-    private final String bookingPageTitle = "Book a flight";
 
     @FindBy(xpath = "//ol//div[(contains(@class, 'day'))]")    private List<WebElement> allDatesIcons;
     @FindBy(xpath = "//ol//span[@class='price']")    private List<WebElement> allDatesWithFlights;
     @FindBy(xpath = "//div[(contains(@class, 'notification-error'))]")    private WebElement unsupportedFlightDestinationError;
-
     @FindBy(xpath = "//input[contains(@value, 'OutboundFlight')]//ancestor::form//span[@class='price']") private List<WebElement> outboundFlights;
     @FindBy(xpath = "//input[contains(@value, 'InboundFlight')]//ancestor::form//span[@class='price']") private List<WebElement> inboundFlights;
-
     @FindBy(xpath = "//section[@class='flight inbound']//div[@class='panel flight-result active']") private WebElement selectInboundFlightBtn;
     @FindBy(xpath = "//section[@class='flight outbound']//div[@class='panel flight-result active']") private WebElement selectOutboundFlightBtn;
-
     @FindBy(xpath = "//div[@class='panel panel--rounded-group']") private List<WebElement> selectedFlightsBluePanels;
-
+//_________Prices______________
     @FindBy(xpath = "//div[@class='back']") private WebElement totalPriceSection; //getTex() &742
-
+    @FindBy(xpath = "//th/span[@class = 'name' and text()='Plus']//following-sibling::span") private WebElement pricePlusFareContainer;
+// ___________Adult passengers prices____________
+    @FindBy(xpath = "//span[text()='Ticket price per person']//..//span[@class='price']")
+    private List<WebElement> pricesPerAdultContainer;
     @FindBy(xpath = "//div[contains(@class, 'container--inbound')]//span[text()='Ticket price per person']//..//span[@class='price']")
     private WebElement priceInboundPerAdultContainer;
-    @FindBy(xpath = "//span[text()='Ticket price per person']//..//span[@class='price']")
-    private List<WebElement> pricesInboundPerAdultContainer; //getAttribute("innerHTML") then trim(), lastindexof(">") and substring(index)
-
     @FindBy(xpath = "//div[contains(@class, 'container--outbound')]//span[text()='Ticket price per person']//..//span[@class='price']")
     private WebElement priceOutboundPerAdultContainer;
-
+//___________Baby passengers prices____________
+    @FindBy(xpath = "//span[contains(., 'Price for a baby')]//..//span[@class='price']")
+    private List<WebElement> pricesPerBabyContainer;
     @FindBy(xpath = "//div[contains(@class, 'container--inbound')]//span[contains(., 'Price for a baby')]//..//span[@class='price']")
     private WebElement priceInboundPerBabyContainer;
     @FindBy(xpath = "//div[contains(@class, 'container--outbound')]//span[contains(., 'Price for a baby')]//..//span[@class='price']")
@@ -47,8 +43,7 @@ public class BookingPage {
 
     @FindBy(xpath = "//footer//*[@name='next_button']") private WebElement nextToFlightFareSelectionButton;
     @FindBy(xpath = "//tr//button[@value = 'B' and text()='Select']") private WebElement selectPlusFareBtn; //+20kg luggage
-    @FindBy(xpath = "//th/span[@class = 'name' and text()='Plus']//following-sibling::span") private WebElement pricePlusFareContainer;
-    private double priceBabyPassenger;
+
 
 
     public BookingPage(WebDriver driver) throws WrongPageException {
@@ -61,19 +56,24 @@ public class BookingPage {
 
     public double getPlusFarePrice(){
         int euroSignCode = 8364;
-
         String text = pricePlusFareContainer.getText(); //here text like "+$48" comes
         int index = text.lastIndexOf(euroSignCode);
-        return Double.valueOf(text.substring(index+1));
+        if (index >= 0 && (index+1)<text.length()) {
+            return Double.valueOf(text.substring(index + 1).replaceAll(",", ""));
+        } else {
+            throw new IndexOutOfBoundsException("Unexpected index for PlusFare text with price.");
+        }
     }
 
     public void pressNextButton(){
+        this.waitForElementIsClickable(nextToFlightFareSelectionButton);
         if(nextToFlightFareSelectionButton.isDisplayed()){
         nextToFlightFareSelectionButton.click();
         }
     }
 
-    public void pressSelectBClassBtn(){
+    public void pressSelectPlusFareBtn(){
+        this.waitForElementIsClickable(selectPlusFareBtn);
         if(selectPlusFareBtn.isEnabled()){
             this.scrollToElement(selectPlusFareBtn);
             selectPlusFareBtn.click();
@@ -81,8 +81,6 @@ public class BookingPage {
     }
 
     public int getSelectedFlightsCount(){
-       /* WebDriverWait wait = new WebDriverWait(driver, 5);
-        wait.until(ExpectedConditions.jsReturnsValue("return jQuery.active == 0;"));*/
         this.waitForLoadingIsFinished();
         logger.info("Selected flights blue spinners count: " + selectedFlightsBluePanels.size());
         return selectedFlightsBluePanels.size();
@@ -166,19 +164,40 @@ public class BookingPage {
     }
 
 
-    public double getPriceBabyPassenger() {
-        return priceBabyPassenger;
+    public double getTotalPricePerBaby() {
+        this.waitForLoadingIsFinished();
+        logger.info("Get Total price per baby started...");
+        return this.getPriceFromInnerHTML(pricesPerBabyContainer);
     }
 
     public double getTotalPricePerAdultPassenger() {
-        double totalAdultPrice = 0;
-        for (WebElement element : pricesInboundPerAdultContainer) {
+        this.waitForLoadingIsFinished();
+        logger.info("Get Total price per adult started...");
+        return this.getPriceFromInnerHTML(pricesPerAdultContainer);
+    }
 
+    public double getPriceFromInnerHTML(List<WebElement> pricesContainer){
+        double totalPrice = 0;
+        for (WebElement element :
+                pricesContainer) {
             String text = element.getAttribute("innerHTML").trim();
-            int i = text.lastIndexOf(">");
-            String substring = text.substring(i+1);
-            totalAdultPrice+= Double.valueOf(substring);
+            int index = text.lastIndexOf(">");
+            if (index >= 0 && (index+1)<text.length()){
+            String substring = text.substring(index+1).replaceAll(",", "");
+            totalPrice+= Double.valueOf(substring);
+            }
         }
-        return totalAdultPrice;
+        logger.info("Total price per passenger equals: " + totalPrice);
+        return totalPrice;
+    }
+
+    public double getTotalAmountPrice(){
+        this.waitForLoadingIsFinished();
+        String text = totalPriceSection.getText();
+        if (text.length() > 1) {
+            logger.info("Total Amount shown in the Booking page: ");
+            return Double.valueOf(text.replaceAll(",", "").substring(1));
+        } else
+            throw new IndexOutOfBoundsException("Unexpected index for TotalAmount text with price.");
     }
 }
