@@ -45,14 +45,17 @@ public class BookingPageTests extends BaseTest{
 
     }
 
+    //public void getTotalPrice
+
     public void verifyTotalPriceIsCorrect(int adults, int children, int babies){
-        double pricePlusFare, pricePerAdult, pricePerChild, pricePerBaby;
+        double priceClass, pricePerAdult, pricePerChild, pricePerBaby, totalPrice;
 
         pricePerAdult = bookingPage.getTotalPricePerAdultPassenger();
         pricePerChild = pricePerAdult;
-     //   pricePerBaby = bookingPage.getPriceBabyPassenger();
-        pricePlusFare= bookingPage.getPlusFarePrice();
+        pricePerBaby = bookingPage.getTotalPricePerBaby();
 
+        totalPrice = adults*pricePerAdult + children*pricePerChild + babies*pricePerBaby;
+        Assert.assertEquals(totalPrice, bookingPage.getTotalAmountPrice(), "The 'Total amount' price in the page does not meet to the calculated: " + totalPrice + ";");
 
     }
 
