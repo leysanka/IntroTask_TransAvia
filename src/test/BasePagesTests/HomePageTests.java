@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
 
 public class HomePageTests extends BaseTest {
 
-   BookingPageTests bookingPageTests = new BookingPageTests();
+  // BookingPageTests bookingPageTests = new BookingPageTests();
 
     public HomePageTests() {    }
 
@@ -124,4 +124,12 @@ public class HomePageTests extends BaseTest {
         };
     }
 
+    public void testOpenManageBookingToolbar() {
+        homePage.openManageBookingToolbar();
+        Assert.assertTrue(homePage.manageBookingPaneIsOpened(), "'Manage your booking' toggle panel does not look to be opened.");
+    }
+
+    public void testGoToViewBooking() {
+        homePage.goToViewBooking();
+    }
 }

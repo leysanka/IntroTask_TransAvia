@@ -57,6 +57,10 @@ public class HomePage {
     @FindBy(xpath = "//button[contains(.,'Save')]") private WebElement savePassengersBtn;
     @FindBy (xpath = "//form[@id='desktop']//button[@class = 'button button-primary']")    private WebElement searchBtn;
 
+    @FindBy(xpath = "//li[@class = 'primary-navigation_item']/a[contains(@href, 'booking-overview')]") private WebElement manageYourBookingBtn;
+    @FindBy(xpath = "//div[@id='horizontal-sub-navigation-manageyourbooking']//div[contains(@class, 'togglepanel-content')]") private WebElement manageYourBookingPanel;
+    @FindBy(xpath = "//li//span[contains(@class, 'icon-account')]") private WebElement viewYourBookingIcon;
+
 
     public HomePage(WebDriver driver) {
         this.driver = driver;
@@ -218,7 +222,6 @@ public class HomePage {
         }
     }
 
-
     public String getPassengersCountBoxValue(String type)throws IllegalArgumentException {
 
         passengersTypes pt = passengersTypes.valueOf(type.toUpperCase()); //throws exc here
@@ -235,6 +238,7 @@ public class HomePage {
                 //throw new InvalidTestDataException(pt + " is unknown type of passenger. Please specify one of the valid: " + passengersTypes.values());
         }
     }
+
     public enum passengersTypes{
         ADULTS,
         CHILDREN,
@@ -243,6 +247,24 @@ public class HomePage {
 
     public void searchBtnSubmit(){
         searchBtn.click();
+    }
+
+    //ManageBookingSection
+
+    public void openManageBookingToolbar(){
+        if (manageYourBookingBtn.isDisplayed()) {
+            manageYourBookingBtn.click();
+        }
+    }
+
+    public boolean manageBookingPaneIsOpened(){
+        return manageYourBookingPanel.isDisplayed();
+    }
+
+    public void goToViewBooking(){
+       if(viewYourBookingIcon.isDisplayed()){
+           viewYourBookingIcon.click();
+       }
     }
 
 }
