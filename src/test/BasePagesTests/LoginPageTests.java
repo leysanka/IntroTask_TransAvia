@@ -27,7 +27,7 @@ public class LoginPageTests extends BaseTest {
 
     public void testFLightDateFillsCorrectly(String flightDate){
         loginPage.setFlightDateFieldField(flightDate);
-        Assert.assertTrue(loginPage.isMatchFlightDateField(flightDate), "Last Name does not match to the expected value: " + flightDate);
+        Assert.assertTrue(loginPage.isMatchFlightDateField(flightDate), "Flight Date does not match to the expected value: " + flightDate);
 
     }
 

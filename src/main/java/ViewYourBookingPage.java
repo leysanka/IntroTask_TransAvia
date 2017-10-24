@@ -4,28 +4,28 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 
-import java.text.Format;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 
 
 public class ViewYourBookingPage {
 
     private WebDriver driver;
-    private final String PAGE_TITLE = "View your booking";
+    private final String VIEWBOOKING_PAGE_TITLE = "View your booking";
 
     @FindBy(xpath = "//em//time") private List<WebElement> deptAndArrivalTimes;
-    @FindBy() private WebElement departureTime;
-    @FindBy() private WebElement arrivalTime;
     @FindBy(xpath = "//h5[contains(text(), 'Duration')]//following-sibling::p") private WebElement duration;
     @FindBy(xpath = "//h3//span[@class='nowrap']") private List<WebElement> flyingRoute;
+    @FindBy(xpath = "//div[contains(@class, 'section--button')]//a[contains(@href, 'booking-details')]") private WebElement bookingDetailsBtn;
 
     public ViewYourBookingPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
+    }
+
+    public boolean isMatchPageTitle(){
+        return driver.getTitle().equals(VIEWBOOKING_PAGE_TITLE);
     }
 
     public String getDepartureTime(){
@@ -51,6 +51,10 @@ public class ViewYourBookingPage {
 
     public String getFlyingTo(){
         return flyingRoute.get(1).getText();
+    }
+
+    public void pressBookingDetailsBtn(){
+        bookingDetailsBtn.click();
     }
 
 

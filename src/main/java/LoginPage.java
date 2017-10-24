@@ -26,8 +26,6 @@ public class LoginPage {
         PageFactory.initElements(driver, this);
     }
 
-    CommonPageClass commonPageClass = new CommonPageClass();
-
     public boolean isMatchPageTitle(){
         return driver.getTitle().equals(LOGIN_PAGE_TITLE);
     }
