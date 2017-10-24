@@ -2,6 +2,8 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.time.LocalTime;
+
 public class ViewBookingWithoutAccountTests extends BaseTest {
 
     @Test (dataProvider = "viewBooking_WithoutAccount_Provider")
@@ -19,20 +21,15 @@ public class ViewBookingWithoutAccountTests extends BaseTest {
         ViewYourBookingPage viewYourBookingPage = new ViewYourBookingPage(driver);
         Assert.assertEquals(viewYourBookingPage.getFlyingFrom(), flyingFrom, "Flying From destination does not meet to the expected: " +flyingFrom);
         Assert.assertEquals(viewYourBookingPage.getFlyingTo(), flyingTo, "Flying To destination does not meet to the expected: " +flyingTo);
-        Assert.assertNotNull(viewYourBookingPage.getDepartureTime(), "");
-        Assert.assertNotNull(viewYourBookingPage.getArrivalTime(), "");
-
-
-
-        String s = "";
-
-
+        Assert.assertNotNull(viewYourBookingPage.getDepartureTime(), "Departure time is not fetched.");
+        Assert.assertNotNull(viewYourBookingPage.getArrivalTime(), "Arrival time is not fetched.");
+        Assert.assertTrue(viewYourBookingPage.isArrivalTimeLaterThanDeparture(), "Arrival time is not after the Departure time.");
     }
 
     @DataProvider(name = "viewBooking_WithoutAccount_Provider")
     public Object[][] viewBooking_WithoutAccount_Provider() {
             return new Object[][]{
-                    {"MF8C9R", "kukharau", "09 June 2016", "Pisa", "Amsterdam(Shiphol)"},
+                    {"MF8C9R", "kukharau", "09 June 2016", "Pisa", "Amsterdam (Schiphol)"},
             };
     }
 
