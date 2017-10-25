@@ -1,1 +1,5 @@
-Currently all tests are placed in HomePageTests -should be reorganized further to separate classes.
+TODO:
+-Reorganize framework
+-Run tests with maven
+-Run tests with testng xml +runner
+-Refactor methods

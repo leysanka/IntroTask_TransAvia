@@ -13,9 +13,9 @@ import java.util.concurrent.TimeUnit;
 
 public class BaseTest {
 
-    WebDriver driver;
-    HomePage homePage;
-    BookingPage bookingPage;
+    protected WebDriver driver;
+    protected HomePage homePage;
+    protected BookingPage bookingPage;
 
 
     private static String homePageUrl = "https://www.transavia.com/";

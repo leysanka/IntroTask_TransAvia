@@ -7,7 +7,7 @@ import java.time.LocalTime;
 public class ViewBookingWithoutAccountTests extends BaseTest {
 
     @Test (dataProvider = "viewBooking_WithoutAccount_Provider")
-    public void viewBooking_WithoutAccount_ArrivalTime_IsCorrect(String bookingNumber, String lastName, String flightDate, String flyingFrom, String flyingTo){
+    public void viewBookingWithoutAccountArrivalTimeIsCorrect(String bookingNumber, String lastName, String flightDate, String flyingFrom, String flyingTo){
         HomePageTests homePageTests = new HomePageTests(driver,homePage);
         homePageTests.testOpenManageBookingToolbar();
         homePageTests.testGoToViewBooking();

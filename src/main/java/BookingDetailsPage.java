@@ -5,10 +5,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class BookingDetailsPage {
+public class BookingDetailsPage extends CommonPage{
 
     private WebDriver driver;
-    private final String BOOKING_DETAILS_PAGE_TITLE = "Booking details";
+    private static final String BOOKING_DETAILS_PAGE_TITLE = "Booking details";
     static Logger logger = LogManager.getLogger();
 
     //
@@ -23,7 +23,7 @@ public class BookingDetailsPage {
 
      public String getTotalAmountValue(){
 
-      CommonPageClass.scrollToElement(driver, totalAmountContainer);
+      scrollToElement(driver, totalAmountContainer);
       logger.info("TotalAmount fetching...");
        return totalAmountContainer.getText();
 
@@ -31,7 +31,7 @@ public class BookingDetailsPage {
 
     public String getTotalPaymentValue(){
 
-        CommonPageClass.scrollToElement(driver, totalPaymentContainer);
+        scrollToElement(driver, totalPaymentContainer);
         logger.info("TotalPayment fetching...");
         return totalPaymentContainer.getText();
 
