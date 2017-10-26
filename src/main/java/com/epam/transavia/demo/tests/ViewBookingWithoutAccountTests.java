@@ -1,12 +1,19 @@
+package com.epam.transavia.demo.tests;
+
+import com.epam.transavia.demo.gui.pages.BookingDetailsPage;
+import com.epam.transavia.demo.gui.pages.LoginPage;
+import com.epam.transavia.demo.gui.pages.ViewYourBookingPage;
+import com.epam.transavia.demo.tests.pages.BaseTest;
+import com.epam.transavia.demo.tests.pages.HomePageTests;
+import com.epam.transavia.demo.tests.pages.LoginPageTests;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import java.time.LocalTime;
-
+@Test
 public class ViewBookingWithoutAccountTests extends BaseTest {
 
-    @Test (dataProvider = "viewBooking_WithoutAccount_Provider")
+    @Test (dataProvider = "viewBookingWithoutAccountProvider")
     public void viewBookingWithoutAccountArrivalTimeIsCorrect(String bookingNumber, String lastName, String flightDate, String flyingFrom, String flyingTo){
         HomePageTests homePageTests = new HomePageTests(driver,homePage);
         homePageTests.testOpenManageBookingToolbar();
@@ -28,8 +35,8 @@ public class ViewBookingWithoutAccountTests extends BaseTest {
     }
 
 
-    @Test (dataProvider = "viewBooking_WithoutAccount__BookingDetails_Provider")
-    public void viewBooking_WithoutAccount_BookingDetails_Payment_IsCorrect(String bookingNumber, String lastName, String flightDate) {
+    @Test (dataProvider = "viewBookingWithoutAccountBookingDetailsProvider")
+    public void viewBookingWithoutAccountBookingDetailsPaymentIsCorrect(String bookingNumber, String lastName, String flightDate) {
         HomePageTests homePageTests = new HomePageTests(driver, homePage);
         homePageTests.testOpenManageBookingToolbar();
         homePageTests.testGoToViewBooking();
@@ -48,15 +55,15 @@ public class ViewBookingWithoutAccountTests extends BaseTest {
         Assert.assertTrue(bookingDetailsPage.isPaymentAmountEqualToTotalPrice(), "Payment amount and Total amount do not meet.");
     }
 
-    @DataProvider(name = "viewBooking_WithoutAccount_Provider")
-    public Object[][] viewBooking_WithoutAccount_Provider() {
+    @DataProvider(name = "viewBookingWithoutAccountProvider")
+    public Object[][] viewBookingWithoutAccountProvider() {
             return new Object[][]{
                     {"MF8C9R", "kukharau", "09 June 2016", "Pisa", "Amsterdam (Schiphol)"},
             };
     }
 
-    @DataProvider(name = "viewBooking_WithoutAccount__BookingDetails_Provider")
-    public Object[][] viewBooking_WithoutAccount_BookingDetails() {
+    @DataProvider(name = "viewBookingWithoutAccountBookingDetailsProvider")
+    public Object[][] viewBookingWithoutAccountBookingDetailsProvider() {
             return new Object[][]{
                     {"MF8C9R", "kukharau", "09 June 2016"},
             };

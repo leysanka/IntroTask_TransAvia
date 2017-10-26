@@ -1,3 +1,6 @@
+package com.epam.transavia.demo.gui.pages;
+
+import com.epam.transavia.demo.core.exceptions.WrongPageException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.*;

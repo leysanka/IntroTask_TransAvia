@@ -1,14 +1,15 @@
+package com.epam.transavia.demo.tests.pages;
+
+import com.epam.transavia.demo.gui.pages.HomePage;
+import com.epam.transavia.demo.core.exceptions.InvalidTestDataException;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class HomePageTests extends BaseTest {
-
-  // BookingPageTests bookingPageTests = new BookingPageTests();
 
     public HomePageTests() {    }
 

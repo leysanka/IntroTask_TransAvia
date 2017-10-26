@@ -1,3 +1,6 @@
+package com.epam.transavia.demo.tests.pages;
+
+import com.epam.transavia.demo.gui.pages.LoginPage;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 
@@ -30,8 +33,6 @@ public class LoginPageTests extends BaseTest {
         Assert.assertTrue(loginPage.isMatchFlightDateField(flightDate), "Flight Date does not match to the expected value: " + flightDate);
 
     }
-
-
 
 
 }

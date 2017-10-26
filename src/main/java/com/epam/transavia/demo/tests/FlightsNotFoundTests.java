@@ -1,11 +1,18 @@
+package com.epam.transavia.demo.tests;
+
+import com.epam.transavia.demo.tests.pages.BaseTest;
+import com.epam.transavia.demo.tests.pages.BookingPageTests;
+import com.epam.transavia.demo.tests.pages.HomePageTests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+@Test
 public class FlightsNotFoundTests extends BaseTest {
 
     /*TC_8: to verify that error message "Unfortunately we do not fly from Dubai, United Arab Emirates to..." is shown for the unsupported flight destination*/
     @Test(priority = 1)
-    public void doNotFly_Destination_Error_ShouldBeShown(){
+
+    public void doNotFlyDestinationErrorShouldBeShown(){
 
         final String DEST_FROM = "Dubai, United Arab Emirates";
         final String DEST_TO = "Agadir, Morocco";

@@ -1,3 +1,5 @@
+package com.epam.transavia.demo.gui.pages;
+
 import org.apache.logging.log4j.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;

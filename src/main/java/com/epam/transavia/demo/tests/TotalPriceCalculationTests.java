@@ -1,11 +1,17 @@
+package com.epam.transavia.demo.tests;
+
+import com.epam.transavia.demo.tests.pages.BaseTest;
+import com.epam.transavia.demo.tests.pages.BookingPageTests;
+import com.epam.transavia.demo.tests.pages.HomePageTests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+@Test()
 public class TotalPriceCalculationTests extends BaseTest {
 
     //TC_2: Check Total Amount price's calculated correctly for round-trip for '2 Adults , 1 Child and 1 Baby' passengers with Plus Fare (ie. 20kg luggage).
     @Test
-    public void totalPrice_Calculation_OneCityRoundTrip_IsCorrect(){
+    public void totalPriceCalculationOneCityRoundTripIsCorrect(){
 
         HomePageTests homePageTests = new HomePageTests(driver,homePage);
         BookingPageTests bookingPageTests = new BookingPageTests();
@@ -48,7 +54,7 @@ public class TotalPriceCalculationTests extends BaseTest {
     //TC_9: Check Total Amount price's calculated correctly for multi-city trip:
     // 'Bologna-Eindhoven' (1st date) Outbound  and  'Amsterdam-Casablanca' (2nd date) Inbound flights
     @Test
-    public void totalPrice_Calculation_MultiCityRoundTrip_IsCorrect(){
+    public void totalPriceCalculationMultiCityRoundTripIsCorrect(){
 
     }
 }

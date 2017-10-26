@@ -1,3 +1,7 @@
+package com.epam.transavia.demo.gui.pages;
+
+import com.epam.transavia.demo.core.exceptions.InvalidTestDataException;
+import com.epam.transavia.demo.core.exceptions.WrongPageException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -152,7 +156,7 @@ public class HomePage {
         action.moveToElement(returnOnCheckBox).click();
     }
 
-    protected static String calculateDateNowPlusLag(long lagDays){
+    public static String calculateDateNowPlusLag(long lagDays){
         LocalDate date = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
         String startDate = date.plusDays(lagDays).format(formatter);
@@ -194,7 +198,7 @@ public class HomePage {
         return passengersPopUp.isDisplayed();
     }
 //TODO may be can be done as one method for any passenger add child, baby, adult-> need to think how
-    public void addAdultPassengers(int adultsCount) throws InvalidTestDataException{
+    public void addAdultPassengers(int adultsCount) throws InvalidTestDataException {
         if (adultsCount>=0 && adultsCount <= MAX_PASSENGERS_TO_FILL){
             for (int i = 0; i <adultsCount ; i++) {
                 if(adultsIncreaseBtn.isEnabled()){
@@ -235,7 +239,7 @@ public class HomePage {
                 return babiesCountBox.getAttribute("value");
             default:
                 throw new IllegalArgumentException(); //doesn't get there
-                //throw new InvalidTestDataException(pt + " is unknown type of passenger. Please specify one of the valid: " + passengersTypes.values());
+                //throw new com.epam.transavia.demo.core.exceptions.InvalidTestDataException(pt + " is unknown type of passenger. Please specify one of the valid: " + passengersTypes.values());
         }
     }
 

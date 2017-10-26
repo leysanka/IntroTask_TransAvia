@@ -1,7 +1,9 @@
+package com.epam.transavia.demo.core.exceptions;
+
 public class InvalidTestDataException extends Throwable {
     private String testDataError;
 
-    InvalidTestDataException(String s) {
+   public InvalidTestDataException(String s) {
         this.testDataError = s;
     }
 

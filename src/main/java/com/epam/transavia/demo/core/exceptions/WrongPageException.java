@@ -1,8 +1,10 @@
+package com.epam.transavia.demo.core.exceptions;
+
 public class WrongPageException extends Throwable {
    private String pageMessage;
 
 
-    WrongPageException(String pageMessage) {
+   public WrongPageException(String pageMessage) {
         this.pageMessage = pageMessage;
     }
 
