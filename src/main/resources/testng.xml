@@ -3,7 +3,11 @@
 <suite name ="Transavia Demo Suit_1">
     <test name = "Booking test">
         <classes>
-            <class name = "com.epam.transavia.demo.tests.TotalPriceCalculationTests" />
+            <class name = "com.epam.transavia.demo.tests.TotalPriceCalculationTests" >
+                <methods>
+                    <include name="totalPriceCalculationOneCityRoundTripIsCorrect"/>
+                </methods>
+            </class>
         </classes>
     </test>
 </suite>

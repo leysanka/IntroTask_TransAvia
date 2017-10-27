@@ -3,14 +3,15 @@ package com.epam.transavia.demo.tests;
 import com.epam.transavia.demo.tests.steps.BaseTest;
 import com.epam.transavia.demo.tests.steps.BookingPageTests;
 import com.epam.transavia.demo.tests.steps.HomePageTests;
-import org.testng.Assert;
+import org.testng.*;
 import org.testng.annotations.Test;
 
 @Test()
 public class TotalPriceCalculationTests extends BaseTest {
 
     //TC_2: Check Total Amount price's calculated correctly for round-trip for '2 Adults , 1 Child and 1 Baby' passengers with Plus Fare (ie. 20kg luggage).
-    @Test
+
+    @Test(testName = "priceIsCorrect")
     public void totalPriceCalculationOneCityRoundTripIsCorrect(){
 
         HomePageTests homePageTests = new HomePageTests(driver,homePage);
