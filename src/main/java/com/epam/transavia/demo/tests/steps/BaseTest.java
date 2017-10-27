@@ -1,4 +1,4 @@
-package com.epam.transavia.demo.tests.pages;
+package com.epam.transavia.demo.tests.steps;
 
 import com.epam.transavia.demo.gui.pages.BookingPage;
 import com.epam.transavia.demo.gui.pages.HomePage;

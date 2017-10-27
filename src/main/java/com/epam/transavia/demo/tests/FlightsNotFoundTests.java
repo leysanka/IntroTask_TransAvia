@@ -1,8 +1,8 @@
 package com.epam.transavia.demo.tests;
 
-import com.epam.transavia.demo.tests.pages.BaseTest;
-import com.epam.transavia.demo.tests.pages.BookingPageTests;
-import com.epam.transavia.demo.tests.pages.HomePageTests;
+import com.epam.transavia.demo.tests.steps.BaseTest;
+import com.epam.transavia.demo.tests.steps.BookingPageTests;
+import com.epam.transavia.demo.tests.steps.HomePageTests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
