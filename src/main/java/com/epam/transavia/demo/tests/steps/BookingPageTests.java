@@ -22,7 +22,7 @@ public class BookingPageTests extends BaseTest{
 
     public void testExpectedDatesSpinnersCountShown(int expDays){
 
-        int allDatesShownCount = bookingPage.getAllDatesShownCount();
+        int allDatesShownCount = super.bookingPage.getAllDatesShownCount();
         Assert.assertTrue((allDatesShownCount == expDays),
                 allDatesShownCount + " count of shown dates does not equal to the expected " + expDays + " days." );
 

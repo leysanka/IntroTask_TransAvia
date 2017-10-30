@@ -14,9 +14,6 @@ public class LoginPageTests extends BaseTest {
     }
 
 
-    public void verifyPageTitleIsCorrect(){
-       Assert.assertTrue(loginPage.isMatchPageTitle());
-    }
 
     public void testBookingNumberFillsCorrectly(String bookingNumber){
         loginPage.setBookingNumberField(bookingNumber);

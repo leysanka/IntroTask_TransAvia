@@ -1,6 +1,9 @@
 package com.epam.transavia.demo.gui.pages;
 
 import com.epam.transavia.demo.businessobjects.BookingInfo;
+import com.epam.transavia.demo.core.exceptions.WrongPageException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -12,23 +15,24 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 
-public class ViewYourBookingPage {
+public class ViewYourBookingPage extends CommonPage {
 
     private WebDriver driver;
-    private final String VIEWBOOKING_PAGE_TITLE = "View your booking";
+    private final String VIEW_BOOKING_PAGE_TITLE = "View your booking";
+    private static Logger logger = LogManager.getLogger();
 
     @FindBy(xpath = "//em//time") private List<WebElement> deptAndArrivalTimes;
     @FindBy(xpath = "//h5[contains(text(), 'Duration')]//following-sibling::p") private WebElement duration;
     @FindBy(xpath = "//h3//span[@class='nowrap']") private List<WebElement> flyingRoute;
     @FindBy(xpath = "//div[contains(@class, 'section--button')]//a[contains(@href, 'booking-details')]") private WebElement bookingDetailsBtn;
 
-    public ViewYourBookingPage(WebDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
-    }
-
-    public boolean isMatchPageTitle(){
-        return driver.getTitle().equals(VIEWBOOKING_PAGE_TITLE);
+    public ViewYourBookingPage(WebDriver driver) throws WrongPageException{
+        super(driver);
+        if (!VIEW_BOOKING_PAGE_TITLE.equals(driver.getTitle())){
+            throw new WrongPageException("View your booking page title does not meet to the expected: " + VIEW_BOOKING_PAGE_TITLE);
+        } else {
+            logger.info("View your booking page initialized successfully.");
+        }
     }
 
     public String getDepartureTime(){
@@ -39,6 +43,7 @@ public class ViewYourBookingPage {
         return deptAndArrivalTimes.get(1).getAttribute("datetime");
     }
 
+//TODO Move to service
     public boolean isArrivalTimeLaterThanDeparture(){
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -56,15 +61,16 @@ public class ViewYourBookingPage {
         return flyingRoute.get(1).getText();
     }
 
+
     public void pressBookingDetailsBtn(){
         bookingDetailsBtn.click();
     }
 
-    public BookingDetailsPage openBookingDetails(){
+    public BookingDetailsPage openBookingDetails() throws WrongPageException {
         bookingDetailsBtn.click();
         return new BookingDetailsPage(driver);
     }
-
+//TODO Move to service
     public boolean isMatchFlyingRoute(BookingInfo bookingInfo){
 
         return (this.getFlyingFrom().equals(bookingInfo.getFlyingFrom()) && this.getFlyingTo().equals(bookingInfo.getFlyingTo()));

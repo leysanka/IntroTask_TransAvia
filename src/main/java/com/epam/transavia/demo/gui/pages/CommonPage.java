@@ -5,33 +5,34 @@ import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 
+public abstract class CommonPage{
 
-  public class CommonPage {
-
+    private static final int SECONDS_TO_WAIT = 10;
     protected WebDriver driver;
 
-      public CommonPage(WebDriver driver) {
-          this.driver = driver;
-      }
 
-      public void waitForLoadingIsFinished()
-      {
-          WebDriverWait wait = new WebDriverWait(driver, 10);
-          wait.until(ExpectedConditions.jsReturnsValue("return jQuery.active == 0;"));
-      }
+    public CommonPage(WebDriver driver) {
+        this.driver = driver;
+        PageFactory.initElements(driver, this);
+    }
 
-      public void waitForElementIsClickable( WebElement element ){
-          WebDriverWait wait = new WebDriverWait(driver, 10);
-          wait.until(ExpectedConditions.elementToBeClickable(element));
-      }
+    public void waitForLoadingIsFinished() {
+        WebDriverWait wait = new WebDriverWait(driver, SECONDS_TO_WAIT);
+        wait.until(ExpectedConditions.jsReturnsValue("return jQuery.active == 0;"));
+    }
 
-      public void scrollToElement( WebElement element)
-      {
-          ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
-      }
+    public void waitForElementIsClickable(WebElement element) {
+        WebDriverWait wait = new WebDriverWait(driver, SECONDS_TO_WAIT);
+        wait.until(ExpectedConditions.elementToBeClickable(element));
+    }
+
+    public void scrollToElement(WebElement element) {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
+    }
 
 }

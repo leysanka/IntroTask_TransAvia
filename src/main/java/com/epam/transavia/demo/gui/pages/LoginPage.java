@@ -1,13 +1,14 @@
 package com.epam.transavia.demo.gui.pages;
 
 import com.epam.transavia.demo.businessobjects.BookingInfo;
+import com.epam.transavia.demo.core.exceptions.WrongPageException;
 import org.apache.logging.log4j.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 
-public class LoginPage {
+public class LoginPage extends CommonPage{
 
     private WebDriver driver;
     static Logger logger = LogManager.getLogger();
@@ -20,13 +21,13 @@ public class LoginPage {
     @FindBy(xpath = "//input[@id = 'retrieveBookingByLastname_FlightDate-datepicker']") private WebElement flightDateField;
     @FindBy(xpath = "//button [text()='View booking']") private WebElement viewBookingBtn;
 
-    public LoginPage(WebDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
-    }
-
-    public boolean isMatchPageTitle(){
-        return driver.getTitle().equals(LOGIN_PAGE_TITLE);
+    public LoginPage(WebDriver driver) throws WrongPageException {
+        super(driver);
+        if (!LOGIN_PAGE_TITLE.equals(driver.getTitle())) {
+            throw new WrongPageException("Login page title does not meet to the expected one: " + LOGIN_PAGE_TITLE);
+        } else {
+            logger.info("Login page initialized successfully.");
+        }
     }
 
     public void setBookingNumberField(String bookingNumber){
@@ -62,7 +63,7 @@ public class LoginPage {
         viewBookingBtn.click();
     }
 
-    public ViewYourBookingPage viewBookingWithoutAccount(BookingInfo bookingInfo){
+    public ViewYourBookingPage viewBookingWithoutAccount(BookingInfo bookingInfo) throws WrongPageException {
         this.setBookingNumberField(bookingInfo.getBookingNumber());
         this.setLastNameFieldField(bookingInfo.getLastName());
         this.setFlightDateFieldField(bookingInfo.getFlightDate());

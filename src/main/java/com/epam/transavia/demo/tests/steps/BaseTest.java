@@ -1,5 +1,6 @@
 package com.epam.transavia.demo.tests.steps;
 
+import com.epam.transavia.demo.core.exceptions.WrongPageException;
 import com.epam.transavia.demo.gui.pages.BookingPage;
 import com.epam.transavia.demo.gui.pages.HomePage;
 import org.apache.logging.log4j.LogManager;
@@ -9,7 +10,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-
 
 import java.util.concurrent.TimeUnit;
 
@@ -25,7 +25,7 @@ public class BaseTest {
     static Logger testLogger = LogManager.getLogger("test");
 
     @BeforeMethod
-    protected void setUpBeforeMethod(){
+    protected void setUpBeforeMethod() throws WrongPageException {
 
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -34,9 +34,8 @@ public class BaseTest {
         homePage = new HomePage(driver);
         try {
             testLogger.info("Try to select Other countries locale...");
-             homePage.selectOtherCountriesLocale();
-        }
-        catch (NullPointerException ex){
+            homePage.selectOtherCountriesLocale();
+        } catch (NullPointerException ex) {
             testLogger.error("Could not select Other Countries");
             homePage = null;
         }

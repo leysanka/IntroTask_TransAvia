@@ -18,8 +18,8 @@ public class HomePageTests extends BaseTest {
     public HomePageTests() {    }
 
     public HomePageTests(WebDriver driver, HomePage homePage) {
-        this.driver = driver;
-        this.homePage=homePage;
+       this.driver = driver;
+       this.homePage = homePage;
     }
 
     public void testFromDestinationFillsCorrectly(String destination) {
