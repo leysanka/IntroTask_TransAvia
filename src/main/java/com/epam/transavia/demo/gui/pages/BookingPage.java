@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
-public class BookingPage {
+public class BookingPage extends CommonPage {
 
     private WebDriver driver;
     private final String bookingPageTitle = "Book a flight";
@@ -50,12 +50,15 @@ public class BookingPage {
 
 
     public BookingPage(WebDriver driver) throws WrongPageException {
+        super(driver);
         this.driver = driver;
         if (!bookingPageTitle.equals(driver.getTitle())) {
-            throw new WrongPageException("Not a Booking page is opened: title " + driver.getTitle() + " does not meet to the expected " + bookingPageTitle);
+            throw new WrongPageException("Not a BookingInfo page is opened: title " + driver.getTitle() + " does not meet to the expected " + bookingPageTitle);
         }
         PageFactory.initElements(driver, this);
     }
+
+
 
     public double getPlusFarePrice(){
         int euroSignCode = 8364;
@@ -69,22 +72,22 @@ public class BookingPage {
     }
 
     public void pressNextButton(){
-        this.waitForElementIsClickable(nextToFlightFareSelectionButton);
+        waitForElementIsClickable(nextToFlightFareSelectionButton);
         if(nextToFlightFareSelectionButton.isDisplayed()){
         nextToFlightFareSelectionButton.click();
         }
     }
 
     public void pressSelectPlusFareBtn(){
-        this.waitForElementIsClickable(selectPlusFareBtn);
+        waitForElementIsClickable(selectPlusFareBtn);
         if(selectPlusFareBtn.isEnabled()){
-            this.scrollToElement(selectPlusFareBtn);
+            scrollToElement(selectPlusFareBtn);
             selectPlusFareBtn.click();
         }
     }
 
     public int getSelectedFlightsCount(){
-        this.waitForLoadingIsFinished();
+        waitForLoadingIsFinished();
         logger.info("Selected flights blue spinners count: " + selectedFlightsBluePanels.size());
         return selectedFlightsBluePanels.size();
     }
@@ -114,35 +117,35 @@ public class BookingPage {
 
     public void pressSelectOutboundFlight(){
 
-        this.waitForLoadingIsFinished();
-        this.scrollToElement(selectOutboundFlightBtn);
-        this.waitForElementIsClickable(selectOutboundFlightBtn);
+        waitForLoadingIsFinished();
+        scrollToElement(selectOutboundFlightBtn);
+        waitForElementIsClickable( selectOutboundFlightBtn);
         selectOutboundFlightBtn.click();
         logger.info("Outbound flight SELECTED successfully.");
     }
 
     public void pressSelectInboundFlight(){
 
-        this.waitForLoadingIsFinished();
-        this.scrollToElement(selectInboundFlightBtn);
-        this.waitForElementIsClickable(selectInboundFlightBtn);
+        waitForLoadingIsFinished();
+        scrollToElement(selectInboundFlightBtn);
+        waitForElementIsClickable( selectInboundFlightBtn);
         selectInboundFlightBtn.click();
         logger.info("Inbound flight SELECTED successfully.");
     }
 
-    public void waitForLoadingIsFinished(){
+   /* public void waitForLoadingIsFinished(){
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.jsReturnsValue("return jQuery.active == 0;"));
-    }
+    }*/
 
-    public void waitForElementIsClickable(WebElement element){
+   /* public void waitForElementIsClickable(WebElement element){
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.elementToBeClickable(element));
-    }
-
+    }*/
+/*
     public void scrollToElement(WebElement element){
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
-    }
+    }*/
 
     public int getFoundFlightsCount(){
        return allDatesWithFlights.size();
@@ -168,13 +171,13 @@ public class BookingPage {
 
 
     public double getTotalPricePerBaby() {
-        this.waitForLoadingIsFinished();
+        waitForLoadingIsFinished();
         logger.info("Get Total price per baby started...");
         return this.getPriceFromInnerHTML(pricesPerBabyContainer);
     }
 
     public double getTotalPricePerAdultPassenger() {
-        this.waitForLoadingIsFinished();
+        waitForLoadingIsFinished();
         logger.info("Get Total price per adult started...");
         return this.getPriceFromInnerHTML(pricesPerAdultContainer);
     }
@@ -195,10 +198,10 @@ public class BookingPage {
     }
 
     public double getTotalAmountPrice(){
-        this.waitForLoadingIsFinished();
+        waitForLoadingIsFinished();
         String text = totalPriceSection.getText();
         if (text.length() > 1) {
-            logger.info("Total Amount shown in the Booking page: ");
+            logger.info("Total Amount shown in the BookingInfo page: " + text);
             return Double.valueOf(text.replaceAll(",", "").substring(1));
         } else
             throw new IndexOutOfBoundsException("Unexpected index for TotalAmount text with price.");

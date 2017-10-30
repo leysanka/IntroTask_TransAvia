@@ -1,7 +1,9 @@
 package com.epam.transavia.demo.tests.steps;
 
+import com.epam.transavia.demo.core.exceptions.WrongPageException;
 import com.epam.transavia.demo.gui.pages.HomePage;
 import com.epam.transavia.demo.core.exceptions.InvalidTestDataException;
+import com.epam.transavia.demo.gui.pages.ManageBookingPage;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -10,6 +12,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class HomePageTests extends BaseTest {
+
+    private ManageBookingPage manageBookingPage;
 
     public HomePageTests() {    }
 
@@ -125,12 +129,11 @@ public class HomePageTests extends BaseTest {
         };
     }
 
-    public void testOpenManageBookingToolbar() {
-        homePage.openManageBookingToolbar();
-        Assert.assertTrue(homePage.manageBookingPaneIsOpened(), "'Manage your booking' toggle panel does not look to be opened.");
-    }
+   /* public void testOpenManageBookingToolbar() {
+        //manageBookingPage = homePage.openManageBookingToolbar();
+        Assert.assertTrue(manageBookingPage.manageBookingPaneIsOpened(), "'Manage your booking' toggle panel does not look to be opened.");
+    }*/
 
-    public void testGoToViewBooking() {
-        homePage.goToViewBooking();
-    }
+
+
 }

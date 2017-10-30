@@ -12,13 +12,24 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
   public class CommonPage {
 
-      public void waitForLoadingIsFinished(WebDriver driver)
+    protected WebDriver driver;
+
+      public CommonPage(WebDriver driver) {
+          this.driver = driver;
+      }
+
+      public void waitForLoadingIsFinished()
       {
           WebDriverWait wait = new WebDriverWait(driver, 10);
           wait.until(ExpectedConditions.jsReturnsValue("return jQuery.active == 0;"));
       }
 
-      public void scrollToElement(WebDriver driver, WebElement element)
+      public void waitForElementIsClickable( WebElement element ){
+          WebDriverWait wait = new WebDriverWait(driver, 10);
+          wait.until(ExpectedConditions.elementToBeClickable(element));
+      }
+
+      public void scrollToElement( WebElement element)
       {
           ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
       }

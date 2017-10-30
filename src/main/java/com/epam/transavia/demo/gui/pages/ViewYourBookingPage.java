@@ -1,5 +1,6 @@
 package com.epam.transavia.demo.gui.pages;
 
+import com.epam.transavia.demo.businessobjects.BookingInfo;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -59,6 +60,16 @@ public class ViewYourBookingPage {
         bookingDetailsBtn.click();
     }
 
+    public BookingDetailsPage openBookingDetails(){
+        bookingDetailsBtn.click();
+        return new BookingDetailsPage(driver);
+    }
+
+    public boolean isMatchFlyingRoute(BookingInfo bookingInfo){
+
+        return (this.getFlyingFrom().equals(bookingInfo.getFlyingFrom()) && this.getFlyingTo().equals(bookingInfo.getFlyingTo()));
+
+    }
 
 
 

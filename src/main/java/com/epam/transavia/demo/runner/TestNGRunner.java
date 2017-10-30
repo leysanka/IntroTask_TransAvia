@@ -2,7 +2,6 @@ package com.epam.transavia.demo.runner;
 
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
-import org.testng.CommandLineArgs;
 import org.testng.TestNG;
 import org.testng.xml.Parser;
 import org.testng.xml.XmlSuite;

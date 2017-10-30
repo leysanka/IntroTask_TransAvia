@@ -27,13 +27,14 @@ public class HomePage {
     private static final String HOME_PAGE_TITLE = "Welcome to Transavia!";
     private static final int MAX_PASSENGERS_TO_FILL = 10;
 
-    //Better to use this for checking whether the Home, Booking etc. pages were loaded.
+    //Better to use this for checking whether the Home, BookingInfo etc. pages were loaded.
     //@FindBy(xpath = "//span[@class = 'icon-font icon-house']") WebElement houseBtn;
 
     @FindBy(xpath = "//a[@href='/en-EU/home']")    private WebElement welcomeOtherCountries;
     @FindBy (xpath = "//form[@id = 'desktop']/parent::section")    private WebElement whereToGoWindow;
     @FindBy(id = "routeSelection_DepartureStation-input")    private WebElement fromField;
     @FindBy(id="routeSelection_ArrivalStation-input")    private WebElement toField;
+
     /*If drop-down is not opened, the attribute "style="display: none;" is set; if it's opened -no such attribute is set.*/
     @FindBy(xpath = "//div[@class = 'autocomplete-results' and not(@style)]")  private WebElement destinationDropDown;
     @FindBy(xpath = "//ol[@class='results']/li") private List<WebElement> dropdownDestinationValuesFrom;
@@ -62,9 +63,6 @@ public class HomePage {
     @FindBy (xpath = "//form[@id='desktop']//button[@class = 'button button-primary']")    private WebElement searchBtn;
 
     @FindBy(xpath = "//li[@class = 'primary-navigation_item']/a[contains(@href, 'booking-overview')]") private WebElement manageYourBookingBtn;
-    @FindBy(xpath = "//div[@id='horizontal-sub-navigation-manageyourbooking']//div[contains(@class, 'togglepanel-content')]") private WebElement manageYourBookingPanel;
-    @FindBy(xpath = "//li//span[contains(@class, 'icon-account')]") private WebElement viewYourBookingIcon;
-
 
     public HomePage(WebDriver driver) {
         this.driver = driver;
@@ -79,6 +77,7 @@ public class HomePage {
             logger.error(e.getMessage());
         }
     }
+
 
     public void selectOtherCountriesLocale(){
         welcomeOtherCountries.click();
@@ -138,16 +137,6 @@ public class HomePage {
         }
         return false;
     }
-    public void checkReturnOnCheckBox(){
-        if (!returnOnIsChecked()) {
-            returnOnCheckBox.click();
-        }
-    }
-    public void uncheckReturnOnCheckBox(){
-        if (returnOnIsChecked()) {
-            returnOnCheckBox.click();
-        }
-    }
 
     public void returnOnCheckBoxClick() {
         WebDriverWait wait = new WebDriverWait(driver, 10);
@@ -155,7 +144,7 @@ public class HomePage {
         Actions action = new Actions(driver);
         action.moveToElement(returnOnCheckBox).click();
     }
-
+//Should be placed somewhere in TestData layer
     public static String calculateDateNowPlusLag(long lagDays){
         LocalDate date = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
@@ -166,13 +155,13 @@ public class HomePage {
     public void setDepartOnDateFieldPlusLag(long lagDays){
 
         departOnDateField.clear();
-        departOnDateField.sendKeys(calculateDateNowPlusLag(lagDays).toString());
+        departOnDateField.sendKeys(calculateDateNowPlusLag(lagDays));
     }
 
     public void setReturnOnDateFieldPlusLag(long lagDays){
 
         returnOnDateField.clear();
-        returnOnDateField.sendKeys(calculateDateNowPlusLag(lagDays).toString());
+        returnOnDateField.sendKeys(calculateDateNowPlusLag(lagDays));
     }
     public boolean returnOnDateIsSet(){
         return !getSelectedReturnOnDate().isEmpty();
@@ -253,22 +242,18 @@ public class HomePage {
         searchBtn.click();
     }
 
-    //ManageBookingSection
-
-    public void openManageBookingToolbar(){
+    public ManageBookingPage openManageBookingToolbar() {
         if (manageYourBookingBtn.isDisplayed()) {
             manageYourBookingBtn.click();
+            return new ManageBookingPage(driver);
         }
+        else {
+            try {
+                throw new WrongPageException("ManageBooking booking page is not opened.");
+            } catch (WrongPageException e) {
+                logger.error(e.getMessage());
+            }
+        }
+        return null;
     }
-
-    public boolean manageBookingPaneIsOpened(){
-        return manageYourBookingPanel.isDisplayed();
-    }
-
-    public void goToViewBooking(){
-       if(viewYourBookingIcon.isDisplayed()){
-           viewYourBookingIcon.click();
-       }
-    }
-
 }

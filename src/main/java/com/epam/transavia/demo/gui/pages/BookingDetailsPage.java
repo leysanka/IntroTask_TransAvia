@@ -10,22 +10,21 @@ import org.openqa.selenium.support.PageFactory;
 public class BookingDetailsPage extends CommonPage{
 
     private WebDriver driver;
-    private static final String BOOKING_DETAILS_PAGE_TITLE = "Booking details";
+    private static final String BOOKING_DETAILS_PAGE_TITLE = "BookingInfo details";
     static Logger logger = LogManager.getLogger();
 
-    //
-   // @FindBy(xpath = "//div[contains(@class, 'section--green')]//span") private WebElement totalAmountContainer;
     @FindBy(xpath = "//div[contains(@class, 'section--green')]//div[@class='front']") private WebElement totalAmountContainer;
     @FindBy(xpath = "//h2[contains(text(), 'Transaction')]//..//div[@class='amount']") private WebElement totalPaymentContainer;
 
     public BookingDetailsPage(WebDriver driver) {
+        super(driver);
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 
      public String getTotalAmountValue(){
 
-      scrollToElement(driver, totalAmountContainer);
+      scrollToElement( totalAmountContainer);
       logger.info("TotalAmount fetching...");
        return totalAmountContainer.getText();
 
@@ -33,7 +32,7 @@ public class BookingDetailsPage extends CommonPage{
 
     public String getTotalPaymentValue(){
 
-        scrollToElement(driver, totalPaymentContainer);
+        scrollToElement(totalPaymentContainer);
         logger.info("TotalPayment fetching...");
         return totalPaymentContainer.getText();
 

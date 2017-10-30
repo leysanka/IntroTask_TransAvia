@@ -32,7 +32,7 @@ public class FlightsFoundTests extends BaseTest {
     @DataProvider(name = "oneWayOneUserFlightProvider")
     public Object[][] oneWayOneUserFlightProvider() {
         return new Object[][]{
-                {"Dubrovnik, Croatia", "Amsterdam (Schiphol), Netherlands", 7, "1 Adult"},
+                {"Paris (Orly South), France", "Amsterdam (Schiphol), Netherlands", 7, "1 Adult"},
                 // {"Amsterdam (Schiphol), Netherlands", "Dubrovnik, Croatia",14, "2"}
         };
     }

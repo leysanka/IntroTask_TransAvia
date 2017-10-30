@@ -1,13 +1,10 @@
 package com.epam.transavia.demo.gui.pages;
 
+import com.epam.transavia.demo.businessobjects.BookingInfo;
 import org.apache.logging.log4j.*;
 import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 public class LoginPage {
@@ -63,6 +60,14 @@ public class LoginPage {
 
     public void pressViewBookingBtn(){
         viewBookingBtn.click();
+    }
+
+    public ViewYourBookingPage viewBookingWithoutAccount(BookingInfo bookingInfo){
+        this.setBookingNumberField(bookingInfo.getBookingNumber());
+        this.setLastNameFieldField(bookingInfo.getLastName());
+        this.setFlightDateFieldField(bookingInfo.getFlightDate());
+        this.submitFlightDateAndGoToViewBooking();
+        return new ViewYourBookingPage(driver);
     }
 
 

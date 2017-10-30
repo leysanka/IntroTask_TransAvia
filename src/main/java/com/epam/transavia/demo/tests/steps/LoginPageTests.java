@@ -20,7 +20,7 @@ public class LoginPageTests extends BaseTest {
 
     public void testBookingNumberFillsCorrectly(String bookingNumber){
         loginPage.setBookingNumberField(bookingNumber);
-        Assert.assertTrue(loginPage.isMatchBookingNumberField(bookingNumber), "Booking Number does not match to the expected value: " + bookingNumber);
+        Assert.assertTrue(loginPage.isMatchBookingNumberField(bookingNumber), "BookingInfo Number does not match to the expected value: " + bookingNumber);
     }
 
     public void testLastNameFillsCorrectly(String lastName){
@@ -28,7 +28,7 @@ public class LoginPageTests extends BaseTest {
         Assert.assertTrue(loginPage.isMatchLastNameField(lastName), "Last Name does not match to the expected value: " + lastName);
     }
 
-    public void testFLightDateFillsCorrectly(String flightDate){
+    public void testFlightDateFillsCorrectly(String flightDate){
         loginPage.setFlightDateFieldField(flightDate);
         Assert.assertTrue(loginPage.isMatchFlightDateField(flightDate), "Flight Date does not match to the expected value: " + flightDate);
 
