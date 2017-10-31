@@ -32,8 +32,6 @@ public class HomePage extends CommonPage {
     private WebElement fromField;
     @FindBy(id = "routeSelection_ArrivalStation-input")
     private WebElement toField;
-
-    /*If drop-down is not opened, the attribute "style="display: none;" is set; if it's opened -no such attribute is set.*/
     @FindBy(xpath = "//div[@class = 'autocomplete-results' and not(@style)]")
     private WebElement destinationDropDown;
     @FindBy(xpath = "//ol[@class='results']/li")
@@ -48,7 +46,6 @@ public class HomePage extends CommonPage {
     private WebElement departOnDateField;
     @FindBy(id = "dateSelection_IsReturnFlight-datepicker")
     private WebElement returnOnDateField;
-
     @FindBy(id = "booking-passengers-input")
     private WebElement passengersField;
 

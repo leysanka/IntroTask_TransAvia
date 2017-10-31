@@ -10,7 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 
 public class LoginPage extends CommonPage{
 
-    private WebDriver driver;
+    //private WebDriver driver;
     static Logger logger = LogManager.getLogger();
 
     private final String LOGIN_PAGE_TITLE = "Log in";
@@ -20,6 +20,7 @@ public class LoginPage extends CommonPage{
     @FindBy(xpath = "//input[@id = 'retrieveBookingByLastname_LastName']") private WebElement lastNameField;
     @FindBy(xpath = "//input[@id = 'retrieveBookingByLastname_FlightDate-datepicker']") private WebElement flightDateField;
     @FindBy(xpath = "//button [text()='View booking']") private WebElement viewBookingBtn;
+
 
     public LoginPage(WebDriver driver) throws WrongPageException {
         super(driver);

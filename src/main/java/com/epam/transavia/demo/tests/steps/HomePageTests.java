@@ -114,7 +114,7 @@ public class HomePageTests extends BaseTest {
 
     // Depart On should display tomorrow's date by default
     public void verifyDefaultDepartOnDateIsCorrect() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM yyyy");
 
         String fieldDate = homePage.getSelectedDepartOnDate();
         String currentDate = LocalDate.now().plusDays(1).format(formatter);

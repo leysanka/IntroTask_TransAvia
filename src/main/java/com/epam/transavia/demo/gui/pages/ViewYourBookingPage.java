@@ -17,7 +17,7 @@ import java.util.List;
 
 public class ViewYourBookingPage extends CommonPage {
 
-    private WebDriver driver;
+ //   private WebDriver driver;
     private final String VIEW_BOOKING_PAGE_TITLE = "View your booking";
     private static Logger logger = LogManager.getLogger();
 
@@ -25,6 +25,7 @@ public class ViewYourBookingPage extends CommonPage {
     @FindBy(xpath = "//h5[contains(text(), 'Duration')]//following-sibling::p") private WebElement duration;
     @FindBy(xpath = "//h3//span[@class='nowrap']") private List<WebElement> flyingRoute;
     @FindBy(xpath = "//div[contains(@class, 'section--button')]//a[contains(@href, 'booking-details')]") private WebElement bookingDetailsBtn;
+    @FindBy(xpath = "//div[@class = 'footnote booking-number']//p") private WebElement bookingNumberText;
 
     public ViewYourBookingPage(WebDriver driver) throws WrongPageException{
         super(driver);
@@ -43,14 +44,8 @@ public class ViewYourBookingPage extends CommonPage {
         return deptAndArrivalTimes.get(1).getAttribute("datetime");
     }
 
-//TODO Move to service
-    public boolean isArrivalTimeLaterThanDeparture(){
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        LocalDateTime arrivalTime = LocalDateTime.parse(this.getArrivalTime(), formatter);
-        LocalDateTime departureTime = LocalDateTime.parse(this.getDepartureTime(), formatter);
-
-        return arrivalTime.isAfter(departureTime);
+    public String getShownBookingNumber() {
+        return bookingNumberText.getText();
     }
 
     public String getFlyingFrom(){
@@ -70,13 +65,5 @@ public class ViewYourBookingPage extends CommonPage {
         bookingDetailsBtn.click();
         return new BookingDetailsPage(driver);
     }
-//TODO Move to service
-    public boolean isMatchFlyingRoute(BookingInfo bookingInfo){
-
-        return (this.getFlyingFrom().equals(bookingInfo.getFlyingFrom()) && this.getFlyingTo().equals(bookingInfo.getFlyingTo()));
-
-    }
-
-
 
 }

@@ -53,7 +53,7 @@ public class TotalPriceCalculationTests extends BaseTest {
 
     //TC_9: Check Total Amount price's calculated correctly for multi-city trip:
     // 'Bologna-Eindhoven' (1st date) Outbound  and  'Amsterdam-Casablanca' (2nd date) Inbound flights
-    @Test
+    @Test(enabled = false)
     public void totalPriceCalculationMultiCityRoundTripIsCorrect(){
 
     }

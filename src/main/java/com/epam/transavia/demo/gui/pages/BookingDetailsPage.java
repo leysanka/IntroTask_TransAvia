@@ -10,8 +10,8 @@ import org.openqa.selenium.support.PageFactory;
 
 public class BookingDetailsPage extends CommonPage{
 
-    private WebDriver driver;
-    private static final String BOOKING_DETAILS_PAGE_TITLE = "BookingInfo details";
+   // private WebDriver driver;
+    private static final String BOOKING_DETAILS_PAGE_TITLE = "Booking details";
     private static Logger logger = LogManager.getLogger();
 
     @FindBy(xpath = "//div[contains(@class, 'section--green')]//div[@class='front']") private WebElement totalAmountContainer;
@@ -39,10 +39,5 @@ public class BookingDetailsPage extends CommonPage{
         return totalPaymentContainer.getText();
 
     }
-
-    public boolean isPaymentAmountEqualToTotalPrice(){
-        return this.getTotalPaymentValue().equals(this.getTotalAmountValue());
-    }
-
 
 }

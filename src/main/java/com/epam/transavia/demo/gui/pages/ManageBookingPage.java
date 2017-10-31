@@ -9,7 +9,7 @@ import org.openqa.selenium.support.FindBy;
 
 public class ManageBookingPage extends CommonPage {
 
-    private WebDriver driver;
+   // private WebDriver driver;
 
     @FindBy(xpath = "//div[@id='horizontal-sub-navigation-manageyourbooking']//div[contains(@class, 'togglepanel-content')]")
     private WebElement manageYourBookingPanel;
