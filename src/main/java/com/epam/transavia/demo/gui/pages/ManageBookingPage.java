@@ -9,11 +9,8 @@ import org.openqa.selenium.support.FindBy;
 
 public class ManageBookingPage extends CommonPage {
 
-   // private WebDriver driver;
-
     @FindBy(xpath = "//div[@id='horizontal-sub-navigation-manageyourbooking']//div[contains(@class, 'togglepanel-content')]")
     private WebElement manageYourBookingPanel;
-
     @FindBy(xpath = "//li//span[contains(@class, 'icon-account')]")
     private WebElement viewYourBookingIcon;
 
@@ -21,7 +18,7 @@ public class ManageBookingPage extends CommonPage {
         super(driver);
     }
 
-    public boolean manageBookingPaneIsOpened(){
+    public boolean manageBookingPanelIsOpened(){
         return manageYourBookingPanel.isDisplayed();
     }
 

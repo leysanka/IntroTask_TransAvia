@@ -10,7 +10,6 @@ import org.openqa.selenium.support.PageFactory;
 
 public class LoginPage extends CommonPage{
 
-    //private WebDriver driver;
     static Logger logger = LogManager.getLogger();
 
     private final String LOGIN_PAGE_TITLE = "Log in";

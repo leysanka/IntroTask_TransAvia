@@ -4,17 +4,15 @@ import com.epam.transavia.demo.businessobjects.BookingInfo;
 import com.epam.transavia.demo.core.exceptions.PageNotCreatedException;
 import com.epam.transavia.demo.core.exceptions.WrongPageException;
 import com.epam.transavia.demo.gui.pages.BookingDetailsPage;
-import com.epam.transavia.demo.gui.pages.CommonPage;
 import com.epam.transavia.demo.gui.pages.HomePage;
 import com.epam.transavia.demo.gui.pages.ViewYourBookingPage;
-import com.epam.transavia.demo.tests.steps.BaseTest;
 import org.openqa.selenium.WebDriver;
 
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class ViewBookingService{
+public class ViewBookingService {
 
     private WebDriver driver;
     private HomePage homePage;
@@ -29,7 +27,7 @@ public class ViewBookingService{
     public boolean viewBookingWithoutAccountSuccess(BookingInfo bookingInfo) throws PageNotCreatedException, WrongPageException {
 
         return homePage.openManageBookingToolbar().goToViewBooking().viewBookingWithoutAccount(bookingInfo)
-                    .getShownBookingNumber().equals(bookingInfo.getBookingNumber());
+                    .getLoadedBookingNumber().equals(bookingInfo.getBookingNumber());
     }
 
     public boolean isArrivalTimeLaterThanDepartureInBookingPage(BookingInfo bookingInfo) throws PageNotCreatedException, WrongPageException {

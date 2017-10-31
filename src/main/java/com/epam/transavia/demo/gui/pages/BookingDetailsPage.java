@@ -10,7 +10,6 @@ import org.openqa.selenium.support.PageFactory;
 
 public class BookingDetailsPage extends CommonPage{
 
-   // private WebDriver driver;
     private static final String BOOKING_DETAILS_PAGE_TITLE = "Booking details";
     private static Logger logger = LogManager.getLogger();
 
