@@ -59,7 +59,6 @@ public class ViewBookingWithoutAccountTests extends BaseTest {
                 "Payment amount and Total amount do not meet.");
     }
 
-
     @DataProvider(name = "bookingAndFlightInfoProvider")
     public static Object[][] bookingAndFlightInfoProvider() {
         return new Object[][]{

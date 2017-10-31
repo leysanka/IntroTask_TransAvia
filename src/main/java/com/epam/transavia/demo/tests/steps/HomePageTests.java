@@ -128,12 +128,4 @@ public class HomePageTests extends BaseTest {
                 // {"Amsterdam (Schiphol), Netherlands", "Dubrovnik, Croatia",14, "2"}
         };
     }
-
-   /* public void testOpenManageBookingToolbar() {
-        //manageBookingPage = homePage.openManageBookingToolbar();
-        Assert.assertTrue(manageBookingPage.manageBookingPaneIsOpened(), "'Manage your booking' toggle panel does not look to be opened.");
-    }*/
-
-
-
 }
