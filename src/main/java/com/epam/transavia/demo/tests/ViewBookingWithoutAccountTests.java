@@ -1,19 +1,18 @@
 package com.epam.transavia.demo.tests;
 
 import com.epam.transavia.demo.businessobjects.BookingInfo;
-import com.epam.transavia.demo.core.exceptions.PageNotCreatedException;
-import com.epam.transavia.demo.core.exceptions.WrongPageException;
 import com.epam.transavia.demo.gui.services.ViewBookingService;
 import com.epam.transavia.demo.tests.steps.BaseTest;
 import org.testng.Assert;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Factory;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
+
+import java.time.LocalDateTime;
 
 
 public class ViewBookingWithoutAccountTests extends BaseTest {
 
     private BookingInfo bookingInfo;
+    private ViewBookingService viewBookingService;
 
     @Factory(dataProvider = "bookingAndFlightInfoProvider")
     public ViewBookingWithoutAccountTests(String bookingNumber, String lastName, String flightDate, String flyingFrom, String flyingTo) {
@@ -24,39 +23,43 @@ public class ViewBookingWithoutAccountTests extends BaseTest {
         bookingInfo.setFlightDate(flightDate);
         bookingInfo.setFlyingFrom(flyingFrom);
         bookingInfo.setFlyingTo(flyingTo);
+    }
 
+    @BeforeMethod
+    public void setUp() {
+        viewBookingService = new ViewBookingService(homePage, bookingInfo);
     }
 
     @Test
-    public void viewBookingWithoutAccountBookingIsLoaded() throws PageNotCreatedException, WrongPageException {
+    public void viewBookingWithoutAccountBookingIsLoaded() {
 
-        Assert.assertTrue(new ViewBookingService(driver, homePage).viewBookingWithoutAccountSuccess(bookingInfo),
+        Assert.assertTrue(viewBookingService.fetchViewBookingNumberAfterLogin().equals(bookingInfo.getBookingNumber()),
                 "View booking without account did not load the expected booking: " + bookingInfo.getBookingNumber());
     }
 
     @Test
-    public void viewBookingWithoutAccountBookingRouteIsCorrect() throws PageNotCreatedException, WrongPageException {
+    public void viewBookingWithoutAccountBookingRouteIsCorrect() {
 
-        ViewBookingService viewBookingService = new ViewBookingService(driver, homePage);
-        Assert.assertTrue(viewBookingService.isMatchFlyingFrom(bookingInfo),
-                "Flying From destination does not match to the expected: " + bookingInfo.getFlyingFrom());
-        Assert.assertTrue(viewBookingService.isMatchFlyingTo(bookingInfo),
-                "Flying To destination does not match to the expected: " + bookingInfo.getFlyingTo());
+        Assert.assertTrue(viewBookingService.fetchViewBookingFlyingFrom().equals(bookingInfo.getFlyingFrom()), "Flying From destination does not match to the expected: " + bookingInfo.getFlyingFrom());
+        Assert.assertTrue(viewBookingService.fetchViewBookingFlyingTo().equals(bookingInfo.getFlyingTo()), "Flying To destination does not match to the expected: " + bookingInfo.getFlyingTo());
     }
 
     @Test
-    public void viewBookingWithoutAccountBookingArrivalTimeIsCorrect() throws PageNotCreatedException, WrongPageException {
+    public void viewBookingWithoutAccountBookingArrivalTimeIsCorrect() {
 
-        Assert.assertTrue(new ViewBookingService(driver, homePage).isArrivalTimeLaterThanDepartureInBookingPage(bookingInfo),
-                "Arrival time is not after the departure time.");
+        LocalDateTime arrivalTime = viewBookingService.fetchViewBookingArrivalTime();
+        LocalDateTime departureTime = viewBookingService.fetchViewBookingDepartureTime();
 
+        Assert.assertTrue(arrivalTime.isAfter(departureTime), "Arrival time is not after the departure time.");
     }
 
     @Test
-    public void viewBookingWithoutAccountBookingDetailsPaymentIsCorrect() throws WrongPageException, PageNotCreatedException {
+    public void viewBookingWithoutAccountBookingDetailsPaymentIsCorrect() {
 
-        Assert.assertTrue(new ViewBookingService(driver, homePage).isPaymentAmountEqualToTotalPrice(bookingInfo),
-                "Payment amount and Total amount do not meet.");
+        String paymentAmount = viewBookingService.fetchBookingDetailsTotalPaymentAmount();
+        String priceAmount = viewBookingService.fetchBookingDetailsTotalPriceAmount();
+
+        Assert.assertTrue(paymentAmount.equals(priceAmount), "Total payment amount does not equal to the Total price amount.");
     }
 
     @DataProvider(name = "bookingAndFlightInfoProvider")
