@@ -11,9 +11,9 @@ public class TotalPriceCalculationTests extends BaseTest {
 
     //TC_2: Check Total Amount price's calculated correctly for round-trip for '2 Adults , 1 Child and 1 Baby' passengers with Plus Fare (ie. 20kg luggage).
     @Test(testName = "priceIsCorrect")
-    public void totalPriceCalculationOneCityRoundTripIsCorrect(){
+    public void totalPriceCalculationOneCityRoundTripIsCorrect() {
 
-        HomePageTests homePageTests = new HomePageTests(driver,homePage);
+        HomePageTests homePageTests = new HomePageTests(driver, homePage);
         BookingPageTests bookingPageTests = new BookingPageTests();
 
         final String DEST_FROM = "Edinburgh, United Kingdom";
@@ -44,17 +44,17 @@ public class TotalPriceCalculationTests extends BaseTest {
         bookingPage.pressSelectPlusFareBtn();
         double plusFarePrice = bookingPage.getPlusFarePrice();
 
-        double totalPrice = 3*adultPrice + 3*plusFarePrice + 1*babyPrice; //childPrice = adultPrice, thus 3 adults calc. Fare price does not apply to babies.
-        Assert.assertEquals(totalPrice, bookingPage.getTotalAmountPrice(),"The 'Total amount' price in the BookingInfo page does not meet to the calculated: " + totalPrice + ";");
+        double totalPrice = 3 * adultPrice + 3 * plusFarePrice + 1 * babyPrice; //childPrice = adultPrice, thus 3 adults calc. Fare price does not apply to babies.
+        Assert.assertEquals(totalPrice, bookingPage.getTotalAmountPrice(), "The 'Total amount' price in the BookingInfo page does not meet to the calculated: " + totalPrice + ";");
 
-        bookingPageTests.verifyTotalPriceIsCorrect(2,1,1);
+        bookingPageTests.verifyTotalPriceIsCorrect(2, 1, 1);
     }
 
 
     //TC_9: Check Total Amount price's calculated correctly for multi-city trip:
     // 'Bologna-Eindhoven' (1st date) Outbound  and  'Amsterdam-Casablanca' (2nd date) Inbound flights
     @Test(enabled = false)
-    public void totalPriceCalculationMultiCityRoundTripIsCorrect(){
+    public void totalPriceCalculationMultiCityRoundTripIsCorrect() {
 
     }
 }

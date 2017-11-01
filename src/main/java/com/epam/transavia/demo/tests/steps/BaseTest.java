@@ -33,21 +33,17 @@ public class BaseTest {
         driver.manage().window().maximize();
         driver.get(homePageUrl);
         homePage = new HomePage(driver);
-        if (homePage != null) {
-            testLogger.info("Try to select Other countries locale...");
-            homePage.selectOtherCountriesLocale();
-        } else {
-            throw new PageNotCreatedException("Home Page is not created, ie null.");
-        }
+        testLogger.info("Try to select Other countries locale...");
+        homePage.selectOtherCountriesLocale();
         Assert.assertTrue(homePage.whereToGoWindowIsDisplayed(), "Window \"Where do you want to go?\" is not displayed.");
 
     }
 
-    protected Logger getTestLogger(){
+    protected Logger getTestLogger() {
         return this.testLogger;
     }
 
-    @AfterMethod (alwaysRun = true)
+    @AfterMethod(alwaysRun = true)
     protected void tearDownAfterMethod() {
         driver.quit();
     }

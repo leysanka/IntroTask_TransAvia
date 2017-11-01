@@ -18,7 +18,7 @@ public class ManageBookingPage extends CommonPage {
         super(driver);
     }
 
-    public boolean manageBookingPanelIsOpened(){
+    public boolean manageBookingPanelIsOpened() {
         return manageYourBookingPanel.isDisplayed();
     }
 

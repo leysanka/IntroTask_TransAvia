@@ -11,7 +11,7 @@ import java.util.List;
 
 public class TestNGRunner {
 
-//TODO: To add 'driver' setting after SingleTon for webdriver is implemented!!
+    //TODO: To add 'driver' setting after SingleTon for webdriver is implemented!!
     public static void main(String[] args) {
 
         TestNG testNG = new TestNG();
@@ -20,7 +20,7 @@ public class TestNGRunner {
 
         try {
             cmdAttributesParser.parseArgument(args);
-            testNG.setXmlSuites((List<XmlSuite>)new Parser(settings.pathToTestngXML).parse());
+            testNG.setXmlSuites((List<XmlSuite>) new Parser(settings.pathToTestngXML).parse());
             testNG.run();
 
         } catch (IOException e) {

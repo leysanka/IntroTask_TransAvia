@@ -1,8 +1,7 @@
 package com.epam.transavia.demo.tests.steps;
 
-import com.epam.transavia.demo.core.exceptions.WrongPageException;
-import com.epam.transavia.demo.gui.pages.HomePage;
 import com.epam.transavia.demo.core.exceptions.InvalidTestDataException;
+import com.epam.transavia.demo.gui.pages.HomePage;
 import com.epam.transavia.demo.gui.pages.ManageBookingPage;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;

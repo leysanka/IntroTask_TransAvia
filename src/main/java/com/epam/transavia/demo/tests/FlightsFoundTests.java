@@ -9,9 +9,9 @@ import org.testng.annotations.*;
 public class FlightsFoundTests extends BaseTest {
 
     // TC_1: to verify that at least from 1 to 7 one way flights found for a single adult person
-    @Test (priority=0, dataProvider = "oneWayOneUserFlightProvider")
-    public void oneWayOneUserFlightShouldBeFound(String destFrom, String destTo, long departDaysLag, String expPassengersNumber){
-        HomePageTests homePageTests = new HomePageTests(driver,homePage);
+    @Test(priority = 0, dataProvider = "oneWayOneUserFlightProvider")
+    public void oneWayOneUserFlightShouldBeFound(String destFrom, String destTo, long departDaysLag, String expPassengersNumber) {
+        HomePageTests homePageTests = new HomePageTests(driver, homePage);
         BookingPageTests bookingPageTests = new BookingPageTests();
 
         homePageTests.testFromDestinationFillsCorrectly(destFrom);

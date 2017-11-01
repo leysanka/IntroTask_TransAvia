@@ -1,11 +1,10 @@
 package com.epam.transavia.demo.tests;
 
 import com.epam.transavia.demo.businessobjects.BookingInfo;
-import com.epam.transavia.demo.gui.services.ViewBookingService;
+import com.epam.transavia.demo.services.ViewBookingService;
 import com.epam.transavia.demo.tests.steps.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.*;
-
 import java.time.LocalDateTime;
 
 

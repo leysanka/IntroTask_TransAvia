@@ -1,7 +1,5 @@
 package com.epam.transavia.demo.gui.pages;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,7 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 
-public abstract class CommonPage{
+public abstract class CommonPage {
 
     private static final int SECONDS_TO_WAIT = 10;
     protected WebDriver driver;
@@ -29,6 +27,11 @@ public abstract class CommonPage{
     public void waitForElementIsClickable(WebElement element) {
         WebDriverWait wait = new WebDriverWait(driver, SECONDS_TO_WAIT);
         wait.until(ExpectedConditions.elementToBeClickable(element));
+    }
+
+    public void waitForElementIsVisible(WebElement element) {
+        WebDriverWait wait = new WebDriverWait(driver, SECONDS_TO_WAIT);
+        wait.until(ExpectedConditions.visibilityOf(element));
     }
 
     public void scrollToElement(WebElement element) {

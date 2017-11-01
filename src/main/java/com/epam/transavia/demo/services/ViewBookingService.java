@@ -1,4 +1,4 @@
-package com.epam.transavia.demo.gui.services;
+package com.epam.transavia.demo.services;
 
 import com.epam.transavia.demo.businessobjects.BookingInfo;
 import com.epam.transavia.demo.core.exceptions.PageNotCreatedException;
@@ -18,7 +18,6 @@ public class ViewBookingService {
     private HomePage homePage;
     private ViewYourBookingPage viewYourBookingPage;
     private BookingDetailsPage bookingDetailsPage;
-
     private static Logger logger = LogManager.getLogger();
 
     public ViewBookingService(HomePage homePage) {

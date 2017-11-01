@@ -3,9 +3,9 @@ package com.epam.transavia.demo.gui.pages;
 import com.epam.transavia.demo.core.exceptions.WrongPageException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.openqa.selenium.*;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -57,12 +57,42 @@ public class BookingPage extends CommonPage {
     @FindBy(xpath = "//tr//button[@value = 'B' and text()='Select']")
     private WebElement selectPlusFareBtn; //+20kg luggage
 
-
     public BookingPage(WebDriver driver) throws WrongPageException {
         super(driver);
         if (!BOOKING_PAGE_TITLE.equals(driver.getTitle())) {
             throw new WrongPageException("Not a Booking page is opened: title " + driver.getTitle() + " does not meet to the expected " + BOOKING_PAGE_TITLE);
         }
+    }
+
+    public void selectOutboundFlight(int flightNumber) {
+        int index = flightNumber - 1;
+
+        if (flightNumber > 0) {
+            if (!outboundFlights.isEmpty() && outboundFlights.size() >= flightNumber) {
+                outboundFlights.get(index).click();
+                logger.info(flightNumber + " Outbound flight chosen successfully.");
+            } else logger.error("Cannot select the specified outbound flight by order: " + flightNumber);
+        } else logger.error("Invalid negative index is specified for flights' webelement list.");
+    }
+
+    public void selectInboundFlight(int flightNumber) {
+        int index = flightNumber - 1;
+
+        if (flightNumber > 0) {
+            if (!inboundFlights.isEmpty() && inboundFlights.size() >= flightNumber) {
+                inboundFlights.get(index).click();
+                logger.info(flightNumber + " Inbound flight chosen successfully.");
+            } else logger.error("Cannot select the specified inbound flight by order: " + flightNumber);
+        } else logger.error("Invalid negative index is specified for flights' webelement list.");
+    }
+
+    public void pressSelectOutboundFlight() {
+
+        waitForLoadingIsFinished();
+        scrollToElement(selectOutboundFlightBtn);
+        waitForElementIsClickable(selectOutboundFlightBtn);
+        selectOutboundFlightBtn.click();
+        logger.info("Outbound flight selected successfully.");
     }
 
     public double getPlusFarePrice() {
@@ -97,37 +127,6 @@ public class BookingPage extends CommonPage {
         return selectedFlightsBluePanels.size();
     }
 
-    public void selectOutboundFlight(int flightNumber) {
-        int index = flightNumber - 1;
-
-        if (flightNumber > 0) {
-            if (!outboundFlights.isEmpty() && outboundFlights.size() >= flightNumber) {
-                outboundFlights.get(index).click();
-                logger.info(flightNumber + " Outbound flight chosen successfully.");
-            } else logger.error("Cannot select the specified outbound flight by order: " + flightNumber);
-        } else logger.error("Invalid negative index is specified for flights' webelement list.");
-    }
-
-    public void selectInboundFlight(int flightNumber) {
-        int index = flightNumber - 1;
-
-        if (flightNumber > 0) {
-            if (!inboundFlights.isEmpty() && inboundFlights.size() >= flightNumber) {
-                inboundFlights.get(index).click();
-                logger.info(flightNumber + " Inbound flight chosen successfully.");
-            } else logger.error("Cannot select the specified inbound flight by order: " + flightNumber);
-        } else logger.error("Invalid negative index is specified for flights' webelement list.");
-    }
-
-    public void pressSelectOutboundFlight() {
-
-        waitForLoadingIsFinished();
-        scrollToElement(selectOutboundFlightBtn);
-        waitForElementIsClickable(selectOutboundFlightBtn);
-        selectOutboundFlightBtn.click();
-        logger.info("Outbound flight selected successfully.");
-    }
-
     public void pressSelectInboundFlight() {
 
         waitForLoadingIsFinished();
@@ -156,7 +155,7 @@ public class BookingPage extends CommonPage {
     public boolean isUnsupportedFlightErrorShown(String expError) {
 
         return unsupportedFlightDestinationError.isDisplayed() &&
-                unsupportedFlightDestinationError.getText().equals(expError);
+               unsupportedFlightDestinationError.getText().equals(expError);
     }
 
 

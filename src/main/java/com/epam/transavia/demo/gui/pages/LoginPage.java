@@ -2,17 +2,18 @@ package com.epam.transavia.demo.gui.pages;
 
 import com.epam.transavia.demo.businessobjects.BookingInfo;
 import com.epam.transavia.demo.core.exceptions.WrongPageException;
-import org.apache.logging.log4j.*;
-import org.openqa.selenium.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
 
 public class LoginPage extends CommonPage{
 
-    static Logger logger = LogManager.getLogger();
-
     private final String LOGIN_PAGE_TITLE = "Log in";
+    static Logger logger = LogManager.getLogger();
 
     //View your booking without an account
     @FindBy(xpath = "//input[@id = 'retrieveBookingByLastname_RecordLocator']") private WebElement bookingNumberField;
@@ -30,37 +31,33 @@ public class LoginPage extends CommonPage{
         }
     }
 
-    public void setBookingNumberField(String bookingNumber){
+    public void setBookingNumberField(String bookingNumber) {
         bookingNumberField.sendKeys(bookingNumber);
     }
 
-    public boolean isMatchBookingNumberField(String bookingNumber){
+    public boolean isMatchBookingNumberField(String bookingNumber) {
         return bookingNumberField.getAttribute("value").equals(bookingNumber);
     }
 
-    public void setLastNameFieldField(String lastName){
+    public void setLastNameFieldField(String lastName) {
         lastNameField.sendKeys(lastName);
     }
 
-    public boolean isMatchLastNameField(String lastName){
+    public boolean isMatchLastNameField(String lastName) {
         return lastNameField.getAttribute("value").equals(lastName);
     }
 
 
-    public void setFlightDateFieldField(String flightDate){
+    public void setFlightDateFieldField(String flightDate) {
         flightDateField.sendKeys(flightDate);
     }
 
-    public boolean isMatchFlightDateField(String flightDate){
+    public boolean isMatchFlightDateField(String flightDate) {
         return flightDateField.getAttribute("value").equals(flightDate);
     }
 
-    public void submitFlightDateAndGoToViewBooking(){
-          flightDateField.sendKeys(Keys.ENTER);
-    }
-
-    public void pressViewBookingBtn(){
-        viewBookingBtn.click();
+    public void submitFlightDateAndGoToViewBooking() {
+        flightDateField.sendKeys(Keys.ENTER);
     }
 
     public ViewYourBookingPage viewBookingWithoutAccount(BookingInfo bookingInfo) throws WrongPageException {
@@ -70,9 +67,5 @@ public class LoginPage extends CommonPage{
         this.submitFlightDateAndGoToViewBooking();
         return new ViewYourBookingPage(driver);
     }
-
-
-
-
 
 }
