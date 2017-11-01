@@ -1,5 +1,7 @@
 package com.epam.transavia.demo.businessobjects;
 
+import java.time.LocalDateTime;
+
 public class BookingInfo {
 
     private String bookingNumber;
@@ -7,6 +9,11 @@ public class BookingInfo {
     private String flightDate;
     private String flyingFrom;
     private String flyingTo;
+    private LocalDateTime arrivalTime;
+    private LocalDateTime departureTime;
+    private String totalPaymentAmount;
+    private String totalPriceAmount;
+
 
 
     public String getBookingNumber() {
@@ -47,6 +54,38 @@ public class BookingInfo {
 
     public void setFlyingTo(String flyingTo) {
         this.flyingTo = flyingTo;
+    }
+
+    public LocalDateTime getArrivalTime() {
+        return arrivalTime;
+    }
+
+    public void setArrivalTime(LocalDateTime arrivalTime) {
+        this.arrivalTime = arrivalTime;
+    }
+
+    public LocalDateTime getDepartureTime() {
+        return departureTime;
+    }
+
+    public void setDepartureTime(LocalDateTime departureTime) {
+        this.departureTime = departureTime;
+    }
+
+    public String getTotalPaymentAmount() {
+        return totalPaymentAmount;
+    }
+
+    public void setTotalPaymentAmount(String totalPaymentAmount) {
+        this.totalPaymentAmount = totalPaymentAmount;
+    }
+
+    public String getTotalPriceAmount() {
+        return totalPriceAmount;
+    }
+
+    public void setTotalPriceAmount(String totalPriceAmount) {
+        this.totalPriceAmount = totalPriceAmount;
     }
 
     public String getFlyingRoute(){

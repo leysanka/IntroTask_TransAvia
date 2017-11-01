@@ -22,7 +22,7 @@ public class LoginPage extends CommonPage{
     @FindBy(xpath = "//button [text()='View booking']") private WebElement viewBookingBtn;
 
 
-    public LoginPage(WebDriver driver) throws WrongPageException {
+    public LoginPage(WebDriver driver)  {
         super(driver);
         if (!LOGIN_PAGE_TITLE.equals(driver.getTitle())) {
             throw new WrongPageException("Login page title does not meet to the expected one: " + LOGIN_PAGE_TITLE);
@@ -60,11 +60,11 @@ public class LoginPage extends CommonPage{
         flightDateField.sendKeys(Keys.ENTER);
     }
 
-    public ViewYourBookingPage viewBookingWithoutAccount(BookingInfo bookingInfo) throws WrongPageException {
-        this.setBookingNumberField(bookingInfo.getBookingNumber());
-        this.setLastNameFieldField(bookingInfo.getLastName());
-        this.setFlightDateFieldField(bookingInfo.getFlightDate());
-        this.submitFlightDateAndGoToViewBooking();
+    public ViewYourBookingPage viewBookingWithoutAccount(BookingInfo bookingInfo) {
+        setBookingNumberField(bookingInfo.getBookingNumber());
+        setLastNameFieldField(bookingInfo.getLastName());
+        setFlightDateFieldField(bookingInfo.getFlightDate());
+        submitFlightDateAndGoToViewBooking();
         return new ViewYourBookingPage(driver);
     }
 

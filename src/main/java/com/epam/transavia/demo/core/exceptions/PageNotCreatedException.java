@@ -1,6 +1,6 @@
 package com.epam.transavia.demo.core.exceptions;
 
-public class PageNotCreatedException extends Throwable {
+public class PageNotCreatedException extends RuntimeException {
     private String pageError;
 
     public PageNotCreatedException(String s) {

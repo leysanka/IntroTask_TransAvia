@@ -22,7 +22,6 @@ public class BaseTest {
 
 
     private static String homePageUrl = "https://www.transavia.com/";
-
     static Logger testLogger = LogManager.getLogger("test");
 
     @BeforeMethod
@@ -32,6 +31,7 @@ public class BaseTest {
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.manage().window().maximize();
         driver.get(homePageUrl);
+
         homePage = new HomePage(driver);
         testLogger.info("Try to select Other countries locale...");
         homePage.selectOtherCountriesLocale();

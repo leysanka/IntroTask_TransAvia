@@ -4,43 +4,70 @@ import com.epam.transavia.demo.businessobjects.BookingInfo;
 import com.epam.transavia.demo.services.ViewBookingService;
 import com.epam.transavia.demo.tests.steps.BaseTest;
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Factory;
+import org.testng.annotations.Test;
+
 import java.time.LocalDateTime;
 
 
 public class ViewBookingWithoutAccountTests extends BaseTest {
 
-    private BookingInfo bookingInfo;
+    private BookingInfo testBookingInfo;
+    private BookingInfo actualBookingInfo;
     private ViewBookingService viewBookingService;
 
     @Factory(dataProvider = "bookingAndFlightInfoProvider")
     public ViewBookingWithoutAccountTests(String bookingNumber, String lastName, String flightDate, String flyingFrom, String flyingTo) {
 
-        bookingInfo = new BookingInfo();
-        bookingInfo.setBookingNumber(bookingNumber);
-        bookingInfo.setLastName(lastName);
-        bookingInfo.setFlightDate(flightDate);
-        bookingInfo.setFlyingFrom(flyingFrom);
-        bookingInfo.setFlyingTo(flyingTo);
+        testBookingInfo = new BookingInfo();
+        testBookingInfo.setBookingNumber(bookingNumber);
+        testBookingInfo.setLastName(lastName);
+        testBookingInfo.setFlightDate(flightDate);
+        testBookingInfo.setFlyingFrom(flyingFrom);
+        testBookingInfo.setFlyingTo(flyingTo);
     }
 
     @BeforeMethod
+    public BookingInfo getActualBookingInfoAfterLogin() {
+        //Working
+        viewBookingService = new ViewBookingService(driver, homePage);
+        viewBookingService.loginToViewBookingWithoutAccountTest(testBookingInfo);
+        return actualBookingInfo = viewBookingService.fetchBookingInfoFromViewBooking();
+
+
+
+    }
+
+  /*  @BeforeMethod
     public void setUp() {
-        viewBookingService = new ViewBookingService(homePage, bookingInfo);
+       // viewBookingService = new ViewBookingService(homePage, testBookingInfo);
+        ViewYourBookingPage viewYourBookingPage = viewBookingService.loginToViewBookingWithoutAccount(testBookingInfo);
+    }
+*/
+
+    @Test
+    public void viewBookingWithoutAccountBookingIsLoadedTest() {
+
+        Assert.assertEquals(actualBookingInfo.getBookingNumber(), testBookingInfo.getBookingNumber(), "Not equal");
+
+        /*Assert.assertTrue(viewBookingService.fetchViewBookingNumberAfterLogin().equals(testBookingInfo.getBookingNumber()),
+                "View booking without account did not load the expected booking: " + testBookingInfo.getBookingNumber());*/
     }
 
     @Test
     public void viewBookingWithoutAccountBookingIsLoaded() {
 
-        Assert.assertTrue(viewBookingService.fetchViewBookingNumberAfterLogin().equals(bookingInfo.getBookingNumber()),
-                "View booking without account did not load the expected booking: " + bookingInfo.getBookingNumber());
+        Assert.assertTrue(viewBookingService.fetchViewBookingNumberAfterLogin().equals(testBookingInfo.getBookingNumber()),
+                "View booking without account did not load the expected booking: " + testBookingInfo.getBookingNumber());
     }
 
     @Test
     public void viewBookingWithoutAccountBookingRouteIsCorrect() {
 
-        Assert.assertTrue(viewBookingService.fetchViewBookingFlyingFrom().equals(bookingInfo.getFlyingFrom()), "Flying From destination does not match to the expected: " + bookingInfo.getFlyingFrom());
-        Assert.assertTrue(viewBookingService.fetchViewBookingFlyingTo().equals(bookingInfo.getFlyingTo()), "Flying To destination does not match to the expected: " + bookingInfo.getFlyingTo());
+        Assert.assertTrue(viewBookingService.fetchViewBookingFlyingFrom().equals(testBookingInfo.getFlyingFrom()), "Flying From destination does not match to the expected: " + testBookingInfo.getFlyingFrom());
+        Assert.assertTrue(viewBookingService.fetchViewBookingFlyingTo().equals(testBookingInfo.getFlyingTo()), "Flying To destination does not match to the expected: " + testBookingInfo.getFlyingTo());
     }
 
     @Test
