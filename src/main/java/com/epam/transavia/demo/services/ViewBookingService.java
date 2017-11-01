@@ -19,6 +19,7 @@ public class ViewBookingService {
     private ViewYourBookingPage viewYourBookingPage;
     private BookingDetailsPage bookingDetailsPage;
     private static Logger logger = LogManager.getLogger();
+    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     public ViewBookingService(HomePage homePage) {
         this.homePage = homePage;
@@ -52,12 +53,12 @@ public class ViewBookingService {
     }
 
     public LocalDateTime fetchViewBookingArrivalTime() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
         return LocalDateTime.parse(viewYourBookingPage.getArrivalTime(), formatter);
     }
 
     public LocalDateTime fetchViewBookingDepartureTime() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
         return LocalDateTime.parse(viewYourBookingPage.getDepartureTime(), formatter);
     }
 
