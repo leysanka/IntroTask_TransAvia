@@ -4,7 +4,7 @@ import com.epam.transavia.demo.gui.pages.LoginPage;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 
-public class LoginPageTests extends BaseTest {
+public class LoginPageTests extends BaseTestBeforeMethod {
 
     private LoginPage loginPage;
 

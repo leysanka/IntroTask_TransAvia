@@ -9,21 +9,18 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class ViewBookingService {
 
     private HomePage homePage;
     private WebDriver driver;
-    private ViewYourBookingPage viewYourBookingPage;
-    private BookingDetailsPage bookingDetailsPage;
 
     private static Logger logger = LogManager.getLogger();
     private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-    public ViewBookingService(HomePage homePage) {
-        this.homePage = homePage;
+    public ViewBookingService(WebDriver driver) {
+        this.driver = driver;
     }
 
     public ViewBookingService(WebDriver driver, HomePage homePage) {
@@ -31,24 +28,15 @@ public class ViewBookingService {
         this.homePage = homePage;
     }
 
-    public ViewBookingService(HomePage homePage, BookingInfo bookingInfo) {
-        this.homePage = homePage;
-        this.viewYourBookingPage = loginToViewBookingWithoutAccount(bookingInfo);
-    }
-
-    public ViewYourBookingPage loginToViewBookingWithoutAccount(BookingInfo bookingInfo) {
-        return homePage.openManageBookingToolbar().goToViewBooking().viewBookingWithoutAccount(bookingInfo);
-
-    }
-
     public void loginToViewBookingWithoutAccountTest(BookingInfo bookingInfo) {
-         homePage.openManageBookingToolbar().goToViewBooking().viewBookingWithoutAccount(bookingInfo);
+       // HomePage homePage = new HomePage(driver);
+        homePage.openManageBookingToolbar().goToViewBooking().viewBookingWithoutAccount(bookingInfo);
 
     }
 
-    public BookingDetailsPage loginToViewBookingOpenBookingDetails() {
-         return viewYourBookingPage.openBookingDetails();
-
+    public void loginToViewBookingOpenBookingDetails() {
+        ViewYourBookingPage viewYourBookingPage = new ViewYourBookingPage(driver);
+        viewYourBookingPage.openBookingDetails();
     }
 
     public BookingInfo fetchBookingInfoFromViewBooking() {
@@ -65,7 +53,7 @@ public class ViewBookingService {
     }
 
     public BookingInfo fetchBookingInfoFromBookingDetails() {
-
+        BookingDetailsPage bookingDetailsPage = new BookingDetailsPage(driver);
         BookingInfo actualInfoBookingDetails = new BookingInfo();
         actualInfoBookingDetails.setTotalPaymentAmount(bookingDetailsPage.getTotalPaymentValue());
         actualInfoBookingDetails.setTotalPriceAmount(bookingDetailsPage.getTotalAmountValue());
@@ -73,40 +61,5 @@ public class ViewBookingService {
         return actualInfoBookingDetails;
     }
 
-    public String fetchViewBookingNumberAfterLogin() {
-        return viewYourBookingPage.getLoadedBookingNumber();
-    }
-
-    public LocalDateTime fetchViewBookingArrivalTime() {
-
-        return LocalDateTime.parse(viewYourBookingPage.getArrivalTime(), formatter);
-    }
-
-    public LocalDateTime fetchViewBookingDepartureTime() {
-
-        return LocalDateTime.parse(viewYourBookingPage.getDepartureTime(), formatter);
-    }
-
-    public String fetchViewBookingFlyingFrom() {
-        return (viewYourBookingPage.getFlyingFrom());
-    }
-
-    public String fetchViewBookingFlyingTo() {
-        return (viewYourBookingPage.getFlyingTo());
-    }
-
-    public String fetchBookingDetailsTotalPaymentAmount() {
-        if (bookingDetailsPage == null) {
-            bookingDetailsPage = loginToViewBookingOpenBookingDetails();
-        }
-        return bookingDetailsPage != null ? bookingDetailsPage.getTotalPaymentValue() : null;
-    }
-
-    public String fetchBookingDetailsTotalPriceAmount() {
-        if (bookingDetailsPage == null) {
-            bookingDetailsPage = loginToViewBookingOpenBookingDetails();
-        }
-        return bookingDetailsPage != null ? bookingDetailsPage.getTotalAmountValue() : null;
-    }
 
 }

@@ -10,7 +10,7 @@ import org.testng.annotations.DataProvider;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class HomePageTests extends BaseTest {
+public class HomePageTests extends BaseTestBeforeMethod {
 
     private ManageBookingPage manageBookingPage;
 

@@ -1,13 +1,13 @@
 package com.epam.transavia.demo.tests;
 
-        import com.epam.transavia.demo.tests.steps.BaseTest;
+        import com.epam.transavia.demo.tests.steps.BaseTestBeforeMethod;
         import com.epam.transavia.demo.tests.steps.BookingPageTests;
         import com.epam.transavia.demo.tests.steps.HomePageTests;
         import org.testng.Assert;
         import org.testng.annotations.Test;
 
 @Test
-public class FlightsNotFoundTests extends BaseTest {
+public class FlightsNotFoundTests extends BaseTestBeforeMethod {
 
     /*TC_8: to verify that error message "Unfortunately we do not fly from Dubai, United Arab Emirates to..." is shown for the unsupported flight destination*/
     @Test(priority = 1)

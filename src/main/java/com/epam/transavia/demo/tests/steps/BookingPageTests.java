@@ -5,7 +5,7 @@ import com.epam.transavia.demo.core.exceptions.WrongPageException;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 
-public class BookingPageTests extends BaseTest {
+public class BookingPageTests extends BaseTestBeforeMethod {
 
     public BookingPage createBookingPageIfValid(WebDriver driver) {
         try {

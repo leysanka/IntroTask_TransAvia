@@ -1,12 +1,12 @@
 package com.epam.transavia.demo.tests;
 
-import com.epam.transavia.demo.tests.steps.BaseTest;
+import com.epam.transavia.demo.tests.steps.BaseTestBeforeMethod;
 import com.epam.transavia.demo.tests.steps.BookingPageTests;
 import com.epam.transavia.demo.tests.steps.HomePageTests;
 import org.testng.annotations.*;
 
 @Test
-public class FlightsFoundTests extends BaseTest {
+public class FlightsFoundTests extends BaseTestBeforeMethod {
 
     // TC_1: to verify that at least from 1 to 7 one way flights found for a single adult person
     @Test(priority = 0, dataProvider = "oneWayOneUserFlightProvider")
