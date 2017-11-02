@@ -42,7 +42,7 @@ public class ViewBookingWithoutAccountTests extends BaseTestBeforeClass {
                Assert.assertEquals(actualViewBookingInfo.getBookingNumber(), testBookingInfo.getBookingNumber(), "Not equal");
     }
 
-    @Test(description = "Get Flying From/To")
+    @Test(description = "Verify Flying From/To fetched from ViewBooking are the same as expected for testing booking.")
     public void viewBookingWithoutAccountBookingRouteIsCorrect() {
 
         Assert.assertEquals(actualViewBookingInfo.getFlyingFrom(),testBookingInfo.getFlyingFrom(), "Flying From destination does not match to the expected: " + testBookingInfo.getFlyingFrom());
