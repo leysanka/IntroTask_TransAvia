@@ -1,5 +1,6 @@
 package com.epam.transavia.demo.runner;
 
+import com.epam.transavia.demo.core.driver.Driver;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.testng.TestNG;
@@ -11,7 +12,6 @@ import java.util.List;
 
 public class TestNGRunner {
 
-    //TODO: To add 'driver' setting after SingleTon for webdriver is implemented!!
     public static void main(String[] args) {
 
         TestNG testNG = new TestNG();
@@ -20,6 +20,7 @@ public class TestNGRunner {
 
         try {
             cmdAttributesParser.parseArgument(args);
+            Driver.setDefaultDriver(settings.driver);
             testNG.setXmlSuites((List<XmlSuite>) new Parser(settings.pathToTestngXML).parse());
             testNG.run();
 

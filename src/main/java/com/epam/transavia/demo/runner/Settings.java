@@ -8,7 +8,7 @@ public class Settings {
     @Option(name = "--testng", required = true)
     public String pathToTestngXML;
 
-    @Option(name = "--driver")
+    @Option(name = "--driver", required = true)
     public String driver;
 
 }

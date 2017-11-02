@@ -5,8 +5,7 @@
         <classes>
             <class name="com.epam.transavia.demo.tests.ViewBookingWithoutAccountTests"/>
             <class name = "com.epam.transavia.demo.tests.TotalPriceCalculationTests" />
-            <class name="com.epam.transavia.demo.tests.FlightsFoundTests"/>
-            <class name="com.epam.transavia.demo.tests.FlightsNotFoundTests"/>
+            <class name="com.epam.transavia.demo.tests.SearchFlightsTests"/>
         </classes>
     </test>
 </suite>
