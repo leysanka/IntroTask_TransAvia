@@ -14,7 +14,6 @@ import java.util.List;
 
 public class HomePage extends CommonPage {
 
-    private static final String HOME_PAGE_TITLE = "Welcome to Transavia!";
     private static final int MAX_PASSENGERS_TO_FILL = 10;
 
     @FindBy(xpath = "//a[@href='/en-EU/home']")
@@ -75,16 +74,11 @@ public class HomePage extends CommonPage {
 
     public HomePage(WebDriver driver) throws WrongPageException {
         super(driver);
-        if (!HOME_PAGE_TITLE.equals(driver.getTitle())) {
-            throw new WrongPageException("HomePage title does not meet to the expected " + HOME_PAGE_TITLE);
+        if (!driver.getCurrentUrl().contains("home")) {
+            throw new WrongPageException("HomePage url does not meet to the expected containing \"home\". " + driver.getCurrentUrl());
         } else {
             logger.info("HomePage initialized successfully.");
         }
-    }
-
-
-    public void selectOtherCountriesLocale() {
-        welcomeOtherCountries.click();
     }
 
     public boolean whereToGoWindowIsDisplayed() {

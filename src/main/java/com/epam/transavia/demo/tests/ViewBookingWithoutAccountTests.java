@@ -30,7 +30,7 @@ public class ViewBookingWithoutAccountTests extends BaseTestBeforeClass {
     @BeforeClass
     public void getActualBookingInfoAfterLogin() {
 
-        ViewBookingService viewBookingService = new ViewBookingService(driver, homePage);
+        ViewBookingService viewBookingService = new ViewBookingService(driver);
         viewBookingService.loginToViewBookingWithoutAccountTest(testBookingInfo); //bookingNumber,lastName and flightDate are used for login
         actualViewBookingInfo = viewBookingService.fetchBookingInfoFromViewBooking();
         viewBookingService.viewBookingOpenBookingDetails();

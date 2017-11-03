@@ -3,6 +3,8 @@ package com.epam.transavia.demo.tests.steps;
 import com.epam.transavia.demo.core.driver.Driver;
 import com.epam.transavia.demo.gui.pages.BookingPage;
 import com.epam.transavia.demo.gui.pages.HomePage;
+import com.epam.transavia.demo.gui.pages.WelcomeLanguages;
+import com.epam.transavia.demo.gui.pages.WelcomePage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -31,10 +33,9 @@ public class BaseTestBeforeMethod {
         driver.manage().window().maximize();
         driver.navigate().to(homePageUrl);
 
-        //TODO Divide welcome and homepage
-        homePage = new HomePage(driver);
+        WelcomePage welcomePage = new WelcomePage(driver);
+        homePage = welcomePage.selectLocaleAndOpenHomePage(WelcomeLanguages.OTHER_COUNTRY);
         testLogger.info("Try to select Other countries locale...");
-        homePage.selectOtherCountriesLocale();
         Assert.assertTrue(homePage.whereToGoWindowIsDisplayed(), "Window \"Where do you want to go?\" is not displayed.");
 
     }

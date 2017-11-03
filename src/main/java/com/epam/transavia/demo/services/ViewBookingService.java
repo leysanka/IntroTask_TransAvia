@@ -13,7 +13,6 @@ import java.time.format.DateTimeFormatter;
 
 public class ViewBookingService {
 
-    private HomePage homePage;
     private WebDriver driver;
 
     private static Logger logger = LogManager.getLogger();
@@ -23,15 +22,9 @@ public class ViewBookingService {
         this.driver = driver;
     }
 
-    public ViewBookingService(WebDriver driver, HomePage homePage) {
-        this.driver = driver;
-        this.homePage = homePage;
-    }
-
     public void loginToViewBookingWithoutAccountTest(BookingInfo bookingInfo) {
-       // HomePage homePage = new HomePage(driver);
+        HomePage homePage = new HomePage(driver);
         homePage.openManageBookingToolbar().goToViewBooking().viewBookingWithoutAccount(bookingInfo);
-
     }
 
     public void viewBookingOpenBookingDetails() {
