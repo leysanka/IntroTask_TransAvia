@@ -1,8 +1,6 @@
 package com.epam.transavia.demo.gui.pages;
 
 import com.epam.transavia.demo.core.exceptions.WrongPageException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -14,7 +12,6 @@ import java.util.List;
 public class BookingPage extends CommonPage {
 
     private final String BOOKING_PAGE_TITLE = "Book a flight";
-    private static Logger logger = LogManager.getLogger();
 
     @FindBy(xpath = "//ol//div[(contains(@class, 'day'))]")
     private List<WebElement> allDatesIcons;

@@ -34,7 +34,7 @@ public class ViewBookingService {
 
     }
 
-    public void loginToViewBookingOpenBookingDetails() {
+    public void viewBookingOpenBookingDetails() {
         ViewYourBookingPage viewYourBookingPage = new ViewYourBookingPage(driver);
         viewYourBookingPage.openBookingDetails();
     }

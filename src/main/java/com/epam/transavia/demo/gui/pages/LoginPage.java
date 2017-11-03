@@ -2,8 +2,6 @@ package com.epam.transavia.demo.gui.pages;
 
 import com.epam.transavia.demo.businessobjects.BookingInfo;
 import com.epam.transavia.demo.core.exceptions.WrongPageException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,7 +11,6 @@ import org.openqa.selenium.support.FindBy;
 public class LoginPage extends CommonPage{
 
     private final String LOGIN_PAGE_TITLE = "Log in";
-    static Logger logger = LogManager.getLogger();
 
     //View your booking without an account
     @FindBy(xpath = "//input[@id = 'retrieveBookingByLastname_RecordLocator']") private WebElement bookingNumberField;
