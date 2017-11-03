@@ -1,16 +1,18 @@
 package com.epam.transavia.demo.core.driver;
 
 import com.epam.transavia.demo.core.exceptions.UnknownDriverTypeException;
+import org.apache.logging.log4j.LogManager;
 import org.openqa.selenium.WebDriver;
 
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 public class Driver {
 
     private static HashMap<String, org.openqa.selenium.WebDriver> instances = new HashMap<String, WebDriver>();
-    private static final ChromeDriverFactory chromeFactory = new ChromeDriverFactory();
-    private static final FirefoxDriverFactory firefoxFactory = new FirefoxDriverFactory();
-    private static String defaultBrowserName = "CHROME";
+    private static final int TIMEOUT_IN_SEC = 10;
+    private static WebDriverType defaultBrowserType = WebDriverType.CHROME;
+  //  private static String defaultBrowserName = "CHROME";
 
     private Driver() {
     }
@@ -19,45 +21,68 @@ public class Driver {
         WebDriverFactory driverFactory;
         switch (webDriverType) {
             case CHROME: {
-                driverFactory = chromeFactory;
+                driverFactory = new ChromeDriverFactory();
                 break;
             }
             case FIREFOX: {
-                driverFactory = firefoxFactory;
+                driverFactory =  new FirefoxDriverFactory();
                 break;
             }
             default: {
                 throw new UnknownDriverTypeException("The specified driver does not exist in the WebDriverType: " + webDriverType);
             }
         }
-        return driverFactory.getDriverOf(webDriverType);
+        WebDriver driver = driverFactory.getDriverOf(webDriverType);
+        driver.manage().deleteAllCookies();
+        driver.manage().timeouts().implicitlyWait(TIMEOUT_IN_SEC, TimeUnit.SECONDS);
+        driver.manage().window().maximize();
+
+        return driver;
     }
 
 
-    private static WebDriver getDriverSingleInstance(String name, WebDriverType webDriverType) {
+    private static WebDriver getDriverSingleInstance(WebDriverType webDriverType) {
         WebDriver driver;
+        String name = webDriverType.toString();
+
         if (!instances.containsKey(name)) {
             driver = getDriverOfType(webDriverType);
             instances.put(name, driver);
         } else {
             driver = instances.get(name);
         }
+
         return driver;
     }
 
     public static WebDriver getDriverByName(String name) {
-        return getDriverSingleInstance(name, WebDriverType.valueOf(name.toUpperCase()));
+        try {
+            return getDriverSingleInstance(WebDriverType.valueOf(name.toUpperCase()));
+        } catch (IllegalArgumentException e) {
+            LogManager.getLogger().error("\n !!! CHROME browser is started instead of requested: " + name + ". \n" + e.getMessage());
+            return getDefaultDriver();
+        }
     }
 
     public static WebDriver getDefaultDriver() {
-        return getDriverSingleInstance(defaultBrowserName, WebDriverType.valueOf(defaultBrowserName.toUpperCase()));
+        return getDriverSingleInstance(defaultBrowserType);
     }
 
     public static void setDefaultDriver(String name) {
-        defaultBrowserName = name;
+        try {
+            defaultBrowserType = WebDriverType.valueOf(name.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            LogManager.getLogger().error(e.getMessage());
+        }
     }
 
     public static void clearInstances() {
+        instances.clear();
+    }
+
+    public static void closeDriver(WebDriver driver) {
+        driver.quit();
+        driver = null;
         instances.clear();
     }
 

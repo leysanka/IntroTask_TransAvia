@@ -1,7 +1,8 @@
 package com.epam.transavia.demo.gui.pages;
 
+import com.epam.transavia.demo.business_objects.WelcomeLanguages;
 import com.epam.transavia.demo.core.exceptions.PageNotCreatedException;
-import com.epam.transavia.demo.core.exceptions.UnknownDriverTypeException;
+import com.epam.transavia.demo.core.exceptions.UnknownLanguageException;
 import com.epam.transavia.demo.core.exceptions.WrongPageException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -33,7 +34,7 @@ public class WelcomePage extends CommonPage {
 
     public HomePage selectLocaleAndOpenHomePage(WelcomeLanguages languageToSelect) {
         WebElement elementToClick = getLanguageWebElement(languageToSelect.toString());
-
+       //is element present -> add method to CommonPage as FindElements(By)=null? not present: present;
         if (elementToClick.isDisplayed()){
            elementToClick.click();
            return new HomePage(driver);
@@ -63,7 +64,7 @@ public class WelcomePage extends CommonPage {
             languageWebElement = languages.get(name);
         } else {
             logger.error("No such language is present in the HashMap.");
-            throw new UnknownDriverTypeException("No such language is present in the HashMap.");
+            throw new UnknownLanguageException("No such language is present in the HashMap.");
         }
         return languageWebElement;
     }

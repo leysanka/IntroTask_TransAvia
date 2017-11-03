@@ -1,16 +1,14 @@
 package com.epam.transavia.demo.tests.steps;
 
+import com.epam.transavia.demo.business_objects.WelcomeLanguages;
 import com.epam.transavia.demo.core.driver.Driver;
 import com.epam.transavia.demo.gui.pages.HomePage;
-import com.epam.transavia.demo.gui.pages.WelcomeLanguages;
 import com.epam.transavia.demo.gui.pages.WelcomePage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
-import org.testng.Assert;
-import org.testng.annotations.*;
-
-import java.util.concurrent.TimeUnit;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 
 public class BaseTestBeforeClass {
 
@@ -23,22 +21,18 @@ public class BaseTestBeforeClass {
     @BeforeClass
     protected void setUpBeforeMethod() {
 
-        //driver = Driver.getDefaultDriver();
-        driver = Driver.getDriverByName("chrome");
-        driver.manage().deleteAllCookies();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.manage().window().maximize();
+        //driver = Driver.getDriverByName("chrome");
 
+        //Add checks for UnknowDriverType
+      //  Driver.setDefaultDriver("bla-bla");
+        driver = Driver.getDriverByName("bla-bla");
+
+      //  driver = Driver.getDefaultDriver();
         //Move to service
         driver.get(welcomePageUrl);
-
         WelcomePage welcomePage = new WelcomePage(driver);
         HomePage homePage = welcomePage.selectLocaleAndOpenHomePage(WelcomeLanguages.OTHER_COUNTRY);
-       // homePage = new HomePage(driver);
         testLogger.info("Try to select Other countries locale...");
-     //   homePage.selectOtherCountriesLocale();
-        Assert.assertTrue(homePage.whereToGoWindowIsDisplayed(), "Window \"Where do you want to go?\" is not displayed.");
-String s = "";
     }
 
     protected Logger getTestLogger() {
@@ -47,7 +41,8 @@ String s = "";
 
     @AfterClass(alwaysRun = true)
     protected void tearDownAfterMethod() {
-        driver.quit();
-        Driver.clearInstances();
+        /*driver.quit();
+        Driver.clearInstances();*/
+        Driver.closeDriver(driver);
     }
 }

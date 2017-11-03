@@ -1,6 +1,6 @@
 package com.epam.transavia.demo.gui.pages;
 
-import com.epam.transavia.demo.businessobjects.BookingInfo;
+import com.epam.transavia.demo.business_objects.BookingInfo;
 import com.epam.transavia.demo.core.exceptions.WrongPageException;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;

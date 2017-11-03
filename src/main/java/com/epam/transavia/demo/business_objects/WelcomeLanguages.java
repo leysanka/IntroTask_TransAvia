@@ -1,4 +1,4 @@
-package com.epam.transavia.demo.gui.pages;
+package com.epam.transavia.demo.business_objects;
 
 public enum WelcomeLanguages {
     OTHER_COUNTRY,

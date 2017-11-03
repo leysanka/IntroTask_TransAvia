@@ -1,6 +1,6 @@
 package com.epam.transavia.demo.services;
 
-import com.epam.transavia.demo.businessobjects.BookingInfo;
+import com.epam.transavia.demo.business_objects.BookingInfo;
 import com.epam.transavia.demo.gui.pages.BookingDetailsPage;
 import com.epam.transavia.demo.gui.pages.HomePage;
 import com.epam.transavia.demo.gui.pages.ViewYourBookingPage;
@@ -9,18 +9,16 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 
-import java.time.format.DateTimeFormatter;
-
 public class ViewBookingService {
 
     private WebDriver driver;
-
     private static Logger logger = LogManager.getLogger();
-    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     public ViewBookingService(WebDriver driver) {
         this.driver = driver;
     }
+
+    //public void
 
     public void loginToViewBookingWithoutAccountTest(BookingInfo bookingInfo) {
         HomePage homePage = new HomePage(driver);

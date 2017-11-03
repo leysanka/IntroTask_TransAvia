@@ -1,6 +1,6 @@
 package com.epam.transavia.demo.tests;
 
-import com.epam.transavia.demo.businessobjects.BookingInfo;
+import com.epam.transavia.demo.business_objects.BookingInfo;
 import com.epam.transavia.demo.services.ViewBookingService;
 import com.epam.transavia.demo.tests.steps.BaseTestBeforeClass;
 import org.testng.Assert;

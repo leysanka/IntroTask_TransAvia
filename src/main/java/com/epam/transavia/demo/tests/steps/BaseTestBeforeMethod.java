@@ -3,7 +3,7 @@ package com.epam.transavia.demo.tests.steps;
 import com.epam.transavia.demo.core.driver.Driver;
 import com.epam.transavia.demo.gui.pages.BookingPage;
 import com.epam.transavia.demo.gui.pages.HomePage;
-import com.epam.transavia.demo.gui.pages.WelcomeLanguages;
+import com.epam.transavia.demo.business_objects.WelcomeLanguages;
 import com.epam.transavia.demo.gui.pages.WelcomePage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,8 +11,6 @@ import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
-
-import java.util.concurrent.TimeUnit;
 
 public class BaseTestBeforeMethod {
 
@@ -29,8 +27,8 @@ public class BaseTestBeforeMethod {
 
         driver = Driver.getDefaultDriver(); //Singletone usage added
         driver.manage().deleteAllCookies();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.manage().window().maximize();
+       /*  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().window().maximize();*/
         driver.navigate().to(homePageUrl);
 
         WelcomePage welcomePage = new WelcomePage(driver);

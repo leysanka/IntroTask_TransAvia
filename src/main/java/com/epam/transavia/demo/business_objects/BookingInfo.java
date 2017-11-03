@@ -1,4 +1,4 @@
-package com.epam.transavia.demo.businessobjects;
+package com.epam.transavia.demo.business_objects;
 
 import java.time.LocalDateTime;
 
