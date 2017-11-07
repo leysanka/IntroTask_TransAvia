@@ -18,7 +18,7 @@ public class BookingPage extends CommonPage {
     @FindBy(xpath = "//ol//span[@class='price']")
     private List<WebElement> allDatesWithFlights;
     @FindBy(xpath = "//div[(contains(@class, 'notification-error'))]")
-    private WebElement unsupportedFlightDestinationError;
+    private WebElement searchFlightError;
     @FindBy(xpath = "//input[contains(@value, 'OutboundFlight')]//ancestor::form//span[@class='price']")
     private List<WebElement> outboundFlights;
     @FindBy(xpath = "//input[contains(@value, 'InboundFlight')]//ancestor::form//span[@class='price']")
@@ -149,10 +149,20 @@ public class BookingPage extends CommonPage {
         return allDatesIcons.size();
     }
 
+    //TODO Should be removed after refactoring
     public boolean isUnsupportedFlightErrorShown(String expError) {
 
-        return unsupportedFlightDestinationError.isDisplayed() &&
-               unsupportedFlightDestinationError.getText().equals(expError);
+        return searchFlightError.isDisplayed() &&
+                searchFlightError.getText().equals(expError);
+    }
+
+    public String getSearchFlightError() {
+        if (isElementVisible(getBy("searchFlightError"))) {
+            return searchFlightError.getText();
+        } else {
+            logger.error("The error message element is not visible.");
+            return null;
+        }
     }
 
 
@@ -187,7 +197,7 @@ public class BookingPage extends CommonPage {
         waitForLoadingIsFinished();
         String text = totalPriceSection.getText();
         if (text.length() > 1) {
-            logger.info("Total Amount shown in the BookingInfo page: " + text);
+            logger.info("Total Amount shown in the BookingDetailsInfo page: " + text);
             return Double.valueOf(text.replaceAll(",", "").substring(1));
         } else
             throw new IndexOutOfBoundsException("Unexpected index for TotalAmount text with price.");

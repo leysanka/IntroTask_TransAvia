@@ -14,7 +14,7 @@ public class BookingPageTests extends BaseTestBeforeMethod {
             testLogger.error(e);
         }
 
-        Assert.assertNotNull(bookingPage, "BookingInfo page object is not created: title did not meet.");
+        Assert.assertNotNull(bookingPage, "BookingDetailsInfo page object is not created: title did not meet.");
         return bookingPage;
     }
 

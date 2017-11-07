@@ -1,6 +1,6 @@
 package com.epam.transavia.demo.business_objects;
 
-public enum WelcomeLanguages {
+public enum WelcomeScreenLanguages {
     OTHER_COUNTRY,
     BELGIË,
     NETHERLANDS,

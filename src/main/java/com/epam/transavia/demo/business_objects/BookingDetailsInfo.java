@@ -2,7 +2,7 @@ package com.epam.transavia.demo.business_objects;
 
 import java.time.LocalDateTime;
 
-public class BookingInfo {
+public class BookingDetailsInfo {
 
     private String bookingNumber;
     private String lastName;

@@ -2,10 +2,12 @@ package com.epam.transavia.demo.gui.pages;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.Annotations;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -20,6 +22,19 @@ public abstract class CommonPage {
     public CommonPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
+    }
+
+    public boolean isElementVisible(By by) {
+        return driver.findElements(by).isEmpty() ? false : true;
+    }
+
+    public By getBy(String fieldName) {
+        try {
+            return new Annotations(this.getClass().getDeclaredField(fieldName)).buildBy();
+        } catch (NoSuchFieldException e) {
+            LogManager.getLogger().fatal("Cannot get By locator for the specified element name.");
+            return null;
+        }
     }
 
     public void waitForLoadingIsFinished() {

@@ -3,7 +3,7 @@ package com.epam.transavia.demo.tests.steps;
 import com.epam.transavia.demo.core.driver.Driver;
 import com.epam.transavia.demo.gui.pages.BookingPage;
 import com.epam.transavia.demo.gui.pages.HomePage;
-import com.epam.transavia.demo.business_objects.WelcomeLanguages;
+import com.epam.transavia.demo.business_objects.WelcomeScreenLanguages;
 import com.epam.transavia.demo.gui.pages.WelcomePage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -27,13 +27,12 @@ public class BaseTestBeforeMethod {
 
         driver = Driver.getDefaultDriver(); //Singletone usage added
         driver.manage().deleteAllCookies();
-       /*  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.manage().window().maximize();*/
         driver.navigate().to(homePageUrl);
 
         WelcomePage welcomePage = new WelcomePage(driver);
-        homePage = welcomePage.selectLocaleAndOpenHomePage(WelcomeLanguages.OTHER_COUNTRY);
+        homePage = welcomePage.selectLocaleAndOpenHomePage(WelcomeScreenLanguages.OTHER_COUNTRY);
         testLogger.info("Try to select Other countries locale...");
+        HomePage homePage = new HomePage(driver);
         Assert.assertTrue(homePage.whereToGoWindowIsDisplayed(), "Window \"Where do you want to go?\" is not displayed.");
 
     }

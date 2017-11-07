@@ -1,6 +1,6 @@
 package com.epam.transavia.demo.tests;
 
-import com.epam.transavia.demo.business_objects.BookingInfo;
+import com.epam.transavia.demo.business_objects.BookingDetailsInfo;
 import com.epam.transavia.demo.services.ViewBookingService;
 import com.epam.transavia.demo.tests.steps.BaseTestBeforeClass;
 import org.testng.Assert;
@@ -12,14 +12,14 @@ import org.testng.annotations.Test;
 
 public class ViewBookingWithoutAccountTests extends BaseTestBeforeClass {
 
-    private BookingInfo testBookingInfo;
-    private BookingInfo actualViewBookingInfo;
-    private BookingInfo actualBookingDetailsInfo;
+    private BookingDetailsInfo testBookingInfo;
+    private BookingDetailsInfo actualViewBookingInfo;
+    private BookingDetailsInfo actualBookingDetailsInfo;
 
     @Factory(dataProvider = "bookingAndFlightInfoProvider")
     public ViewBookingWithoutAccountTests(String bookingNumber, String lastName, String flightDate, String flyingFrom, String flyingTo) {
 
-        testBookingInfo = new BookingInfo();
+        testBookingInfo = new BookingDetailsInfo();
         testBookingInfo.setBookingNumber(bookingNumber);
         testBookingInfo.setLastName(lastName);
         testBookingInfo.setFlightDate(flightDate);
@@ -30,7 +30,7 @@ public class ViewBookingWithoutAccountTests extends BaseTestBeforeClass {
     @BeforeClass
     public void getActualBookingInfoAfterLogin() {
 
-        ViewBookingService viewBookingService = new ViewBookingService(driver);
+        ViewBookingService viewBookingService = new ViewBookingService();
         viewBookingService.loginToViewBookingWithoutAccountTest(testBookingInfo); //bookingNumber,lastName and flightDate are used for login
         actualViewBookingInfo = viewBookingService.fetchBookingInfoFromViewBooking();
         viewBookingService.viewBookingOpenBookingDetails();

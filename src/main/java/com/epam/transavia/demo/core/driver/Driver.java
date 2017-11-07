@@ -12,7 +12,6 @@ public class Driver {
     private static HashMap<String, org.openqa.selenium.WebDriver> instances = new HashMap<String, WebDriver>();
     private static final int TIMEOUT_IN_SEC = 10;
     private static WebDriverType defaultBrowserType = WebDriverType.CHROME;
-  //  private static String defaultBrowserName = "CHROME";
 
     private Driver() {
     }
@@ -56,12 +55,8 @@ public class Driver {
     }
 
     public static WebDriver getDriverByName(String name) {
-        try {
-            return getDriverSingleInstance(WebDriverType.valueOf(name.toUpperCase()));
-        } catch (IllegalArgumentException e) {
-            LogManager.getLogger().error("\n !!! CHROME browser is started instead of requested: " + name + ". \n" + e.getMessage());
+        setDefaultDriver(name);
             return getDefaultDriver();
-        }
     }
 
     public static WebDriver getDefaultDriver() {
@@ -72,7 +67,7 @@ public class Driver {
         try {
             defaultBrowserType = WebDriverType.valueOf(name.toUpperCase());
         } catch (IllegalArgumentException e) {
-            LogManager.getLogger().error(e.getMessage());
+            throw new UnknownDriverTypeException(name + " is not supported browser type.\nSystem error: " + e.getMessage());
         }
     }
 
@@ -81,8 +76,10 @@ public class Driver {
     }
 
     public static void closeDriver(WebDriver driver) {
-        driver.quit();
-        driver = null;
+        if (driver != null) {
+            driver.quit();
+            driver = null;
+        }
         instances.clear();
     }
 

@@ -1,6 +1,6 @@
 package com.epam.transavia.demo.gui.pages;
 
-import com.epam.transavia.demo.business_objects.BookingInfo;
+import com.epam.transavia.demo.business_objects.BookingDetailsInfo;
 import com.epam.transavia.demo.core.exceptions.WrongPageException;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -57,10 +57,10 @@ public class LoginPage extends CommonPage{
         flightDateField.sendKeys(Keys.ENTER);
     }
 
-    public ViewYourBookingPage viewBookingWithoutAccount(BookingInfo bookingInfo) {
-        setBookingNumberField(bookingInfo.getBookingNumber());
-        setLastNameFieldField(bookingInfo.getLastName());
-        setFlightDateFieldField(bookingInfo.getFlightDate());
+    public ViewYourBookingPage viewBookingWithoutAccount(BookingDetailsInfo bookingDetailsInfo) {
+        setBookingNumberField(bookingDetailsInfo.getBookingNumber());
+        setLastNameFieldField(bookingDetailsInfo.getLastName());
+        setFlightDateFieldField(bookingDetailsInfo.getFlightDate());
         submitFlightDateAndGoToViewBooking();
         return new ViewYourBookingPage(driver);
     }

@@ -1,6 +1,6 @@
 package com.epam.transavia.demo.gui.pages;
 
-import com.epam.transavia.demo.business_objects.WelcomeLanguages;
+import com.epam.transavia.demo.business_objects.WelcomeScreenLanguages;
 import com.epam.transavia.demo.core.exceptions.PageNotCreatedException;
 import com.epam.transavia.demo.core.exceptions.UnknownLanguageException;
 import com.epam.transavia.demo.core.exceptions.WrongPageException;
@@ -14,7 +14,7 @@ import java.util.List;
 public class WelcomePage extends CommonPage {
 
     private static final String WELCOME_PAGE_TITLE = "Welcome to Transavia!";
-    private static HashMap<String, WebElement> languages = new HashMap();
+    private static HashMap<String, WebElement> languages = new HashMap<String, WebElement>();
 
     @FindBy(xpath = "//div[@class = 'component_language-switch']//li//a")
     private List<WebElement> allLanguagesList;
@@ -32,7 +32,7 @@ public class WelcomePage extends CommonPage {
         }
     }
 
-    public HomePage selectLocaleAndOpenHomePage(WelcomeLanguages languageToSelect) {
+    public HomePage selectLocaleAndOpenHomePage(WelcomeScreenLanguages languageToSelect) {
         WebElement elementToClick = getLanguageWebElement(languageToSelect.toString());
        //is element present -> add method to CommonPage as FindElements(By)=null? not present: present;
         if (elementToClick.isDisplayed()){

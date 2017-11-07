@@ -45,7 +45,7 @@ public class TotalPriceCalculationTests extends BaseTestBeforeMethod {
         double plusFarePrice = bookingPage.getPlusFarePrice();
 
         double totalPrice = 3 * adultPrice + 3 * plusFarePrice + 1 * babyPrice; //childPrice = adultPrice, thus 3 adults calc. Fare price does not apply to babies.
-        Assert.assertEquals(totalPrice, bookingPage.getTotalAmountPrice(), "The 'Total amount' price in the BookingInfo page does not meet to the calculated: " + totalPrice + ";");
+        Assert.assertEquals(totalPrice, bookingPage.getTotalAmountPrice(), "The 'Total amount' price in the BookingDetailsInfo page does not meet to the calculated: " + totalPrice + ";");
 
         bookingPageTests.verifyTotalPriceIsCorrect(2, 1, 1);
     }

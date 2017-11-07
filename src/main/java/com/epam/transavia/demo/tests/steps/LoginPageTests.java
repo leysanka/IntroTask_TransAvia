@@ -15,7 +15,7 @@ public class LoginPageTests extends BaseTestBeforeMethod {
 
     public void testBookingNumberFillsCorrectly(String bookingNumber) {
         loginPage.setBookingNumberField(bookingNumber);
-        Assert.assertTrue(loginPage.isMatchBookingNumberField(bookingNumber), "BookingInfo Number does not match to the expected value: " + bookingNumber);
+        Assert.assertTrue(loginPage.isMatchBookingNumberField(bookingNumber), "BookingDetailsInfo Number does not match to the expected value: " + bookingNumber);
     }
 
     public void testLastNameFillsCorrectly(String lastName) {

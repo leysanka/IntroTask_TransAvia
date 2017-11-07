@@ -3,6 +3,7 @@ package com.epam.transavia.demo.gui.pages;
 import com.epam.transavia.demo.core.exceptions.InvalidTestDataException;
 import com.epam.transavia.demo.core.exceptions.PageNotCreatedException;
 import com.epam.transavia.demo.core.exceptions.WrongPageException;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -15,6 +16,7 @@ import java.util.List;
 public class HomePage extends CommonPage {
 
     private static final int MAX_PASSENGERS_TO_FILL = 10;
+    private static final String homePageEnEuUrl = "https://www.transavia.com/en-EU/home/";
 
     @FindBy(xpath = "//a[@href='/en-EU/home']")
     private WebElement welcomeOtherCountries;
@@ -81,9 +83,13 @@ public class HomePage extends CommonPage {
         }
     }
 
+    public static String getHomePageEnEuUrl() {
+        return homePageEnEuUrl;
+    }
+
     public boolean whereToGoWindowIsDisplayed() {
-        waitForElementIsVisible(whereToGoWindow);
-        return whereToGoWindow.isDisplayed();
+
+        return isElementVisible(getBy("whereToGoWindow"));
     }
 
     public void fromFieldActivate() {
@@ -145,7 +151,7 @@ public class HomePage extends CommonPage {
         LocalDate date = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
         String startDate = date.plusDays(lagDays).format(formatter);
-        return startDate.toString();
+        return startDate;
     }
 
     public void setDepartOnDateFieldPlusLag(long lagDays) {

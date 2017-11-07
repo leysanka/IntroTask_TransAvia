@@ -1,6 +1,7 @@
 package com.epam.transavia.demo.services;
 
-import com.epam.transavia.demo.business_objects.BookingInfo;
+import com.epam.transavia.demo.business_objects.BookingDetailsInfo;
+import com.epam.transavia.demo.core.driver.Driver;
 import com.epam.transavia.demo.gui.pages.BookingDetailsPage;
 import com.epam.transavia.demo.gui.pages.HomePage;
 import com.epam.transavia.demo.gui.pages.ViewYourBookingPage;
@@ -11,18 +12,12 @@ import org.openqa.selenium.WebDriver;
 
 public class ViewBookingService {
 
-    private WebDriver driver;
+    private static WebDriver driver = Driver.getDefaultDriver();
     private static Logger logger = LogManager.getLogger();
 
-    public ViewBookingService(WebDriver driver) {
-        this.driver = driver;
-    }
-
-    //public void
-
-    public void loginToViewBookingWithoutAccountTest(BookingInfo bookingInfo) {
+    public void loginToViewBookingWithoutAccountTest(BookingDetailsInfo bookingDetailsInfo) {
         HomePage homePage = new HomePage(driver);
-        homePage.openManageBookingToolbar().goToViewBooking().viewBookingWithoutAccount(bookingInfo);
+        homePage.openManageBookingToolbar().goToViewBooking().viewBookingWithoutAccount(bookingDetailsInfo);
     }
 
     public void viewBookingOpenBookingDetails() {
@@ -30,10 +25,10 @@ public class ViewBookingService {
         viewYourBookingPage.openBookingDetails();
     }
 
-    public BookingInfo fetchBookingInfoFromViewBooking() {
+    public BookingDetailsInfo fetchBookingInfoFromViewBooking() {
 
         ViewYourBookingPage viewYourBookingPage = new ViewYourBookingPage(driver);
-        BookingInfo actualInfoViewBooking = new BookingInfo();
+        BookingDetailsInfo actualInfoViewBooking = new BookingDetailsInfo();
         actualInfoViewBooking.setBookingNumber(viewYourBookingPage.getLoadedBookingNumber());
         actualInfoViewBooking.setFlyingFrom(viewYourBookingPage.getFlyingFrom());
         actualInfoViewBooking.setFlyingTo(viewYourBookingPage.getFlyingTo());
@@ -43,9 +38,9 @@ public class ViewBookingService {
         return actualInfoViewBooking;
     }
 
-    public BookingInfo fetchBookingInfoFromBookingDetails() {
+    public BookingDetailsInfo fetchBookingInfoFromBookingDetails() {
         BookingDetailsPage bookingDetailsPage = new BookingDetailsPage(driver);
-        BookingInfo actualInfoBookingDetails = new BookingInfo();
+        BookingDetailsInfo actualInfoBookingDetails = new BookingDetailsInfo();
         actualInfoBookingDetails.setTotalPaymentAmount(bookingDetailsPage.getTotalPaymentValue());
         actualInfoBookingDetails.setTotalPriceAmount(bookingDetailsPage.getTotalAmountValue());
 
