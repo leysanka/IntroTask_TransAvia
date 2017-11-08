@@ -8,7 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import java.util.List;
 
 
-public class ViewYourBookingPage extends CommonPage {
+public class ViewBookingPage extends CommonPage {
 
     private final String VIEW_BOOKING_PAGE_TITLE = "View your booking";
 
@@ -23,7 +23,7 @@ public class ViewYourBookingPage extends CommonPage {
     @FindBy(xpath = "//div[@class = 'footnote booking-number']//p")
     private WebElement bookingNumberText;
 
-    public ViewYourBookingPage(WebDriver driver) throws WrongPageException {
+    public ViewBookingPage(WebDriver driver) throws WrongPageException {
         super(driver);
         if (!VIEW_BOOKING_PAGE_TITLE.equals(driver.getTitle())) {
             throw new WrongPageException("View your booking page title does not meet to the expected: " + VIEW_BOOKING_PAGE_TITLE);
@@ -57,9 +57,9 @@ public class ViewYourBookingPage extends CommonPage {
         bookingDetailsBtn.click();
     }
 
-    public BookingDetailsPage openBookingDetails() throws WrongPageException {
+    public ViewBookingDetailsPage openBookingDetails() throws WrongPageException {
         bookingDetailsBtn.click();
-        return new BookingDetailsPage(driver);
+        return new ViewBookingDetailsPage(driver);
     }
 
 }

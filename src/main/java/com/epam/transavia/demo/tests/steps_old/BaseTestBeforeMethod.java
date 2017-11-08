@@ -1,4 +1,4 @@
-package com.epam.transavia.demo.tests.steps;
+package com.epam.transavia.demo.tests.steps_old;
 
 import com.epam.transavia.demo.core.driver.Driver;
 import com.epam.transavia.demo.gui.pages.BookingPage;

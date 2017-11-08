@@ -9,8 +9,6 @@ import java.util.List;
 
 public class BookingPage extends CommonPage {
 
-    private final String BOOKING_PAGE_TITLE = "Book a flight";
-
     @FindBy(xpath = "//ol//div[(contains(@class, 'day'))]")
     private List<WebElement> allDatesIcons;
     @FindBy(xpath = "//ol//span[@class='price']")
@@ -52,13 +50,15 @@ public class BookingPage extends CommonPage {
     @FindBy(xpath = "//tr//button[@value = 'B' and text()='Select']")
     private WebElement selectPlusFareBtn; //+20kg luggage
 
+
     public BookingPage(WebDriver driver) throws WrongPageException {
         super(driver);
-        if (!BOOKING_PAGE_TITLE.equals(driver.getTitle())) {
-            throw new WrongPageException("Not a Booking page is opened: title " + driver.getTitle() + " does not meet to the expected " + BOOKING_PAGE_TITLE);
+        if (!driver.getCurrentUrl().contains("book-a-flight")) {
+            throw new WrongPageException("Not a Booking page is opened: url " + driver.getCurrentUrl() + " does not contain \"book-a-flight\" part. ");
         }
     }
 
+    //TODO REmove -moved to BookingService
     public void selectOutboundFlight(int flightNumber) {
         int index = flightNumber - 1;
 
@@ -70,6 +70,7 @@ public class BookingPage extends CommonPage {
         } else logger.error("Invalid negative index is specified for flights' webelement list.");
     }
 
+    //TODO REmove -moved to BookingService
     public void selectInboundFlight(int flightNumber) {
         int index = flightNumber - 1;
 
@@ -79,15 +80,6 @@ public class BookingPage extends CommonPage {
                 logger.info(flightNumber + " Inbound flight chosen successfully.");
             } else logger.error("Cannot select the specified inbound flight by order: " + flightNumber);
         } else logger.error("Invalid negative index is specified for flights' webelement list.");
-    }
-
-    public void pressSelectOutboundFlight() {
-
-        waitForLoadingIsFinished();
-        scrollToElement(selectOutboundFlightBtn);
-        waitForElementIsClickable(selectOutboundFlightBtn);
-        selectOutboundFlightBtn.click();
-        logger.info("Outbound flight selected successfully.");
     }
 
     public double getPlusFarePrice() {
@@ -102,10 +94,10 @@ public class BookingPage extends CommonPage {
     }
 
     public void pressNextButton() {
+        waitForLoadingIsFinished();
         waitForElementIsClickable(nextToFlightFareSelectionButton);
-        if (nextToFlightFareSelectionButton.isDisplayed()) {
-            nextToFlightFareSelectionButton.click();
-        }
+        nextToFlightFareSelectionButton.click();
+
     }
 
     public void pressSelectPlusFareBtn() {
@@ -122,34 +114,32 @@ public class BookingPage extends CommonPage {
         return selectedFlightsBluePanels.size();
     }
 
+    private void pressSelectFlightButton(WebElement button) {
+        waitForLoadingIsFinished();
+        scrollToElement(button);
+        waitForElementIsClickable(button);
+        button.click();
+    }
+
     public void pressSelectInboundFlight() {
 
-        waitForLoadingIsFinished();
-        scrollToElement(selectInboundFlightBtn);
-        waitForElementIsClickable(selectInboundFlightBtn);
-        selectInboundFlightBtn.click();
-        logger.info("Inbound flight SELECTED successfully.");
+        pressSelectFlightButton(selectInboundFlightBtn);
+        logger.info("Inbound flight selected successfully.");
+    }
+
+    public void pressSelectOutboundFlight() {
+
+        pressSelectFlightButton(selectOutboundFlightBtn);
+        logger.info("Outbound flight selected successfully.");
     }
 
     public int getFoundFlightsCount() {
         return allDatesWithFlights.size();
     }
 
-    public boolean isFlightsFounds() {
-        waitForElementsAreVisible(allDatesIcons);
-        return !allDatesWithFlights.isEmpty();
-    }
-
     public int getAllDatesShownCount() {
         waitForElementsAreVisible(allDatesIcons);
         return allDatesIcons.size();
-    }
-
-    //TODO Should be removed after refactoring
-    public boolean isUnsupportedFlightErrorShown(String expError) {
-
-        return searchFlightError.isDisplayed() &&
-                searchFlightError.getText().equals(expError);
     }
 
     public String getSearchFlightError() {
@@ -198,4 +188,24 @@ public class BookingPage extends CommonPage {
         } else
             throw new IndexOutOfBoundsException("Unexpected index for TotalAmount text with price.");
     }
+
+    public List<WebElement> getOutboundFlightsFound() {
+        if (!outboundFlights.isEmpty()) {
+            return outboundFlights;
+        } else {
+            logger.error("Outbound flights are not found.");
+            return null;
+        }
+    }
+
+    public List<WebElement> getInboundFlightsFound() {
+        if (!inboundFlights.isEmpty()) {
+            return inboundFlights;
+        } else {
+            logger.error("Inbound flights are not found.");
+            return null;
+        }
+    }
+
+
 }

@@ -7,9 +7,9 @@ public class NewBooking {
     private String departDate;
     private String returnDate;
     private String bookingError;
-    private int adultsCount;
-    private int childrenCount;
-    private int babiesCount;
+    private int adultsCount = 1;
+    private int childrenCount = 0;
+    private int babiesCount = 0;
 
     public NewBooking(String fromDestination, String toDestination, String departDate, String returnDate, String bookingError, int adultsCount, int childrenCount, int babiesCount) {
         this.fromDestination = fromDestination;

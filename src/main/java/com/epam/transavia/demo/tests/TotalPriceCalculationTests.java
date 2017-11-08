@@ -1,9 +1,9 @@
 package com.epam.transavia.demo.tests;
 
-import com.epam.transavia.demo.tests.steps.BaseTestBeforeMethod;
-import com.epam.transavia.demo.tests.steps.BookingPageTests;
-import com.epam.transavia.demo.tests.steps.HomePageTests;
-import org.testng.*;
+import com.epam.transavia.demo.tests.steps_old.BaseTestBeforeMethod;
+import com.epam.transavia.demo.tests.steps_old.BookingPageTests;
+import com.epam.transavia.demo.tests.steps_old.HomePageTests;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 @Test()
@@ -22,14 +22,13 @@ public class TotalPriceCalculationTests extends BaseTestBeforeMethod {
         final int ADULTS_TO_ADD = 1;
         final String TOTAL_PASSENGERS = "2 Adults , 1 Child and 1 Baby";
 
-
         homePageTests.testFromDestinationFillsCorrectly(DEST_FROM);
         homePageTests.testToDestinationFillsCorrectly(DEST_TO);
         homePageTests.verifyDefaultDepartOnDateIsCorrect();
         homePageTests.verifyReturnOnIsChecked();
         homePageTests.verifyReturnOnDateIsSet();
         homePageTests.verifyExpectedPassengersCountIsShown(DEFAULT_PASSENGERS);
-        homePage.passengersFieldClick();
+        homePage.passengersFieldActivate();
         homePageTests.verifyPassengersPopUpIsDisaplyed();
         homePageTests.testAddAdultPassengers(ADULTS_TO_ADD);
         homePageTests.testAddChildrenPassenger();

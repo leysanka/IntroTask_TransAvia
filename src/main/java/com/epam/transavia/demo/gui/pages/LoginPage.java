@@ -29,40 +29,30 @@ public class LoginPage extends CommonPage{
     }
 
     public void setBookingNumberField(String bookingNumber) {
+        bookingNumberField.clear();
         bookingNumberField.sendKeys(bookingNumber);
     }
 
-    public boolean isMatchBookingNumberField(String bookingNumber) {
-        return bookingNumberField.getAttribute("value").equals(bookingNumber);
-    }
-
     public void setLastNameFieldField(String lastName) {
+        lastNameField.clear();
         lastNameField.sendKeys(lastName);
     }
 
-    public boolean isMatchLastNameField(String lastName) {
-        return lastNameField.getAttribute("value").equals(lastName);
-    }
-
-
     public void setFlightDateFieldField(String flightDate) {
+        flightDateField.clear();
         flightDateField.sendKeys(flightDate);
-    }
-
-    public boolean isMatchFlightDateField(String flightDate) {
-        return flightDateField.getAttribute("value").equals(flightDate);
     }
 
     public void submitFlightDateAndGoToViewBooking() {
         flightDateField.sendKeys(Keys.ENTER);
     }
 
-    public ViewYourBookingPage viewBookingWithoutAccount(BookingDetailsInfo bookingDetailsInfo) {
+    public ViewBookingPage viewBookingWithoutAccount(BookingDetailsInfo bookingDetailsInfo) {
         setBookingNumberField(bookingDetailsInfo.getBookingNumber());
         setLastNameFieldField(bookingDetailsInfo.getLastName());
         setFlightDateFieldField(bookingDetailsInfo.getFlightDate());
         submitFlightDateAndGoToViewBooking();
-        return new ViewYourBookingPage(driver);
+        return new ViewBookingPage(driver);
     }
 
 }

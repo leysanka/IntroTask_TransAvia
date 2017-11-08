@@ -1,7 +1,6 @@
 package com.epam.transavia.demo.core.driver;
 
 import com.epam.transavia.demo.core.exceptions.UnknownDriverTypeException;
-import org.apache.logging.log4j.LogManager;
 import org.openqa.selenium.WebDriver;
 
 import java.util.HashMap;
@@ -50,7 +49,7 @@ public class Driver {
         } else {
             driver = instances.get(name);
         }
-
+        driver.manage().deleteAllCookies();
         return driver;
     }
 

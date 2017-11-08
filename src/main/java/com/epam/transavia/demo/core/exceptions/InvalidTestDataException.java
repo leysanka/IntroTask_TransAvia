@@ -1,6 +1,6 @@
 package com.epam.transavia.demo.core.exceptions;
 
-public class InvalidTestDataException extends Throwable {
+public class InvalidTestDataException extends RuntimeException {
     private String testDataError;
 
     public InvalidTestDataException(String s) {

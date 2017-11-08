@@ -2,10 +2,10 @@ package com.epam.transavia.demo.services;
 
 import com.epam.transavia.demo.business_objects.BookingDetailsInfo;
 import com.epam.transavia.demo.core.driver.Driver;
-import com.epam.transavia.demo.gui.pages.BookingDetailsPage;
 import com.epam.transavia.demo.gui.pages.HomePage;
-import com.epam.transavia.demo.gui.pages.ViewYourBookingPage;
-import com.epam.transavia.demo.util.DateTimeConverter;
+import com.epam.transavia.demo.gui.pages.ViewBookingDetailsPage;
+import com.epam.transavia.demo.gui.pages.ViewBookingPage;
+import com.epam.transavia.demo.util.DateTimeHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -21,28 +21,28 @@ public class ViewBookingService {
     }
 
     public void viewBookingOpenBookingDetails() {
-        ViewYourBookingPage viewYourBookingPage = new ViewYourBookingPage(driver);
-        viewYourBookingPage.openBookingDetails();
+        ViewBookingPage viewBookingPage = new ViewBookingPage(driver);
+        viewBookingPage.openBookingDetails();
     }
 
     public BookingDetailsInfo fetchBookingInfoFromViewBooking() {
 
-        ViewYourBookingPage viewYourBookingPage = new ViewYourBookingPage(driver);
+        ViewBookingPage viewBookingPage = new ViewBookingPage(driver);
         BookingDetailsInfo actualInfoViewBooking = new BookingDetailsInfo();
-        actualInfoViewBooking.setBookingNumber(viewYourBookingPage.getLoadedBookingNumber());
-        actualInfoViewBooking.setFlyingFrom(viewYourBookingPage.getFlyingFrom());
-        actualInfoViewBooking.setFlyingTo(viewYourBookingPage.getFlyingTo());
-        actualInfoViewBooking.setArrivalTime(DateTimeConverter.formatStringToLocalDateTime(viewYourBookingPage.getArrivalTime()));
-        actualInfoViewBooking.setDepartureTime(DateTimeConverter.formatStringToLocalDateTime(viewYourBookingPage.getDepartureTime()));
+        actualInfoViewBooking.setBookingNumber(viewBookingPage.getLoadedBookingNumber());
+        actualInfoViewBooking.setFlyingFrom(viewBookingPage.getFlyingFrom());
+        actualInfoViewBooking.setFlyingTo(viewBookingPage.getFlyingTo());
+        actualInfoViewBooking.setArrivalTime(DateTimeHelper.formatStringToLocalDateTime(viewBookingPage.getArrivalTime()));
+        actualInfoViewBooking.setDepartureTime(DateTimeHelper.formatStringToLocalDateTime(viewBookingPage.getDepartureTime()));
 
         return actualInfoViewBooking;
     }
 
     public BookingDetailsInfo fetchBookingInfoFromBookingDetails() {
-        BookingDetailsPage bookingDetailsPage = new BookingDetailsPage(driver);
+        ViewBookingDetailsPage viewBookingDetailsPage = new ViewBookingDetailsPage(driver);
         BookingDetailsInfo actualInfoBookingDetails = new BookingDetailsInfo();
-        actualInfoBookingDetails.setTotalPaymentAmount(bookingDetailsPage.getTotalPaymentValue());
-        actualInfoBookingDetails.setTotalPriceAmount(bookingDetailsPage.getTotalAmountValue());
+        actualInfoBookingDetails.setTotalPaymentAmount(viewBookingDetailsPage.getTotalPaymentValue());
+        actualInfoBookingDetails.setTotalPriceAmount(viewBookingDetailsPage.getTotalAmountValue());
 
         return actualInfoBookingDetails;
     }

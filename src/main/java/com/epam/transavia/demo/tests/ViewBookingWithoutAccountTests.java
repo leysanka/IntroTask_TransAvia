@@ -2,7 +2,7 @@ package com.epam.transavia.demo.tests;
 
 import com.epam.transavia.demo.business_objects.BookingDetailsInfo;
 import com.epam.transavia.demo.services.ViewBookingService;
-import com.epam.transavia.demo.tests.steps.BaseTestBeforeClass;
+import org.apache.logging.log4j.LogManager;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -18,7 +18,7 @@ public class ViewBookingWithoutAccountTests extends BaseTestBeforeClass {
 
     @Factory(dataProvider = "bookingAndFlightInfoProvider")
     public ViewBookingWithoutAccountTests(String bookingNumber, String lastName, String flightDate, String flyingFrom, String flyingTo) {
-
+        LogManager.getLogger().info("ViewBookingTests have started.");
         testBookingInfo = new BookingDetailsInfo();
         testBookingInfo.setBookingNumber(bookingNumber);
         testBookingInfo.setLastName(lastName);

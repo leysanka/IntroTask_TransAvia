@@ -1,9 +1,10 @@
 package com.epam.transavia.demo.gui.pages;
 
+import com.epam.transavia.demo.business_objects.PassengersTypes;
 import com.epam.transavia.demo.core.exceptions.InvalidTestDataException;
 import com.epam.transavia.demo.core.exceptions.PageNotCreatedException;
 import com.epam.transavia.demo.core.exceptions.WrongPageException;
-import com.epam.transavia.demo.util.DateTimeConverter;
+import com.epam.transavia.demo.util.DateTimeHelper;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -146,17 +147,29 @@ public class HomePage extends CommonPage {
         returnOnCheckBox.click();
     }
 
-    //TODO Should be placed somewhere in TestData layer
+    //TODO Should be placed somewhere in TestData layer -> DONE moved to DateTimeConverter
     public static String calculateDateNowPlusLag(long lagDays) {
-        return DateTimeConverter.convertLocalDateToSourceStringFormat(LocalDate.now().plusDays(lagDays));
+        return DateTimeHelper.convertLocalDateToSourceStringFormat(LocalDate.now().plusDays(lagDays));
     }
 
+    public void setDepartOnDateField(String date) {
+        departOnDateField.clear();
+        departOnDateField.sendKeys(date);
+    }
+
+    public void setReturnOnDateField(String date) {
+        returnOnDateField.clear();
+        returnOnDateField.sendKeys(date);
+    }
+
+    //TODO Remove after refactoring
     public void setDepartOnDateFieldPlusLag(long lagDays) {
 
         departOnDateField.clear();
         departOnDateField.sendKeys(calculateDateNowPlusLag(lagDays));
     }
 
+    //TODO Remove after refactoring
     public void setReturnOnDateFieldPlusLag(long lagDays) {
 
         returnOnDateField.clear();
@@ -179,7 +192,7 @@ public class HomePage extends CommonPage {
         return passengersField.getAttribute("value").contains(expPassengers);
     }
 
-    public void passengersFieldClick() {
+    public void passengersFieldActivate() {
         passengersField.click();
     }
 
@@ -187,9 +200,12 @@ public class HomePage extends CommonPage {
         return passengersPopUp.isDisplayed();
     }
 
-    //TODO may be can be done as one method for any passenger add child, baby, adult-> need to think how
+    //DONE may be can be done as one method for any passenger add child, baby, adult-> need to think how
+    //TODO Remove after tests are refactored
     public void addAdultPassengers(int adultsCount) throws InvalidTestDataException {
         if (adultsCount >= 0 && adultsCount <= MAX_PASSENGERS_TO_FILL) {
+            passengersField.click();
+            //    adultsCountBox.clear();
             for (int i = 0; i < adultsCount; i++) {
                 if (adultsIncreaseBtn.isEnabled()) {
                     adultsIncreaseBtn.click();
@@ -202,23 +218,36 @@ public class HomePage extends CommonPage {
         }
     }
 
-    public void addChildrenPassenger() {
+    public void addAdultPassenger() {
+
+        if (adultsIncreaseBtn.isEnabled()) {
+            adultsIncreaseBtn.click();
+        } else {
+            logger.error("Increase Adults button is not enabled.");
+        }
+    }
+
+    public void addChildPassenger() {
+
         if (childrenIncreaseBtn.isEnabled()) {
             childrenIncreaseBtn.click();
-            passengersField.click();
+        } else {
+            logger.error("Increase Children button is not enabled.");
         }
     }
 
     public void addBabyPassenger() {
+
         if (babiesIncreaseBtn.isEnabled()) {
             babiesIncreaseBtn.click();
-            passengersField.click();
+        } else {
+            logger.error("Increase Babies button is not enabled.");
         }
     }
 
     public String getPassengersCountBoxValue(String type) throws IllegalArgumentException {
 
-        passengersTypes pt = passengersTypes.valueOf(type.toUpperCase()); //throws exc here
+        PassengersTypes pt = PassengersTypes.valueOf(type.toUpperCase()); //throws exc here
 
         switch (pt) {
             case ADULTS:
@@ -232,11 +261,6 @@ public class HomePage extends CommonPage {
         }
     }
 
-    public enum passengersTypes {
-        ADULTS,
-        CHILDREN,
-        BABIES
-    }
 
     public void searchBtnSubmit() {
         searchBtn.click();

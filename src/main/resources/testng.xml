@@ -4,8 +4,9 @@
     <test name = "Booking test">
         <classes>
             <class name="com.epam.transavia.demo.tests.ViewBookingWithoutAccountTests"/>
-            <class name = "com.epam.transavia.demo.tests.TotalPriceCalculationTests" />
             <class name="com.epam.transavia.demo.tests.SearchFlightsTests"/>
+            <class name="com.epam.transavia.demo.tests.BookingPriceCalculationTests"/>
+            <class name="com.epam.transavia.demo.tests.SearchFlightErrorsTests"/>
         </classes>
     </test>
 </suite>

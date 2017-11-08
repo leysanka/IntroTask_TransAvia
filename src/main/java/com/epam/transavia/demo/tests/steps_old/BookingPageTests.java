@@ -1,4 +1,4 @@
-package com.epam.transavia.demo.tests.steps;
+package com.epam.transavia.demo.tests.steps_old;
 
 import com.epam.transavia.demo.gui.pages.BookingPage;
 import com.epam.transavia.demo.core.exceptions.WrongPageException;
@@ -18,23 +18,6 @@ public class BookingPageTests extends BaseTestBeforeMethod {
         return bookingPage;
     }
 
-    public void testExpectedDatesSpinnersCountShown(int expDays) {
-
-        int allDatesShownCount = super.bookingPage.getAllDatesShownCount();
-        Assert.assertTrue((allDatesShownCount == expDays),
-                allDatesShownCount + " count of shown dates does not equal to the expected " + expDays + " days.");
-
-    }
-
-    public void verifyFlightsAreFound() {
-        Assert.assertTrue(bookingPage.isFlightsFounds(), "No flights found.");
-    }
-
-    public void testCorrectNumberOfOneWayFlightsIsFound() {
-        int foundFlightsCount = bookingPage.getFoundFlightsCount();
-        Assert.assertTrue((foundFlightsCount >= 1 && foundFlightsCount <= 7),
-                foundFlightsCount + " flights found does not meet to the expected for a week (1-7).");
-    }
 
     public void testSelectFirstInboundOutboundFlights() {
         bookingPage.selectOutboundFlight(1);

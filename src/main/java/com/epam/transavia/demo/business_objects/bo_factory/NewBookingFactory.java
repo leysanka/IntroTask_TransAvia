@@ -14,7 +14,7 @@ public class NewBookingFactory {
         return newBooking;
     }
 
-    public static NewBooking createFoundRouteBooking() {
+    public static NewBooking createAlwaysFoundRouteBooking() {
         NewBooking newBooking = new NewBooking();
         newBooking.setFromDestination("Amsterdam (Schiphol), Netherlands");
         newBooking.setToDestination("Nice, France");

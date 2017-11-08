@@ -1,4 +1,4 @@
-package com.epam.transavia.demo.tests.steps;
+package com.epam.transavia.demo.tests.steps_old;
 
 import com.epam.transavia.demo.core.exceptions.InvalidTestDataException;
 import com.epam.transavia.demo.gui.pages.HomePage;
@@ -82,7 +82,7 @@ public class HomePageTests extends BaseTestBeforeMethod {
     public void testAddChildrenPassenger() {
         if (homePage.isVisiblePassengersPopup()) {
         }
-        homePage.addChildrenPassenger();
+        homePage.addChildPassenger();
         testLogger.info("Child added");
     }
 

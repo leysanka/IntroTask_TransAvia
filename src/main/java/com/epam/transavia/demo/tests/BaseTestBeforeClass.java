@@ -1,4 +1,4 @@
-package com.epam.transavia.demo.tests.steps;
+package com.epam.transavia.demo.tests;
 
 import com.epam.transavia.demo.business_objects.WelcomeScreenLanguages;
 import com.epam.transavia.demo.core.driver.Driver;
@@ -7,7 +7,7 @@ import com.epam.transavia.demo.gui.pages.WelcomePage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 
 public class BaseTestBeforeClass {
@@ -20,20 +20,19 @@ public class BaseTestBeforeClass {
     @BeforeClass
     protected void setUpBeforeMethod() {
 
-        //driver = Driver.getDriverByName("chrome");
         driver = Driver.getDefaultDriver();
         //Move to service
         driver.get(welcomePageUrl);
         WelcomePage welcomePage = new WelcomePage(driver);
-        HomePage homePage = welcomePage.selectLocaleAndOpenHomePage(WelcomeScreenLanguages.OTHER_COUNTRY);
         testLogger.info("Try to select Other countries locale...");
+        HomePage homePage = welcomePage.selectLocaleAndOpenHomePage(WelcomeScreenLanguages.OTHER_COUNTRY);
     }
 
     protected Logger getTestLogger() {
         return testLogger;
     }
 
-    @AfterClass(alwaysRun = true)
+    @AfterSuite()
     protected void tearDownAfterMethod() {
 
         Driver.closeDriver(driver);
