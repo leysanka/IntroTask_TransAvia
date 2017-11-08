@@ -19,7 +19,6 @@ public class SearchFlightsService {
         return (new HomePage(driver).whereToGoWindowIsDisplayed());
     }
 
-
     public void setFlyDestinations(NewBooking newBooking) {
         HomePage homePage = new HomePage(driver);
         homePage.setFromDestinationByKeys(newBooking.getFromDestination());
@@ -33,6 +32,18 @@ public class SearchFlightsService {
         }
         homePage.searchBtnSubmit();
     }
+
+    public int fetchAllDateSpinnersShownCount() {
+        BookingPage bookingPage = new BookingPage(driver);
+        return bookingPage.getAllDatesShownCount();
+    }
+
+    public int fetchDateSpinnersWithFlightsCount() {
+        BookingPage bookingPage = new BookingPage(driver);
+        return bookingPage.getFoundFlightsCount();
+    }
+
+
 
     public String fetchBookingError() {
         BookingPage bookingPage = new BookingPage(driver);

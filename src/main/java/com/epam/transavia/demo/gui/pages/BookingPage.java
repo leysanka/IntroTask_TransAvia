@@ -4,8 +4,6 @@ import com.epam.transavia.demo.core.exceptions.WrongPageException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
@@ -138,14 +136,12 @@ public class BookingPage extends CommonPage {
     }
 
     public boolean isFlightsFounds() {
-        WebDriverWait wait = new WebDriverWait(driver, 5);
-        wait.until(ExpectedConditions.visibilityOfAllElements(allDatesIcons));
+        waitForElementsAreVisible(allDatesIcons);
         return !allDatesWithFlights.isEmpty();
     }
 
     public int getAllDatesShownCount() {
-        WebDriverWait wait = new WebDriverWait(driver, 5);
-        wait.until(ExpectedConditions.visibilityOfAllElements(allDatesIcons));
+        waitForElementsAreVisible(allDatesIcons);
         return allDatesIcons.size();
     }
 

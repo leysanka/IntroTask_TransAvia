@@ -11,6 +11,8 @@ import org.openqa.selenium.support.pagefactory.Annotations;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.List;
+
 
 public abstract class CommonPage {
 
@@ -25,7 +27,7 @@ public abstract class CommonPage {
     }
 
     public boolean isElementVisible(By by) {
-        return driver.findElements(by).isEmpty() ? false : true;
+        return !driver.findElements(by).isEmpty();
     }
 
     public By getBy(String fieldName) {
@@ -51,6 +53,13 @@ public abstract class CommonPage {
         WebDriverWait wait = new WebDriverWait(driver, SECONDS_TO_WAIT);
         wait.until(ExpectedConditions.visibilityOf(element));
     }
+
+    public void waitForElementsAreVisible(List<WebElement> elements) {
+        WebDriverWait wait = new WebDriverWait(driver, SECONDS_TO_WAIT);
+        wait.until(ExpectedConditions.visibilityOfAllElements(elements));
+    }
+
+
 
     public void scrollToElement(WebElement element) {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);

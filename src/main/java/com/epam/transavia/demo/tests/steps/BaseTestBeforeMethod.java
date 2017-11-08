@@ -38,7 +38,7 @@ public class BaseTestBeforeMethod {
     }
 
     protected Logger getTestLogger() {
-        return this.testLogger;
+        return testLogger;
     }
 
     @AfterSuite(alwaysRun = true)

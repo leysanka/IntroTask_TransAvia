@@ -3,13 +3,12 @@ package com.epam.transavia.demo.gui.pages;
 import com.epam.transavia.demo.core.exceptions.InvalidTestDataException;
 import com.epam.transavia.demo.core.exceptions.PageNotCreatedException;
 import com.epam.transavia.demo.core.exceptions.WrongPageException;
-import org.openqa.selenium.By;
+import com.epam.transavia.demo.util.DateTimeConverter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 
@@ -105,10 +104,12 @@ public class HomePage extends CommonPage {
     }
 
     public void setFromDestinationByKeys(String airport) {
+        fromField.clear();
         fromField.sendKeys(airport);
     }
 
     public void setToDestinationByKeys(String airport) {
+        toField.clear();
         toField.sendKeys(airport);
 
     }
@@ -143,15 +144,11 @@ public class HomePage extends CommonPage {
     public void returnOnCheckBoxClick() {
         waitForElementIsClickable(returnOnCheckBox);
         returnOnCheckBox.click();
-
     }
 
     //TODO Should be placed somewhere in TestData layer
     public static String calculateDateNowPlusLag(long lagDays) {
-        LocalDate date = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
-        String startDate = date.plusDays(lagDays).format(formatter);
-        return startDate;
+        return DateTimeConverter.convertLocalDateToSourceStringFormat(LocalDate.now().plusDays(lagDays));
     }
 
     public void setDepartOnDateFieldPlusLag(long lagDays) {

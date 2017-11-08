@@ -20,7 +20,8 @@ public class BaseTestBeforeClass {
     @BeforeClass
     protected void setUpBeforeMethod() {
 
-        driver = Driver.getDriverByName("chrome");
+        //driver = Driver.getDriverByName("chrome");
+        driver = Driver.getDefaultDriver();
         //Move to service
         driver.get(welcomePageUrl);
         WelcomePage welcomePage = new WelcomePage(driver);
@@ -29,7 +30,7 @@ public class BaseTestBeforeClass {
     }
 
     protected Logger getTestLogger() {
-        return this.testLogger;
+        return testLogger;
     }
 
     @AfterClass(alwaysRun = true)
