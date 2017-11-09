@@ -2,9 +2,9 @@ package com.epam.transavia.demo.services;
 
 import com.epam.transavia.demo.business_objects.BookingDetailsInfo;
 import com.epam.transavia.demo.core.driver.Driver;
-import com.epam.transavia.demo.gui.pages.HomePage;
-import com.epam.transavia.demo.gui.pages.ViewBookingDetailsPage;
-import com.epam.transavia.demo.gui.pages.ViewBookingPage;
+import com.epam.transavia.demo.ui.pages.HomePage;
+import com.epam.transavia.demo.ui.pages.ViewBookingDetailsPage;
+import com.epam.transavia.demo.ui.pages.ViewBookingPage;
 import com.epam.transavia.demo.util.DateTimeHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

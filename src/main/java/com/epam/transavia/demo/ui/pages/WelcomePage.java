@@ -1,8 +1,8 @@
-package com.epam.transavia.demo.gui.pages;
+package com.epam.transavia.demo.ui.pages;
 
 import com.epam.transavia.demo.business_objects.WelcomeScreenLanguages;
 import com.epam.transavia.demo.core.exceptions.PageNotCreatedException;
-import com.epam.transavia.demo.core.exceptions.UnknownLanguageException;
+import com.epam.transavia.demo.core.exceptions.UnknownWelcomeLanguageException;
 import com.epam.transavia.demo.core.exceptions.WrongPageException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -34,10 +34,10 @@ public class WelcomePage extends CommonPage {
 
     public HomePage selectLocaleAndOpenHomePage(WelcomeScreenLanguages languageToSelect) {
         WebElement elementToClick = getLanguageWebElement(languageToSelect.toString());
-       //is element present -> add method to CommonPage as FindElements(By)=null? not present: present;
-        if (elementToClick.isDisplayed()){
-           elementToClick.click();
-           return new HomePage(driver);
+        //is element present -> add method to CommonPage as FindElements(By)=null? not present: present;
+        if (elementToClick.isDisplayed()) {
+            elementToClick.click();
+            return new HomePage(driver);
         } else {
             throw new PageNotCreatedException("Home Page is not created after Language selection in Welcome screen.");
         }
@@ -48,7 +48,7 @@ public class WelcomePage extends CommonPage {
             languages.clear();
         }
         int i = 0;
-        for (WebElement element: allLanguagesList) {
+        for (WebElement element : allLanguagesList) {
             String langName = allLanguagesList.get(i).getText().replaceAll("\\s", "_").toUpperCase();
             WebElement elementID = allLanguagesList.get(i);
             languages.put(langName, elementID);
@@ -60,11 +60,11 @@ public class WelcomePage extends CommonPage {
     private WebElement getLanguageWebElement(String name) {
         WebElement languageWebElement = null;
         languages = populateMapWithLanguagesFromWelcomePage();
-        if(languages.containsKey(name)) {
+        if (languages.containsKey(name)) {
             languageWebElement = languages.get(name);
         } else {
             logger.error("No such language is present in the HashMap.");
-            throw new UnknownLanguageException("No such language is present in the HashMap.");
+            throw new UnknownWelcomeLanguageException("No such language is present in the HashMap.");
         }
         return languageWebElement;
     }

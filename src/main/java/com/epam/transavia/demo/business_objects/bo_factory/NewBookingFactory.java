@@ -9,8 +9,8 @@ public class NewBookingFactory {
         newBooking.setFromDestination("Dubai, United Arab Emirates");
         newBooking.setToDestination("Agadir, Morocco");
         newBooking.setBookingError("Unfortunately we do not fly from Dubai, United Arab Emirates to Agadir, Morocco." +
-                " However, we do fly from Dubai, United Arab Emirates to other destinations." +
-                " Please change your destination and try again.");
+                                   " However, we do fly from Dubai, United Arab Emirates to other destinations." +
+                                   " Please change your destination and try again.");
         return newBooking;
     }
 

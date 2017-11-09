@@ -17,7 +17,7 @@ public class ChromeDriverFactory implements WebDriverFactory {
         return new ChromeDriver(setChromeIncognitoCapability());
     }
 
-    private static Capabilities setChromeIncognitoCapability(){
+    private static Capabilities setChromeIncognitoCapability() {
 
         ChromeOptions options = new ChromeOptions();
         options.addArguments("incognito");

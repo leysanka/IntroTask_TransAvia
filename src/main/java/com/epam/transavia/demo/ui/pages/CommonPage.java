@@ -1,4 +1,4 @@
-package com.epam.transavia.demo.gui.pages;
+package com.epam.transavia.demo.ui.pages;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -58,7 +58,6 @@ public abstract class CommonPage {
         WebDriverWait wait = new WebDriverWait(driver, SECONDS_TO_WAIT);
         wait.until(ExpectedConditions.visibilityOfAllElements(elements));
     }
-
 
 
     public void scrollToElement(WebElement element) {

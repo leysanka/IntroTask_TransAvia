@@ -1,4 +1,4 @@
-package com.epam.transavia.demo.gui.pages;
+package com.epam.transavia.demo.ui.pages;
 
 import com.epam.transavia.demo.core.exceptions.WrongPageException;
 import org.openqa.selenium.WebDriver;
@@ -9,8 +9,10 @@ public class ViewBookingDetailsPage extends CommonPage {
 
     private static final String BOOKING_DETAILS_PAGE_TITLE = "Booking details";
 
-    @FindBy(xpath = "//div[contains(@class, 'section--green')]//div[@class='front']") private WebElement totalAmountContainer;
-    @FindBy(xpath = "//h2[contains(text(), 'Transaction')]//..//div[@class='amount']") private WebElement totalPaymentContainer;
+    @FindBy(xpath = "//div[contains(@class, 'section--green')]//div[@class='front']")
+    private WebElement totalAmountContainer;
+    @FindBy(xpath = "//h2[contains(text(), 'Transaction')]//..//div[@class='amount']")
+    private WebElement totalPaymentContainer;
 
     public ViewBookingDetailsPage(WebDriver driver) throws WrongPageException {
         super(driver);

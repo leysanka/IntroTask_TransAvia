@@ -4,5 +4,5 @@ import org.openqa.selenium.WebDriver;
 
 public interface WebDriverFactory {
 
-   WebDriver getDriverOf(WebDriverType webDriverType);
+    WebDriver getDriverOf(WebDriverType webDriverType);
 }

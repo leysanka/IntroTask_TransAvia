@@ -1,4 +1,4 @@
-package com.epam.transavia.demo.gui.pages;
+package com.epam.transavia.demo.ui.pages;
 
 import com.epam.transavia.demo.core.exceptions.WrongPageException;
 import org.openqa.selenium.WebDriver;
@@ -15,9 +15,11 @@ public class BookingPage extends CommonPage {
     private List<WebElement> allDatesWithFlights;
     @FindBy(xpath = "//div[(contains(@class, 'notification-error'))]")
     private WebElement searchFlightError;
-    @FindBy(xpath = "//input[contains(@value, 'OutboundFlight')]//ancestor::form//span[@class='price']")
+    //  @FindBy(xpath = "//input[contains(@value, 'OutboundFlight')]//ancestor::form//span[@class='price']")
+    @FindBy(xpath = "//input[contains(@value, 'OutboundFlight')]//ancestor::form//div[contains(@class, 'day-with-availability')]")
     private List<WebElement> outboundFlights;
-    @FindBy(xpath = "//input[contains(@value, 'InboundFlight')]//ancestor::form//span[@class='price']")
+    //  @FindBy(xpath = "//input[contains(@value, 'InboundFlight')]//ancestor::form//span[@class='price']")
+    @FindBy(xpath = "//input[contains(@value, 'InboundFlight')]//ancestor::form//div[contains(@class, 'day-with-availability')]")
     private List<WebElement> inboundFlights;
     @FindBy(xpath = "//section[@class='flight inbound']//div[@class='panel flight-result active']")
     private WebElement selectInboundFlightBtn;
@@ -51,35 +53,11 @@ public class BookingPage extends CommonPage {
     private WebElement selectPlusFareBtn; //+20kg luggage
 
 
-    public BookingPage(WebDriver driver) throws WrongPageException {
+    public BookingPage(WebDriver driver) {
         super(driver);
         if (!driver.getCurrentUrl().contains("book-a-flight")) {
             throw new WrongPageException("Not a Booking page is opened: url " + driver.getCurrentUrl() + " does not contain \"book-a-flight\" part. ");
         }
-    }
-
-    //TODO REmove -moved to BookingService
-    public void selectOutboundFlight(int flightNumber) {
-        int index = flightNumber - 1;
-
-        if (flightNumber > 0) {
-            if (!outboundFlights.isEmpty() && outboundFlights.size() >= flightNumber) {
-                outboundFlights.get(index).click();
-                logger.info(flightNumber + " Outbound flight chosen successfully.");
-            } else logger.error("Cannot select the specified outbound flight by order: " + flightNumber);
-        } else logger.error("Invalid negative index is specified for flights' webelement list.");
-    }
-
-    //TODO REmove -moved to BookingService
-    public void selectInboundFlight(int flightNumber) {
-        int index = flightNumber - 1;
-
-        if (flightNumber > 0) {
-            if (!inboundFlights.isEmpty() && inboundFlights.size() >= flightNumber) {
-                inboundFlights.get(index).click();
-                logger.info(flightNumber + " Inbound flight chosen successfully.");
-            } else logger.error("Cannot select the specified inbound flight by order: " + flightNumber);
-        } else logger.error("Invalid negative index is specified for flights' webelement list.");
     }
 
     public double getPlusFarePrice() {
@@ -87,6 +65,7 @@ public class BookingPage extends CommonPage {
         String text = pricePlusFareContainer.getText(); //here text like "+$48" comes
         int index = text.lastIndexOf(euroSignCode);
         if (index >= 0 && (index + 1) < text.length()) {
+            logger.info("Plus fare price equals: " + text);
             return Double.valueOf(text.substring(index + 1).replaceAll(",", ""));
         } else {
             throw new IndexOutOfBoundsException("Unexpected index for PlusFare text with price.");
@@ -116,6 +95,7 @@ public class BookingPage extends CommonPage {
 
     private void pressSelectFlightButton(WebElement button) {
         waitForLoadingIsFinished();
+        waitForElementIsVisible(button);
         scrollToElement(button);
         waitForElementIsClickable(button);
         button.click();
@@ -150,7 +130,6 @@ public class BookingPage extends CommonPage {
             return null;
         }
     }
-
 
     public double getTotalPricePerBaby() {
         waitForLoadingIsFinished();

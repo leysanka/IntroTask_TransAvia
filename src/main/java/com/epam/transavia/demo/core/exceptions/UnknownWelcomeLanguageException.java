@@ -1,9 +1,9 @@
 package com.epam.transavia.demo.core.exceptions;
 
-public class UnknownLanguageException extends RuntimeException {
-    private  String localError;
+public class UnknownWelcomeLanguageException extends RuntimeException {
+    private String localError;
 
-    public UnknownLanguageException(String s) {
+    public UnknownWelcomeLanguageException(String s) {
         this.localError = s;
     }
 

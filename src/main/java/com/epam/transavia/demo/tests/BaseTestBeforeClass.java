@@ -2,34 +2,51 @@ package com.epam.transavia.demo.tests;
 
 import com.epam.transavia.demo.business_objects.WelcomeScreenLanguages;
 import com.epam.transavia.demo.core.driver.Driver;
-import com.epam.transavia.demo.gui.pages.HomePage;
-import com.epam.transavia.demo.gui.pages.WelcomePage;
+import com.epam.transavia.demo.ui.pages.HomePage;
+import com.epam.transavia.demo.ui.pages.WelcomePage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeSuite;
 
 public class BaseTestBeforeClass {
 
     protected WebDriver driver;
 
     private static String welcomePageUrl = "https://www.transavia.com/";
+    private static String homePageUrl;
+    private static WelcomeScreenLanguages defaultLocale = WelcomeScreenLanguages.OTHER_COUNTRY;
     private static Logger testLogger = LogManager.getLogger("test");
 
-    @BeforeClass
-    protected void setUpBeforeMethod() {
+    @BeforeSuite
+    protected void setUpInitial() {
 
         driver = Driver.getDefaultDriver();
-        //Move to service
         driver.get(welcomePageUrl);
         WelcomePage welcomePage = new WelcomePage(driver);
-        testLogger.info("Try to select Other countries locale...");
-        HomePage homePage = welcomePage.selectLocaleAndOpenHomePage(WelcomeScreenLanguages.OTHER_COUNTRY);
+        testLogger.info("Select Other countries locale: " + defaultLocale);
+        HomePage homePage = welcomePage.selectLocaleAndOpenHomePage(defaultLocale);
+        homePageUrl = driver.getCurrentUrl();
     }
+
+    @BeforeClass
+    protected void navigateToHomePage() {
+        driver = Driver.getDefaultDriver();
+        if (!driver.getCurrentUrl().equals(homePageUrl)) {
+            driver.navigate().to(homePageUrl);
+        }
+        HomePage homePage = new HomePage(driver);
+    }
+
 
     protected Logger getTestLogger() {
         return testLogger;
+    }
+
+    public static String getHomePageUrl() {
+        return homePageUrl;
     }
 
     @AfterSuite()

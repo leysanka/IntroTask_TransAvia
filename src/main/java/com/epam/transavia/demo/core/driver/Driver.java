@@ -23,7 +23,7 @@ public class Driver {
                 break;
             }
             case FIREFOX: {
-                driverFactory =  new FirefoxDriverFactory();
+                driverFactory = new FirefoxDriverFactory();
                 break;
             }
             default: {
@@ -55,7 +55,7 @@ public class Driver {
 
     public static WebDriver getDriverByName(String name) {
         setDefaultDriver(name);
-            return getDefaultDriver();
+        return getDefaultDriver();
     }
 
     public static WebDriver getDefaultDriver() {

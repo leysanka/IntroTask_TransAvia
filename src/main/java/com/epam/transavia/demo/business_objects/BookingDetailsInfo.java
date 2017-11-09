@@ -15,7 +15,6 @@ public class BookingDetailsInfo {
     private String totalPriceAmount;
 
 
-
     public String getBookingNumber() {
         return bookingNumber;
     }
@@ -88,7 +87,7 @@ public class BookingDetailsInfo {
         this.totalPriceAmount = totalPriceAmount;
     }
 
-    public String getFlyingRoute(){
+    public String getFlyingRoute() {
         return "Flying from: " + this.getFlyingFrom() + "; \n Flying to: " + this.getFlyingTo() + ";";
     }
 }

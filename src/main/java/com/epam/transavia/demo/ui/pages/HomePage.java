@@ -1,22 +1,16 @@
-package com.epam.transavia.demo.gui.pages;
+package com.epam.transavia.demo.ui.pages;
 
 import com.epam.transavia.demo.business_objects.PassengersTypes;
-import com.epam.transavia.demo.core.exceptions.InvalidTestDataException;
 import com.epam.transavia.demo.core.exceptions.PageNotCreatedException;
 import com.epam.transavia.demo.core.exceptions.WrongPageException;
-import com.epam.transavia.demo.util.DateTimeHelper;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import java.time.LocalDate;
 import java.util.List;
 
 
 public class HomePage extends CommonPage {
-
-    private static final int MAX_PASSENGERS_TO_FILL = 10;
-    private static final String homePageEnEuUrl = "https://www.transavia.com/en-EU/home/";
 
     @FindBy(xpath = "//a[@href='/en-EU/home']")
     private WebElement welcomeOtherCountries;
@@ -83,10 +77,6 @@ public class HomePage extends CommonPage {
         }
     }
 
-    public static String getHomePageEnEuUrl() {
-        return homePageEnEuUrl;
-    }
-
     public boolean whereToGoWindowIsDisplayed() {
 
         return isElementVisible(getBy("whereToGoWindow"));
@@ -115,12 +105,12 @@ public class HomePage extends CommonPage {
 
     }
 
-    public boolean isMatchFromDestinationFieldText(String airportValue) {
-        return fromField.getAttribute("value").equals(airportValue);
+    public String getFromDestinationFieldText(String airportValue) {
+        return fromField.getAttribute("value");
     }
 
-    public boolean isMatchToDestinationFieldText(String airportValue) {
-        return toField.getAttribute("value").equals(airportValue);
+    public String getToDestinationFieldText(String airportValue) {
+        return toField.getAttribute("value");
     }
 
     public void selectDestinationFromDropDown(int item) {
@@ -147,11 +137,6 @@ public class HomePage extends CommonPage {
         returnOnCheckBox.click();
     }
 
-    //TODO Should be placed somewhere in TestData layer -> DONE moved to DateTimeConverter
-    public static String calculateDateNowPlusLag(long lagDays) {
-        return DateTimeHelper.convertLocalDateToSourceStringFormat(LocalDate.now().plusDays(lagDays));
-    }
-
     public void setDepartOnDateField(String date) {
         departOnDateField.clear();
         departOnDateField.sendKeys(date);
@@ -162,24 +147,6 @@ public class HomePage extends CommonPage {
         returnOnDateField.sendKeys(date);
     }
 
-    //TODO Remove after refactoring
-    public void setDepartOnDateFieldPlusLag(long lagDays) {
-
-        departOnDateField.clear();
-        departOnDateField.sendKeys(calculateDateNowPlusLag(lagDays));
-    }
-
-    //TODO Remove after refactoring
-    public void setReturnOnDateFieldPlusLag(long lagDays) {
-
-        returnOnDateField.clear();
-        returnOnDateField.sendKeys(calculateDateNowPlusLag(lagDays));
-    }
-
-    public boolean returnOnDateIsSet() {
-        return !getSelectedReturnOnDate().isEmpty();
-    }
-
     public String getSelectedDepartOnDate() {
         return departOnDateField.getAttribute("value");
     }
@@ -188,8 +155,8 @@ public class HomePage extends CommonPage {
         return returnOnDateField.getAttribute("value");
     }
 
-    public boolean isCorrectPassengersCountShown(String expPassengers) {
-        return passengersField.getAttribute("value").contains(expPassengers);
+    public String getPassengersFieldValueShown() {
+        return passengersField.getAttribute("value");
     }
 
     public void passengersFieldActivate() {
@@ -197,28 +164,10 @@ public class HomePage extends CommonPage {
     }
 
     public boolean isVisiblePassengersPopup() {
-        return passengersPopUp.isDisplayed();
+        return isElementVisible(getBy("passengersPopUp"));
     }
 
-    //DONE may be can be done as one method for any passenger add child, baby, adult-> need to think how
-    //TODO Remove after tests are refactored
-    public void addAdultPassengers(int adultsCount) throws InvalidTestDataException {
-        if (adultsCount >= 0 && adultsCount <= MAX_PASSENGERS_TO_FILL) {
-            passengersField.click();
-            //    adultsCountBox.clear();
-            for (int i = 0; i < adultsCount; i++) {
-                if (adultsIncreaseBtn.isEnabled()) {
-                    adultsIncreaseBtn.click();
-                    logger.info((i + 1) + " passenger added.");
-                    passengersField.click();
-                } else break;
-            }
-        } else {
-            throw new InvalidTestDataException("Invalid input for adults count to add, or adultsIncrease button is not enabled.");
-        }
-    }
-
-    public void addAdultPassenger() {
+    public void increaseAdultPassenger() {
 
         if (adultsIncreaseBtn.isEnabled()) {
             adultsIncreaseBtn.click();
@@ -227,7 +176,7 @@ public class HomePage extends CommonPage {
         }
     }
 
-    public void addChildPassenger() {
+    public void increaseChildPassenger() {
 
         if (childrenIncreaseBtn.isEnabled()) {
             childrenIncreaseBtn.click();
@@ -236,7 +185,7 @@ public class HomePage extends CommonPage {
         }
     }
 
-    public void addBabyPassenger() {
+    public void increaseBabyPassenger() {
 
         if (babiesIncreaseBtn.isEnabled()) {
             babiesIncreaseBtn.click();
@@ -267,11 +216,11 @@ public class HomePage extends CommonPage {
     }
 
     public ManageBookingPage openManageBookingToolbar() throws PageNotCreatedException {
-        if (manageYourBookingBtn.isDisplayed()) {
+        if (isElementVisible(getBy("manageYourBookingBtn"))) {
             manageYourBookingBtn.click();
             return new ManageBookingPage(driver);
         } else {
-            throw new PageNotCreatedException("ManageBooking booking page is not opened.");
+            throw new PageNotCreatedException("ManageBooking booking page is not opened due to not visible.");
         }
     }
 }

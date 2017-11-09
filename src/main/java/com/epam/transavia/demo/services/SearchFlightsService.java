@@ -4,8 +4,9 @@ import com.epam.transavia.demo.business_objects.NewBooking;
 import com.epam.transavia.demo.business_objects.PassengersTypes;
 import com.epam.transavia.demo.core.driver.Driver;
 import com.epam.transavia.demo.core.exceptions.InvalidTestDataException;
-import com.epam.transavia.demo.gui.pages.BookingPage;
-import com.epam.transavia.demo.gui.pages.HomePage;
+import com.epam.transavia.demo.ui.pages.BookingPage;
+import com.epam.transavia.demo.ui.pages.HomePage;
+import com.epam.transavia.demo.tests.BaseTestBeforeClass;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -16,8 +17,11 @@ public class SearchFlightsService {
     private static final int MAX_PASSENGERS_TO_FILL = 10;
 
     public boolean navigateToWhereToGoWindow() {
-        if (!HomePage.getHomePageEnEuUrl().equals(driver.getCurrentUrl())) {
+  /*      if (!HomePage.getHomePageEnEuUrl().equals(driver.getCurrentUrl())) {
             driver.navigate().to(HomePage.getHomePageEnEuUrl());
+        }*/
+        if (!BaseTestBeforeClass.getHomePageUrl().equals(driver.getCurrentUrl())) {
+            driver.navigate().to(BaseTestBeforeClass.getHomePageUrl());
         }
         return (new HomePage(driver).whereToGoWindowIsDisplayed());
     }
@@ -66,15 +70,15 @@ public class SearchFlightsService {
 
     private void addPassengers(int passengersCountToAdd, PassengersTypes passengerType) {
         if (passengerType == PassengersTypes.ADULTS) {
-            passengersCountToAdd = passengersCountToAdd - 1; //As 1 Adult is set by default in page and Passengers field is not editable to be cleared.
+            passengersCountToAdd = passengersCountToAdd - 1; //As 1 Adult is set by default in the form and Passengers field is not editable to be cleared.
         }
         if (passengersCountToAdd > 0 && passengersCountToAdd < MAX_PASSENGERS_TO_FILL) {
             HomePage homePage = new HomePage(driver);
             homePage.passengersFieldActivate();
             logger.info("Passengers field is activated.");
-            for (int i = 0; i < passengersCountToAdd; i++) {
+            for (int i = 1; i <= passengersCountToAdd; i++) {
                 addPassengerOfType(passengerType);
-                logger.info("Passenger added: " + i + passengerType.toString());
+                logger.info("Passenger added: " + i + " " + passengerType.toString());
             }
         } else {
             throw new InvalidTestDataException("Invalid passengers count to add is specified: " + passengersCountToAdd + passengerType.toString());
@@ -86,16 +90,16 @@ public class SearchFlightsService {
         HomePage homePage = new HomePage(driver);
         switch (passengerType) {
             case ADULTS:
-                homePage.addAdultPassenger();
+                homePage.increaseAdultPassenger();
                 break;
             case CHILDREN:
-                homePage.addChildPassenger();
+                homePage.increaseChildPassenger();
                 break;
             case BABIES:
-                homePage.addBabyPassenger();
+                homePage.increaseBabyPassenger();
                 break;
             default:
-                throw new IllegalArgumentException("Unknow passenger type: " + passengerType);
+                throw new IllegalArgumentException("Unknown passenger type: " + passengerType);
         }
     }
 

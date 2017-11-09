@@ -1,4 +1,4 @@
-package com.epam.transavia.demo.gui.pages;
+package com.epam.transavia.demo.ui.pages;
 
 import com.epam.transavia.demo.business_objects.BookingDetailsInfo;
 import com.epam.transavia.demo.core.exceptions.WrongPageException;
@@ -8,18 +8,22 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 
-public class LoginPage extends CommonPage{
+public class LoginPage extends CommonPage {
 
     private final String LOGIN_PAGE_TITLE = "Log in";
 
     //View your booking without an account
-    @FindBy(xpath = "//input[@id = 'retrieveBookingByLastname_RecordLocator']") private WebElement bookingNumberField;
-    @FindBy(xpath = "//input[@id = 'retrieveBookingByLastname_LastName']") private WebElement lastNameField;
-    @FindBy(xpath = "//input[@id = 'retrieveBookingByLastname_FlightDate-datepicker']") private WebElement flightDateField;
-    @FindBy(xpath = "//button [text()='View booking']") private WebElement viewBookingBtn;
+    @FindBy(xpath = "//input[@id = 'retrieveBookingByLastname_RecordLocator']")
+    private WebElement bookingNumberField;
+    @FindBy(xpath = "//input[@id = 'retrieveBookingByLastname_LastName']")
+    private WebElement lastNameField;
+    @FindBy(xpath = "//input[@id = 'retrieveBookingByLastname_FlightDate-datepicker']")
+    private WebElement flightDateField;
+    @FindBy(xpath = "//button [text()='View booking']")
+    private WebElement viewBookingBtn;
 
 
-    public LoginPage(WebDriver driver)  {
+    public LoginPage(WebDriver driver) {
         super(driver);
         if (!LOGIN_PAGE_TITLE.equals(driver.getTitle())) {
             throw new WrongPageException("Login page title does not meet to the expected one: " + LOGIN_PAGE_TITLE);
