@@ -62,6 +62,7 @@ public class Driver {
         return getDriverSingleInstance(defaultBrowserType);
     }
 
+    //TODO Enum exception handler
     public static void setDefaultDriver(String name) {
         try {
             defaultBrowserType = WebDriverType.valueOf(name.toUpperCase());

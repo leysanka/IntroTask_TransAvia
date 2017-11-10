@@ -10,11 +10,11 @@ import org.testng.annotations.Test;
 
 public class BookingPriceCalculationTests extends BaseTestBeforeClass {
 
-    BookingService bookingService;
-    SearchFlightsService flightService;
-    NewBooking newBooking;
+    private BookingService bookingService;
+    private SearchFlightsService flightService;
+    private NewBooking newBooking;
 
-    @BeforeClass
+    @BeforeClass () //dependsOnMethods = "navigateToHomePage"
     public void setupForBookingTests() {
         flightService = new SearchFlightsService();
         bookingService = new BookingService();

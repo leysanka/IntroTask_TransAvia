@@ -35,28 +35,28 @@ public class ViewBookingWithoutAccountTests extends BaseTestBeforeClass {
         actualBookingDetailsInfo = viewBookingService.fetchBookingInfoFromBookingDetails();
     }
 
-    @Test(priority = 1, description = "Verify that the expected Booking ID is loaded in ViewBooking after login without account,ie. via BookingNumb, LastName and FlightDate.")
+    @Test(description = "Verify that the expected Booking ID is loaded in ViewBooking after login without account,ie. via BookingNumb, LastName and FlightDate.")
     public void viewBookingWithoutAccountBookingIsLoaded() {
-        Assert.assertEquals(actualViewBookingInfo.getBookingNumber(), testBookingInfo.getBookingNumber(), "Not equal");
+               Assert.assertEquals(actualViewBookingInfo.getBookingNumber(), testBookingInfo.getBookingNumber(), "Not equal");
     }
 
-    @Test(priority = 1, description = "Verify Flying From/To fetched from ViewBooking are the same as expected for testing booking.")
+    @Test(description = "Verify Flying From/To fetched from ViewBooking are the same as expected for testing booking.")
     public void viewBookingWithoutAccountBookingRouteIsCorrect() {
 
-        Assert.assertEquals(actualViewBookingInfo.getFlyingFrom(), testBookingInfo.getFlyingFrom(), "Flying From destination does not match to the expected: " + testBookingInfo.getFlyingFrom());
-        Assert.assertEquals(actualViewBookingInfo.getFlyingTo(), testBookingInfo.getFlyingTo(), "Flying To destination does not match to the expected: " + testBookingInfo.getFlyingTo());
+        Assert.assertEquals(actualViewBookingInfo.getFlyingFrom(),testBookingInfo.getFlyingFrom(), "Flying From destination does not match to the expected: " + testBookingInfo.getFlyingFrom());
+        Assert.assertEquals(actualViewBookingInfo.getFlyingTo(),testBookingInfo.getFlyingTo(), "Flying To destination does not match to the expected: " + testBookingInfo.getFlyingTo());
     }
 
-    @Test(priority = 1, description = "Verify times fetched from ViewBooking page: Arrival time is later than Departure.")
+    @Test(description = "Verify times fetched from ViewBooking page: Arrival time is later than Departure.")
     public void viewBookingWithoutAccountBookingArrivalTimeIsCorrect() {
         Assert.assertTrue(actualViewBookingInfo.getArrivalTime().isAfter(actualViewBookingInfo.getDepartureTime()), "Arrival time is not after the departure time.");
     }
 
-    @Test(priority = 1, description = "Verify Total Price and Total Payment values fetched from ViewBooking -> BookingDetails are equal.")
+    @Test(description = "Verify Total Price and Total Payment values fetched from ViewBooking -> BookingDetails are equal.")
     public void viewBookingWithoutAccountBookingDetailsPaymentIsCorrect() {
-        Assert.assertEquals(actualBookingDetailsInfo.getTotalPaymentAmount(), actualBookingDetailsInfo.getTotalPriceAmount(),
-                "Total payment amount does not equal to the Total price amount. Payment is " + actualBookingDetailsInfo.getTotalPaymentAmount()
-                + ". Price is " + actualBookingDetailsInfo.getTotalPriceAmount() + ".");
+        Assert.assertEquals(actualBookingDetailsInfo.getTotalPaymentAmount(),actualBookingDetailsInfo.getTotalPriceAmount(),
+                "Total payment amount does not equal to the Total price amount. Payment is " +actualBookingDetailsInfo.getTotalPaymentAmount()
+                + ". Price is " + actualBookingDetailsInfo.getTotalPriceAmount() + "." );
     }
 
     @DataProvider(name = "bookingAndFlightInfoProvider")

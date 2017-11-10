@@ -11,7 +11,7 @@ import java.util.List;
 
 public class BookingService {
 
-    private static WebDriver driver = Driver.getDefaultDriver();
+    private WebDriver driver = Driver.getDefaultDriver();
     private static Logger logger = LogManager.getLogger();
 
 

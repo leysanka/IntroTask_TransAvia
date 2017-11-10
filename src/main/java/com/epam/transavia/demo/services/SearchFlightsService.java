@@ -12,14 +12,13 @@ import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 
 public class SearchFlightsService {
-    private static WebDriver driver = Driver.getDefaultDriver();
+
+    private WebDriver driver = Driver.getDefaultDriver();
     private static Logger logger = LogManager.getLogger();
     private static final int MAX_PASSENGERS_TO_FILL = 10;
 
     public boolean navigateToWhereToGoWindow() {
-  /*      if (!HomePage.getHomePageEnEuUrl().equals(driver.getCurrentUrl())) {
-            driver.navigate().to(HomePage.getHomePageEnEuUrl());
-        }*/
+
         if (!BaseTestBeforeClass.getHomePageUrl().equals(driver.getCurrentUrl())) {
             driver.navigate().to(BaseTestBeforeClass.getHomePageUrl());
         }
@@ -74,7 +73,7 @@ public class SearchFlightsService {
         }
         if (passengersCountToAdd > 0 && passengersCountToAdd < MAX_PASSENGERS_TO_FILL) {
             HomePage homePage = new HomePage(driver);
-            homePage.passengersFieldActivate();
+            homePage.passengersPopUpActivate();
             logger.info("Passengers field is activated.");
             for (int i = 1; i <= passengersCountToAdd; i++) {
                 addPassengerOfType(passengerType);
@@ -86,6 +85,7 @@ public class SearchFlightsService {
 
     }
 
+    //TODO: Set custom exception
     private void addPassengerOfType(PassengersTypes passengerType) {
         HomePage homePage = new HomePage(driver);
         switch (passengerType) {

@@ -10,7 +10,7 @@ import org.openqa.selenium.support.FindBy;
 
 public class LoginPage extends CommonPage {
 
-    private final String LOGIN_PAGE_TITLE = "Log in";
+    private static final String LOGIN_PAGE_TITLE = "Log in";
 
     //View your booking without an account
     @FindBy(xpath = "//input[@id = 'retrieveBookingByLastname_RecordLocator']")

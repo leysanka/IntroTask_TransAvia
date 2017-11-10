@@ -10,7 +10,7 @@ import java.util.List;
 
 public class ViewBookingPage extends CommonPage {
 
-    private final String VIEW_BOOKING_PAGE_TITLE = "View your booking";
+    private static final String VIEW_BOOKING_PAGE_TITLE = "View your booking";
 
     @FindBy(xpath = "//em//time")
     private List<WebElement> deptAndArrivalTimes;
@@ -50,11 +50,6 @@ public class ViewBookingPage extends CommonPage {
 
     public String getFlyingTo() {
         return flyingRoute.get(1).getText();
-    }
-
-
-    public void pressBookingDetailsBtn() {
-        bookingDetailsBtn.click();
     }
 
     public ViewBookingDetailsPage openBookingDetails() throws WrongPageException {

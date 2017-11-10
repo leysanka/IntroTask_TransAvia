@@ -2,7 +2,7 @@ package com.epam.transavia.demo.business_objects.bo_factory;
 
 import com.epam.transavia.demo.business_objects.NewBooking;
 
-public class NewBookingFactory {
+public class NewBookingStaticFactory {
 
     public static NewBooking createNotFlyingBooking() {
         NewBooking newBooking = new NewBooking();

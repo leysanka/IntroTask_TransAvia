@@ -60,6 +60,7 @@ public class BookingPage extends CommonPage {
         }
     }
 
+    //TODO: more common
     public double getPlusFarePrice() {
         int euroSignCode = 8364;
         String text = pricePlusFareContainer.getText(); //here text like "+$48" comes
@@ -123,7 +124,7 @@ public class BookingPage extends CommonPage {
     }
 
     public String getSearchFlightError() {
-        if (isElementVisible(getBy("searchFlightError"))) {
+        if (isElementPresent(getBy("searchFlightError"))) {
             return searchFlightError.getText();
         } else {
             logger.error("The error message element is not visible.");
@@ -142,7 +143,7 @@ public class BookingPage extends CommonPage {
         logger.info("Get Total price per adult started...");
         return this.getPriceFromInnerHTML(pricesPerAdultContainer);
     }
-
+//TODO: Add inner HTML get into Common and other move to util or service
     public double getPriceFromInnerHTML(List<WebElement> pricesContainer) {
         double totalPrice = 0;
         for (WebElement element :

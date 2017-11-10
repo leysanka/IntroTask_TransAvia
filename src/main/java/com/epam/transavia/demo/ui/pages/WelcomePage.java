@@ -33,10 +33,9 @@ public class WelcomePage extends CommonPage {
     }
 
     public HomePage selectLocaleAndOpenHomePage(WelcomeScreenLanguages languageToSelect) {
-        WebElement elementToClick = getLanguageWebElement(languageToSelect.toString());
-        //is element present -> add method to CommonPage as FindElements(By)=null? not present: present;
-        if (elementToClick.isDisplayed()) {
-            elementToClick.click();
+        WebElement elementToSelect = getLanguageWebElement(languageToSelect.toString());
+        if (elementToSelect != null) {
+            elementToSelect.click();
             return new HomePage(driver);
         } else {
             throw new PageNotCreatedException("Home Page is not created after Language selection in Welcome screen.");
@@ -47,16 +46,18 @@ public class WelcomePage extends CommonPage {
         if (languages != null) {
             languages.clear();
         }
-        int i = 0;
-        for (WebElement element : allLanguagesList) {
-            String langName = allLanguagesList.get(i).getText().replaceAll("\\s", "_").toUpperCase();
-            WebElement elementID = allLanguagesList.get(i);
-            languages.put(langName, elementID);
-            i++;
+        if (!allLanguagesList.isEmpty()) {
+            int i = 0;
+            for (WebElement element : allLanguagesList) {
+                String langName = allLanguagesList.get(i).getText().replaceAll("\\s", "_").toUpperCase();
+                WebElement webElement = allLanguagesList.get(i);
+                languages.put(langName, webElement);
+                i++;
+            }
         }
         return languages;
     }
-
+//TODO refactor enum with exception handler
     private WebElement getLanguageWebElement(String name) {
         WebElement languageWebElement = null;
         languages = populateMapWithLanguagesFromWelcomePage();

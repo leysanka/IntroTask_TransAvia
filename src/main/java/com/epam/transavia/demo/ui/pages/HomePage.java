@@ -79,7 +79,7 @@ public class HomePage extends CommonPage {
 
     public boolean whereToGoWindowIsDisplayed() {
 
-        return isElementVisible(getBy("whereToGoWindow"));
+        return isElementPresent(getBy("whereToGoWindow"));
     }
 
     public void fromFieldActivate() {
@@ -114,18 +114,15 @@ public class HomePage extends CommonPage {
     }
 
     public void selectDestinationFromDropDown(int item) {
-        if (destinationDropDown.isDisplayed()) {
-            try {
+        if (isElementPresent(getBy("destinationDropDown")) && !dropdownDestinationValuesFrom.isEmpty()) {
+            if (item > 0 && dropdownDestinationValuesFrom.size() >= item) {
                 dropdownDestinationValuesFrom.get(item).click();
-            } catch (IndexOutOfBoundsException e) {
-                e.printStackTrace();
-                logger.error("Invalid index specified for the destination airports drop-down values");
+            } else {
+                logger.error("Invalid item number for the From destinations drop-down list.");
             }
+        } else {
+            logger.error("Destination drop-down is not opened or empty.");
         }
-    }
-
-    public int getFromDestinationsCount() {
-        return dropdownDestinationValuesFrom.size();
     }
 
     public boolean returnOnIsChecked() {
@@ -155,16 +152,18 @@ public class HomePage extends CommonPage {
         return returnOnDateField.getAttribute("value");
     }
 
-    public String getPassengersFieldValueShown() {
+    public String getPassengersFieldValue() {
         return passengersField.getAttribute("value");
     }
 
-    public void passengersFieldActivate() {
-        passengersField.click();
+    public void passengersPopUpActivate() {
+      if (!isDisplayedPassengersPopup()) {
+          passengersField.click();
+      }
     }
 
-    public boolean isVisiblePassengersPopup() {
-        return isElementVisible(getBy("passengersPopUp"));
+    public boolean isDisplayedPassengersPopup() {
+        return passengersPopUp.isDisplayed(); //isDisplayed works properly there
     }
 
     public void increaseAdultPassenger() {
@@ -194,6 +193,7 @@ public class HomePage extends CommonPage {
         }
     }
 
+    //TODO Refactoring add Enum exception handler
     public String getPassengersCountBoxValue(String type) throws IllegalArgumentException {
 
         PassengersTypes pt = PassengersTypes.valueOf(type.toUpperCase()); //throws exc here
@@ -216,7 +216,7 @@ public class HomePage extends CommonPage {
     }
 
     public ManageBookingPage openManageBookingToolbar() throws PageNotCreatedException {
-        if (isElementVisible(getBy("manageYourBookingBtn"))) {
+        if (isElementPresent(getBy("manageYourBookingBtn"))) {
             manageYourBookingBtn.click();
             return new ManageBookingPage(driver);
         } else {

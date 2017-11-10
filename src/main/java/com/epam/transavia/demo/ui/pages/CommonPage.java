@@ -26,7 +26,7 @@ public abstract class CommonPage {
         PageFactory.initElements(driver, this);
     }
 
-    public boolean isElementVisible(By by) {
+    public boolean isElementPresent(By by) {
         return !driver.findElements(by).isEmpty();
     }
 

@@ -19,11 +19,11 @@ public class ManageBookingPage extends CommonPage {
     }
 
     public boolean manageBookingPanelIsOpened() {
-        return manageYourBookingPanel.isDisplayed();
+        return manageYourBookingPanel.isDisplayed(); //isDisplayed works properly there -returns true or false
     }
 
     public LoginPage goToViewBooking() throws PageNotCreatedException, WrongPageException {
-        if (viewYourBookingIcon.isDisplayed()) {
+        if (viewYourBookingIcon.isDisplayed()) { //isDisplayed works properly there -returns true or false
             viewYourBookingIcon.click();
             return new LoginPage(driver);
         } else {

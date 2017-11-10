@@ -12,7 +12,7 @@ import org.openqa.selenium.WebDriver;
 
 public class ViewBookingService {
 
-    private static WebDriver driver = Driver.getDefaultDriver();
+    private WebDriver driver = Driver.getDefaultDriver();
     private static Logger logger = LogManager.getLogger();
 
     public void loginToViewBookingWithoutAccountTest(BookingDetailsInfo bookingDetailsInfo) {

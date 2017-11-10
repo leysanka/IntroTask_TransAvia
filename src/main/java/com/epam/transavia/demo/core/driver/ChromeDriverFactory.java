@@ -6,8 +6,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
-import java.util.concurrent.TimeUnit;
-
 public class ChromeDriverFactory implements WebDriverFactory {
     private static final int TIMEOUT_IN_SEC = 10;
 
@@ -26,13 +24,4 @@ public class ChromeDriverFactory implements WebDriverFactory {
 
         return capabilities;
     }
-
-    private static void chromeBrowserSetUp(WebDriver driver) {
-
-        driver.manage().deleteAllCookies();
-        driver.manage().timeouts().implicitlyWait(TIMEOUT_IN_SEC, TimeUnit.SECONDS);
-        driver.manage().window().maximize();
-    }
-
-
 }

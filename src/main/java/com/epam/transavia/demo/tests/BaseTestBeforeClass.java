@@ -15,7 +15,7 @@ public class BaseTestBeforeClass {
 
     protected WebDriver driver;
 
-    private static String welcomePageUrl = "https://www.transavia.com/";
+    private static final String WELCOME_PAGE_URL = "https://www.transavia.com/";
     private static String homePageUrl;
     private static WelcomeScreenLanguages defaultLocale = WelcomeScreenLanguages.OTHER_COUNTRY;
     private static Logger testLogger = LogManager.getLogger("test");
@@ -24,7 +24,7 @@ public class BaseTestBeforeClass {
     protected void setUpInitial() {
 
         driver = Driver.getDefaultDriver();
-        driver.get(welcomePageUrl);
+        driver.get(WELCOME_PAGE_URL);
         WelcomePage welcomePage = new WelcomePage(driver);
         testLogger.info("Select Other countries locale: " + defaultLocale);
         HomePage homePage = welcomePage.selectLocaleAndOpenHomePage(defaultLocale);
