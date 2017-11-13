@@ -9,6 +9,6 @@ public class UnknownWelcomeLanguageException extends RuntimeException {
 
     @Override
     public String getMessage() {
-        return this.localError + "System error: " + super.getMessage();
+        return this.localError + "\nSystem error: " + super.getMessage();
     }
 }

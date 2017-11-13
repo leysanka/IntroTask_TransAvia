@@ -2,7 +2,6 @@ package com.epam.transavia.demo.ui.pages;
 
 import com.epam.transavia.demo.business_objects.WelcomeScreenLanguages;
 import com.epam.transavia.demo.core.exceptions.PageNotCreatedException;
-import com.epam.transavia.demo.core.exceptions.UnknownWelcomeLanguageException;
 import com.epam.transavia.demo.core.exceptions.WrongPageException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -26,14 +25,14 @@ public class WelcomePage extends CommonPage {
     public WelcomePage(WebDriver driver) {
         super(driver);
         if (!WELCOME_PAGE_TITLE.equals(driver.getTitle())) {
-            throw new WrongPageException("Welcome screen title does not match to the expected: " + WELCOME_PAGE_TITLE);
+            throw new WrongPageException("Welcome screen title does not match to the expected: " + WELCOME_PAGE_TITLE + "\n");
         } else {
             logger.info("Welcome page initialized successfully.");
         }
     }
 
     public HomePage selectLocaleAndOpenHomePage(WelcomeScreenLanguages languageToSelect) {
-        WebElement elementToSelect = getLanguageWebElement(languageToSelect.toString());
+        WebElement elementToSelect = getLanguageWebElement(languageToSelect);
         if (elementToSelect != null) {
             elementToSelect.click();
             return new HomePage(driver);
@@ -49,6 +48,7 @@ public class WelcomePage extends CommonPage {
         if (!allLanguagesList.isEmpty()) {
             int i = 0;
             for (WebElement element : allLanguagesList) {
+                /*Fetch each language's text from all languages list on Welcome page and convert it to enum-like format.*/
                 String langName = allLanguagesList.get(i).getText().replaceAll("\\s", "_").toUpperCase();
                 WebElement webElement = allLanguagesList.get(i);
                 languages.put(langName, webElement);
@@ -58,15 +58,12 @@ public class WelcomePage extends CommonPage {
         return languages;
     }
 
-    //TODO refactor enum with exception handler
-    private WebElement getLanguageWebElement(String name) {
+    //TODO Verify working after transavia is recovered!
+    private WebElement getLanguageWebElement(WelcomeScreenLanguages enumLang) {
         WebElement languageWebElement = null;
         languages = populateMapWithLanguagesFromWelcomePage();
-        if (languages.containsKey(name)) {
-            languageWebElement = languages.get(name);
-        } else {
-            logger.error("No such language is present in the HashMap.");
-            throw new UnknownWelcomeLanguageException("No such language is present in the HashMap.");
+        if (WelcomeScreenLanguages.isEnumLangPresentInMap(enumLang, languages)) {
+            languageWebElement = languages.get(enumLang.toString());
         }
         return languageWebElement;
     }

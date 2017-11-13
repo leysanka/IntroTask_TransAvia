@@ -2,6 +2,7 @@ package com.epam.transavia.demo.ui.pages;
 
 import com.epam.transavia.demo.business_objects.PassengersTypes;
 import com.epam.transavia.demo.core.exceptions.PageNotCreatedException;
+import com.epam.transavia.demo.core.exceptions.UnknownPassengerTypeException;
 import com.epam.transavia.demo.core.exceptions.WrongPageException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -193,12 +194,9 @@ public class HomePage extends CommonPage {
         }
     }
 
-    //TODO Refactoring add Enum exception handler
-    public String getPassengersCountBoxValue(String type) throws IllegalArgumentException {
+    public String getPassengersCountBoxValue(String type) {
 
-        PassengersTypes pt = PassengersTypes.valueOf(type.toUpperCase()); //throws exc here
-
-        switch (pt) {
+        switch (PassengersTypes.getPassengerOfType(type)) {
             case ADULTS:
                 return adultsCountBox.getAttribute("value");
             case CHILDREN:
@@ -206,7 +204,7 @@ public class HomePage extends CommonPage {
             case BABIES:
                 return babiesCountBox.getAttribute("value");
             default:
-                throw new IllegalArgumentException(); //doesn't get there
+                throw new UnknownPassengerTypeException(type + " is undefined passenger type in PassengersTypes enum.");
         }
     }
 

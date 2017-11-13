@@ -62,13 +62,8 @@ public class Driver {
         return getDriverSingleInstance(defaultBrowserType);
     }
 
-    //TODO Enum exception handler
     public static void setDefaultDriver(String name) {
-        try {
-            defaultBrowserType = WebDriverType.valueOf(name.toUpperCase());
-        } catch (IllegalArgumentException e) {
-            throw new UnknownDriverTypeException(name + " is not supported browser type.\nSystem error: " + e.getMessage());
-        }
+        defaultBrowserType = WebDriverType.getWebDriverType(name);
     }
 
     public static void clearInstances() {

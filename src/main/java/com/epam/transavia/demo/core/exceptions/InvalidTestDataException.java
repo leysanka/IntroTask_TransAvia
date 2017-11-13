@@ -9,6 +9,6 @@ public class InvalidTestDataException extends RuntimeException {
 
     @Override
     public String getMessage() {
-        return this.testDataError + super.getMessage();
+        return this.testDataError + "\n" + "System error: " + super.getMessage();
     }
 }

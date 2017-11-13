@@ -23,7 +23,7 @@ public class BaseTestBeforeClass {
     @BeforeSuite
     protected void setUpInitial() {
 
-        driver = Driver.getDefaultDriver();
+        driver = Driver.getDriverByName("chrome");
         driver.get(WELCOME_PAGE_URL);
         WelcomePage welcomePage = new WelcomePage(driver);
         testLogger.info("Select Other countries locale: " + defaultLocale);
@@ -33,6 +33,7 @@ public class BaseTestBeforeClass {
 
     @BeforeClass
     protected void navigateToHomePage() {
+
         driver = Driver.getDefaultDriver();
         if (!driver.getCurrentUrl().equals(homePageUrl)) {
             driver.navigate().to(homePageUrl);
