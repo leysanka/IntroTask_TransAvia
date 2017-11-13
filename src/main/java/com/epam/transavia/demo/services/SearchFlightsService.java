@@ -62,7 +62,7 @@ public class SearchFlightsService {
     }
 
     public void addRequiredPassengers(NewBooking newBooking) {
-       // if ()
+        // if ()
         addPassengers(newBooking.getAdultsCount(), PassengersTypes.ADULTS);
         addPassengers(newBooking.getChildrenCount(), PassengersTypes.CHILDREN);
         addPassengers(newBooking.getBabiesCount(), PassengersTypes.BABIES);

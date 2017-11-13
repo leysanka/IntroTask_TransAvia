@@ -5,30 +5,30 @@
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
-        <RollingFile name = "file" filename = "logs/logfile.log" filePattern = "logs/logfile -%d.log">
+        <RollingFile name="file" filename="logs/logfile.log" filePattern="logs/logfile -%d.log">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
             <Policies>
-                <TimeBasedTriggeringPolicy interval = "1" modulate = "true"/>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
             </Policies>
         </RollingFile>
-        <RollingFile name = "testfile" filename = "logs/test_logfile.log" filePattern = "logs/test_logfile -%d.log">
+        <RollingFile name="testfile" filename="logs/test_logfile.log" filePattern="logs/test_logfile -%d.log">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
             <Policies>
-                <TimeBasedTriggeringPolicy interval = "1" modulate = "true"/>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
             </Policies>
         </RollingFile>
     </Appenders>
 
     <Loggers>
 
-        <Logger name= "test" level="all" additivity="true">
+        <Logger name="test" level="all" additivity="true">
             <!--<AppenderRef ref="Console"/>-->
-            <AppenderRef ref = "testfile"/>
+            <AppenderRef ref="testfile"/>
         </Logger>
         <!-- Root Logger -->
         <Root level="all">
             <AppenderRef ref="Console"/>
-            <AppenderRef ref = "file"/>
+            <AppenderRef ref="file"/>
         </Root>
 
     </Loggers>

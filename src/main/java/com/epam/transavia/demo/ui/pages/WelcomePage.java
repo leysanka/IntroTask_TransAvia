@@ -57,7 +57,8 @@ public class WelcomePage extends CommonPage {
         }
         return languages;
     }
-//TODO refactor enum with exception handler
+
+    //TODO refactor enum with exception handler
     private WebElement getLanguageWebElement(String name) {
         WebElement languageWebElement = null;
         languages = populateMapWithLanguagesFromWelcomePage();

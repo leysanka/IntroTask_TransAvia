@@ -7,6 +7,6 @@ public class FirefoxDriverFactory implements WebDriverFactory {
 
     @Override
     public WebDriver getDriverOf(WebDriverType webDriverType) {
-         return new FirefoxDriver();
+        return new FirefoxDriver();
     }
 }

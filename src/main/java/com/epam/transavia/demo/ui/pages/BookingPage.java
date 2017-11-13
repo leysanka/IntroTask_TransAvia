@@ -143,7 +143,8 @@ public class BookingPage extends CommonPage {
         logger.info("Get Total price per adult started...");
         return this.getPriceFromInnerHTML(pricesPerAdultContainer);
     }
-//TODO: Add inner HTML get into Common and other move to util or service
+
+    //TODO: Add inner HTML get into Common and other move to util or service
     public double getPriceFromInnerHTML(List<WebElement> pricesContainer) {
         double totalPrice = 0;
         for (WebElement element :

@@ -15,7 +15,7 @@ public class BookingPriceCalculationTests extends BaseTestBeforeClass {
     private SearchFlightsService flightService;
     private NewBooking newBooking;
 
-    @BeforeClass ()
+    @BeforeClass()
     public void setupForBookingTests() {
         flightService = new SearchFlightsService();
         bookingService = new BookingService();

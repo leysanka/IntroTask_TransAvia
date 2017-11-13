@@ -48,7 +48,7 @@ public class NewBookingBuilder {
         return this;
     }
 
-    public NewBooking getBooking(){
+    public NewBooking getBooking() {
         return new NewBooking(this);
     }
 

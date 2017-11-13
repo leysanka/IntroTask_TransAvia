@@ -157,9 +157,9 @@ public class HomePage extends CommonPage {
     }
 
     public void passengersPopUpActivate() {
-      if (!isDisplayedPassengersPopup()) {
-          passengersField.click();
-      }
+        if (!isDisplayedPassengersPopup()) {
+            passengersField.click();
+        }
     }
 
     public boolean isDisplayedPassengersPopup() {
