@@ -1,5 +1,7 @@
 package com.epam.transavia.demo.business_objects;
 
+import com.epam.transavia.demo.business_objects.bo_factory.NewBookingBuilder;
+
 public class NewBooking {
 
     private String fromDestination;
@@ -11,18 +13,17 @@ public class NewBooking {
     private int childrenCount = 0;
     private int babiesCount = 0;
 
-    public NewBooking(String fromDestination, String toDestination, String departDate, String returnDate, String bookingError, int adultsCount, int childrenCount, int babiesCount) {
-        this.fromDestination = fromDestination;
-        this.toDestination = toDestination;
-        this.departDate = departDate;
-        this.returnDate = returnDate;
-        this.bookingError = bookingError;
-        this.adultsCount = adultsCount;
-        this.childrenCount = childrenCount;
-        this.babiesCount = babiesCount;
+    public NewBooking() {
     }
 
-    public NewBooking() {
+    public NewBooking(NewBookingBuilder bookingBuilder) {
+        this.fromDestination = bookingBuilder.getFromDestination();
+        this.toDestination = bookingBuilder.getToDestination();
+        this.departDate = bookingBuilder.getDepartDate();
+        this.returnDate = bookingBuilder.getReturnDate();
+        this.adultsCount = bookingBuilder.getAdultsCount();
+        this.childrenCount = bookingBuilder.getChildrenCount();
+        this.babiesCount = bookingBuilder.getBabiesCount();
     }
 
     public String getFromDestination() {

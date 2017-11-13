@@ -1,9 +1,10 @@
 package com.epam.transavia.demo.tests;
 
 import com.epam.transavia.demo.business_objects.NewBooking;
+import com.epam.transavia.demo.business_objects.bo_factory.BookingCreator;
+import com.epam.transavia.demo.business_objects.bo_factory.NewBookingBuilder;
 import com.epam.transavia.demo.services.BookingService;
 import com.epam.transavia.demo.services.SearchFlightsService;
-import com.epam.transavia.demo.util.DateTimeHelper;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -14,21 +15,19 @@ public class BookingPriceCalculationTests extends BaseTestBeforeClass {
     private SearchFlightsService flightService;
     private NewBooking newBooking;
 
-    @BeforeClass () //dependsOnMethods = "navigateToHomePage"
+    @BeforeClass ()
     public void setupForBookingTests() {
         flightService = new SearchFlightsService();
         bookingService = new BookingService();
-        newBooking = new NewBooking();
-        newBooking.setFromDestination("Edinburgh, United Kingdom");
-        newBooking.setToDestination("Paris (Orly South), France");
-        newBooking.setAdultsCount(2);
-        newBooking.setChildrenCount(1);
-        newBooking.setBabiesCount(1);
-        newBooking.setDepartDate(DateTimeHelper.calculateDateNowPlusLag(1));
-        newBooking.setReturnDate(DateTimeHelper.calculateDateNowPlusLag(8));
+        /*Create concrete test booking with hardcoded parameters from BookingCreator class*/
+        newBooking = new BookingCreator().constructRoundTripWithAllPassengersTypes(new NewBookingBuilder());
+
+        /**
+         * Alternatively NewBookingBuilder with @Factory data provider parameters could be used:
+         * newBooking = new NewBookingBuilder().setFromDestination("").getBooking();
+         */
 
     }
-
 
     @Test(description = "2 Adults, 1 Children and 1 Baby passengers round trip search, select 1st found inbound and outbound flights, fetch prices per adult(=child) and baby,"
                         + " select Plus fare class, fetch its price, fetch total price and verify it's calculated properly.")
@@ -49,7 +48,7 @@ public class BookingPriceCalculationTests extends BaseTestBeforeClass {
                  + (newBooking.getBabiesCount()) * actualPricePerBaby), "Total price calculated does not equal to the Total Amount price from page.");
     }
 
-    //TODO: To be implemented.
+    //TODO: TC has to be implemented.
     @Test(enabled = false)
     public void totalPriceCalculationMultiCityRoundTripIsCorrect() {
 

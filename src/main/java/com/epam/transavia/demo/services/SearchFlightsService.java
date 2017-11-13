@@ -62,6 +62,7 @@ public class SearchFlightsService {
     }
 
     public void addRequiredPassengers(NewBooking newBooking) {
+       // if ()
         addPassengers(newBooking.getAdultsCount(), PassengersTypes.ADULTS);
         addPassengers(newBooking.getChildrenCount(), PassengersTypes.CHILDREN);
         addPassengers(newBooking.getBabiesCount(), PassengersTypes.BABIES);
@@ -71,18 +72,19 @@ public class SearchFlightsService {
         if (passengerType == PassengersTypes.ADULTS) {
             passengersCountToAdd = passengersCountToAdd - 1; //As 1 Adult is set by default in the form and Passengers field is not editable to be cleared.
         }
-        if (passengersCountToAdd > 0 && passengersCountToAdd < MAX_PASSENGERS_TO_FILL) {
-            HomePage homePage = new HomePage(driver);
-            homePage.passengersPopUpActivate();
-            logger.info("Passengers field is activated.");
-            for (int i = 1; i <= passengersCountToAdd; i++) {
-                addPassengerOfType(passengerType);
-                logger.info("Passenger added: " + i + " " + passengerType.toString());
+        if (passengersCountToAdd > 0) {
+            if (passengersCountToAdd < MAX_PASSENGERS_TO_FILL) {
+                HomePage homePage = new HomePage(driver);
+                homePage.passengersPopUpActivate();
+                logger.info("Passengers field is activated.");
+                for (int i = 1; i <= passengersCountToAdd; i++) {
+                    addPassengerOfType(passengerType);
+                    logger.info("Passenger added: " + i + " " + passengerType.toString());
+                }
+            } else {
+                throw new InvalidTestDataException("Invalid passengers count to add is specified: " + passengersCountToAdd + " " + passengerType.toString());
             }
-        } else {
-            throw new InvalidTestDataException("Invalid passengers count to add is specified: " + passengersCountToAdd + passengerType.toString());
         }
-
     }
 
     //TODO: Set custom exception
