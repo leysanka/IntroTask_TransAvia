@@ -25,7 +25,7 @@ public class ViewBookingWithoutAccountTests extends BaseTestBeforeClass {
         testBookingInfo.setFlyingTo(flyingTo);
     }
 
-    @BeforeClass
+    @BeforeClass(description = "Open Manage Booking menu from HomePage, press View Booking and proceed with login without account in opened Login page.")
     public void getActualBookingInfoAfterLogin() {
         getTestLogger().warn("ViewBookingTests have started.");
         ViewBookingService viewBookingService = new ViewBookingService();

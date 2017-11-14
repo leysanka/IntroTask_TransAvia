@@ -2,18 +2,19 @@ package com.epam.transavia.demo.tests;
 
 import com.epam.transavia.demo.business_objects.WelcomeScreenLanguages;
 import com.epam.transavia.demo.core.driver.Driver;
+import com.epam.transavia.demo.core.driver.DriverDecorator;
 import com.epam.transavia.demo.ui.pages.HomePage;
 import com.epam.transavia.demo.ui.pages.WelcomePage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 
 public class BaseTestBeforeClass {
 
-    protected WebDriver driver;
+    //protected WebDriver driver;
+    protected DriverDecorator driver;
 
     private static final String WELCOME_PAGE_URL = "https://www.transavia.com/";
     private static String homePageUrl;
@@ -23,7 +24,7 @@ public class BaseTestBeforeClass {
     @BeforeSuite
     protected void setUpInitial() {
 
-        driver = Driver.getDriverByName("chrome");
+        driver = new DriverDecorator(Driver.getDriverByName("chrome"));
         driver.get(WELCOME_PAGE_URL);
         WelcomePage welcomePage = new WelcomePage(driver);
         testLogger.info("Select Other countries locale: " + defaultLocale);
@@ -34,7 +35,7 @@ public class BaseTestBeforeClass {
     @BeforeClass
     protected void navigateToHomePage() {
 
-        driver = Driver.getDefaultDriver();
+        driver = new DriverDecorator(Driver.getDefaultDriver());
         if (!driver.getCurrentUrl().equals(homePageUrl)) {
             driver.navigate().to(homePageUrl);
         }

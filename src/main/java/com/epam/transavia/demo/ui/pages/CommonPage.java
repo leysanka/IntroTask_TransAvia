@@ -61,7 +61,9 @@ public abstract class CommonPage {
 
 
     public void scrollToElement(WebElement element) {
+
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
+
     }
 
 }

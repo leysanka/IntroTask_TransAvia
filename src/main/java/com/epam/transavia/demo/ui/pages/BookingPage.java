@@ -60,6 +60,10 @@ public class BookingPage extends CommonPage {
         }
     }
 
+    public String getPlusFarePriceContainerText() {
+        return pricePlusFareContainer.getText();
+    }
+
     //TODO: more common
     public double getPlusFarePrice() {
         int euroSignCode = 8364;
