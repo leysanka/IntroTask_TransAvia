@@ -17,7 +17,7 @@ import java.util.List;
 public abstract class CommonPage {
 
     private static final int SECONDS_TO_WAIT = 10;
-    protected static Logger logger = LogManager.getLogger();
+    protected Logger logger = LogManager.getLogger(this.getClass());
     protected WebDriver driver;
 
 
@@ -64,6 +64,14 @@ public abstract class CommonPage {
 
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
 
+    }
+
+    public String getInnerHTMLValue(WebElement element) {
+        if (element.getAttribute("innerHTML") != null) {
+            return element.getAttribute("innerHTML").trim();
+        }
+        logger.error("InnerHTML attribute did not return value.");
+        return null;
     }
 
 }

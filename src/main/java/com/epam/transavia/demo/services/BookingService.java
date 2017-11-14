@@ -2,7 +2,9 @@ package com.epam.transavia.demo.services;
 
 import com.epam.transavia.demo.core.driver.Driver;
 import com.epam.transavia.demo.core.driver.DriverDecorator;
+import com.epam.transavia.demo.core.exceptions.TextParseHelperException;
 import com.epam.transavia.demo.ui.pages.BookingPage;
+import com.epam.transavia.demo.util.TextParseHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebElement;
@@ -26,24 +28,55 @@ public class BookingService {
 
     public double fetchPricePerAdult() {
 
-        return new BookingPage(driver).getTotalPricePerAdultPassenger();
+        return calculateTotalPricePerPassenger(new BookingPage(driver).getListPricesPerAdultPassenger());
     }
 
     public double fetchPricePerBaby() {
 
-        return new BookingPage(driver).getTotalPricePerBaby();
+        return calculateTotalPricePerPassenger(new BookingPage(driver).getListPricesPerBabyPassenger());
     }
 
+    /**
+     * Plus Fare price is fetched from page as text "+$48",
+     * thus need to be parsed to be used in calculation verification further.
+     */
     public double selectAndFetchPlusFarePrice() {
         BookingPage bookingPage = new BookingPage(driver);
         bookingPage.pressSelectPlusFareBtn();
-        return bookingPage.getPlusFarePrice();
+        try {
+            return TextParseHelper.retrieveDigitsFromText(bookingPage.getPlusFarePriceContainerText());
+        } catch (TextParseHelperException e) {
+            logger.error(e.getMessage());
+            return 0;
+        }
+    }
+
+    /**
+     * Price per each passenger may consist of a list of different prices. They are fetched from Booking Page,
+     * as a String list for each WebElement of WebElements list. And here calculate double totalPrice from String list,
+     * to use it in calculations' verification further.
+     */
+    private double calculateTotalPricePerPassenger(List<String> textPricesList) {
+        double totalPrice = 0;
+        for (String textItem : textPricesList) {
+            try {
+                totalPrice += TextParseHelper.retrieveDigitsFromText(textItem);
+            } catch (TextParseHelperException e) {
+                logger.error(e.getMessage());
+            }
+        }
+        logger.info("Total price passenger is: " + totalPrice);
+        return totalPrice;
     }
 
 
-
     public double fetchTotalAmountPrice() {
-        return new BookingPage(driver).getTotalAmountPrice();
+        try {
+            return TextParseHelper.retrieveDigitsFromText(new BookingPage(driver).getTotalAmountPriceValue());
+        } catch (TextParseHelperException e) {
+            logger.error(e.getMessage());
+        }
+        return 0;
     }
 
 

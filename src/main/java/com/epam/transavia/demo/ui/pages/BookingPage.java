@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BookingPage extends CommonPage {
@@ -61,20 +62,8 @@ public class BookingPage extends CommonPage {
     }
 
     public String getPlusFarePriceContainerText() {
+        logger.info("Plus Fare price raw text value is: " + pricePlusFareContainer.getText());
         return pricePlusFareContainer.getText();
-    }
-
-    //TODO: more common
-    public double getPlusFarePrice() {
-        int euroSignCode = 8364;
-        String text = pricePlusFareContainer.getText(); //here text like "+$48" comes
-        int index = text.lastIndexOf(euroSignCode);
-        if (index >= 0 && (index + 1) < text.length()) {
-            logger.info("Plus fare price equals: " + text);
-            return Double.valueOf(text.substring(index + 1).replaceAll(",", ""));
-        } else {
-            throw new IndexOutOfBoundsException("Unexpected index for PlusFare text with price.");
-        }
     }
 
     public void pressNextButton() {
@@ -136,42 +125,30 @@ public class BookingPage extends CommonPage {
         }
     }
 
-    public double getTotalPricePerBaby() {
-        waitForLoadingIsFinished();
-        logger.info("Get Total price per baby started...");
-        return this.getPriceFromInnerHTML(pricesPerBabyContainer);
-    }
-
-    public double getTotalPricePerAdultPassenger() {
+    public List<String> getListPricesPerAdultPassenger() {
         waitForLoadingIsFinished();
         logger.info("Get Total price per adult started...");
-        return this.getPriceFromInnerHTML(pricesPerAdultContainer);
+        return getStringListOfPrices(pricesPerAdultContainer);
     }
 
-    //TODO: Add inner HTML get into Common and other move to util or service
-    public double getPriceFromInnerHTML(List<WebElement> pricesContainer) {
-        double totalPrice = 0;
-        for (WebElement element :
-                pricesContainer) {
-            String text = element.getAttribute("innerHTML").trim();
-            int index = text.lastIndexOf(">");
-            if (index >= 0 && (index + 1) < text.length()) {
-                String substring = text.substring(index + 1).replaceAll(",", "");
-                totalPrice += Double.valueOf(substring);
-            }
-        }
-        logger.info("Total price per passenger equals: " + totalPrice);
-        return totalPrice;
-    }
-
-    public double getTotalAmountPrice() {
+    public List<String> getListPricesPerBabyPassenger() {
         waitForLoadingIsFinished();
-        String text = totalPriceSection.getText();
-        if (text.length() > 1) {
-            logger.info("Total Amount shown in the BookingDetailsInfo page: " + text);
-            return Double.valueOf(text.replaceAll(",", "").substring(1));
-        } else
-            throw new IndexOutOfBoundsException("Unexpected index for TotalAmount text with price.");
+        logger.info("Get Total price per baby started...");
+        return getStringListOfPrices(pricesPerBabyContainer);
+    }
+
+    private List<String> getStringListOfPrices(List<WebElement> pricesContainer) {
+        List<String> rawPrices = new ArrayList<String>();
+        for (WebElement element : pricesContainer) {
+            rawPrices.add(getInnerHTMLValue(element));
+        }
+        return rawPrices;
+    }
+
+    public String getTotalAmountPriceValue() {
+        waitForLoadingIsFinished();
+        logger.info("Total Amount shown in the BookingDetailsInfo page: " + totalPriceSection.getText());
+        return totalPriceSection.getText();
     }
 
     public List<WebElement> getOutboundFlightsFound() {
