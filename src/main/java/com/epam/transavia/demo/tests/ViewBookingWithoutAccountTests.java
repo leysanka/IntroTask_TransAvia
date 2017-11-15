@@ -30,9 +30,9 @@ public class ViewBookingWithoutAccountTests extends BaseTestBeforeClass {
         getTestLogger().warn("ViewBookingTests have started.");
         ViewBookingService viewBookingService = new ViewBookingService();
         viewBookingService.loginToViewBookingWithoutAccountTest(testBookingInfo); //bookingNumber,lastName and flightDate are used for login
-        actualViewBookingInfo = viewBookingService.fetchBookingInfoFromViewBooking();
+        actualViewBookingInfo = viewBookingService.getBookingInfoFromViewBooking();
         viewBookingService.viewBookingOpenBookingDetails();
-        actualBookingDetailsInfo = viewBookingService.fetchBookingInfoFromBookingDetails();
+        actualBookingDetailsInfo = viewBookingService.getBookingInfoFromBookingDetails();
     }
 
     @Test(description = "Verify that the expected Booking ID is loaded in ViewBooking after login without account,ie. via BookingNumb, LastName and FlightDate.")

@@ -18,21 +18,26 @@ public class DriverDecorator implements WebDriver, JavascriptExecutor {
 
     public DriverDecorator(WebDriver driver) {
         this.driver = driver;
+        logger.info("Decorator initialised.");
     }
 
     @Override
     public void get(String url) {
-        logger.info("DriverDecorator getting the url: " + url);
+        logger.info("Driver getting the url: " + url);
         driver.get(url);
     }
 
     @Override
     public String getCurrentUrl() {
+
+        // logger.info("Driver getting CurrentUrl: " + driver.getCurrentUrl());
         return driver.getCurrentUrl();
     }
 
     @Override
     public String getTitle() {
+
+        logger.info("Driver getting Title: " + driver.getTitle());
         return driver.getTitle();
     }
 
@@ -80,6 +85,8 @@ public class DriverDecorator implements WebDriver, JavascriptExecutor {
 
     @Override
     public Navigation navigate() {
+
+        logger.info("Driver navigate is being performed");
         return driver.navigate();
     }
 

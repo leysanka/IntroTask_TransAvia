@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Driver {
 
-    private static HashMap<String, org.openqa.selenium.WebDriver> instances = new HashMap<String, WebDriver>();
+    private static HashMap<String, DriverDecorator> instances = new HashMap<String, DriverDecorator>();
     private static final int TIMEOUT_IN_SEC = 10;
     private static WebDriverType defaultBrowserType = WebDriverType.CHROME;
 
@@ -38,19 +38,18 @@ public class Driver {
         return driver;
     }
 
-
     private static WebDriver getDriverSingleInstance(WebDriverType webDriverType) {
-        WebDriver driver;
+        DriverDecorator decoratedDriver;
         String name = webDriverType.toString();
 
         if (!instances.containsKey(name)) {
-            driver = getDriverOfType(webDriverType);
-            instances.put(name, driver);
+            decoratedDriver = new DriverDecorator(getDriverOfType(webDriverType));
+            instances.put(name, decoratedDriver);
         } else {
-            driver = instances.get(name);
+            decoratedDriver = instances.get(name);
         }
-        driver.manage().deleteAllCookies();
-        return driver;
+        decoratedDriver.manage().deleteAllCookies();
+        return decoratedDriver;
     }
 
     public static WebDriver getDriverByName(String name) {
@@ -66,7 +65,7 @@ public class Driver {
         defaultBrowserType = WebDriverType.getWebDriverType(name);
     }
 
-    public static void clearInstances() {
+    private static void clearInstances() {
         instances.clear();
     }
 
@@ -75,7 +74,6 @@ public class Driver {
             driver.quit();
             driver = null;
         }
-        instances.clear();
+        clearInstances();
     }
-
 }

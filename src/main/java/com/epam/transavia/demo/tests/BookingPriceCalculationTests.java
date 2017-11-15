@@ -24,7 +24,7 @@ public class BookingPriceCalculationTests extends BaseTestBeforeClass {
 
         /**
          * Alternatively NewBookingBuilder with @Factory data provider parameters could be used:
-         * newBooking = new NewBookingBuilder().setFromDestination("").getBooking();
+         * newBooking = new NewBookingBuilder().withFromDestination("").withReturnDate("")...getBooking();
          */
 
     }
@@ -39,8 +39,8 @@ public class BookingPriceCalculationTests extends BaseTestBeforeClass {
         flightService.searchRoundTripWithParameters(newBooking);
         bookingService.selectFirstInboundOutboundFlightsAndNextToFareSelection();
 
-        Double actualPricePerAdult = bookingService.fetchPricePerAdult();
-        Double actualPricePerBaby = bookingService.fetchPricePerBaby();
+        Double actualPricePerAdult = bookingService.getPricePerAdult();
+        Double actualPricePerBaby = bookingService.getPricePerBaby();
         Double actualPlusFarePrice = bookingService.selectAndFetchPlusFarePrice();
 
         Assert.assertEquals(bookingService.fetchTotalAmountPrice(),

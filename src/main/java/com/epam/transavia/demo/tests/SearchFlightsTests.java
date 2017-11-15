@@ -23,13 +23,13 @@ public class SearchFlightsTests extends BaseTestBeforeClass {
             description = "Verify that correct number of date spinners shown, for one-way Outbound flight there must be 7 (one week).")
     public void expectedDaysCountSpinnersShouldBeDisplayed() {
 
-        Assert.assertEquals(foundFlightsService.fetchAllDateSpinnersShownCount(), 7, "The expected spinners count '7' does not equal to the shown on Booking page.");
+        Assert.assertEquals(foundFlightsService.getAllDateSpinnersCount(), 7, "The expected spinners count '7' does not equal to the shown on Booking page.");
     }
 
     @Test(groups = {"found_flights"}, description = "Verify that al least one date with flight is found.")
     public void availableFlightsShouldBeFound() {
 
-        Assert.assertTrue(foundFlightsService.fetchDateSpinnersWithFlightsCount() > 0, "No dates with available flights are found.");
+        Assert.assertTrue(foundFlightsService.getDateSpinnersWithFlightsCount() > 0, "No dates with available flights are found.");
     }
 
 }

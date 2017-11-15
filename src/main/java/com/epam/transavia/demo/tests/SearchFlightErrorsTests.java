@@ -23,6 +23,6 @@ public class SearchFlightErrorsTests extends BaseTestBeforeClass {
 
         searchFlightsService.searchDefaultOneWayOneUserFlight(notFlyingBooking);
 
-        Assert.assertEquals(searchFlightsService.fetchBookingError(), notFlyingBooking.getBookingError(), "Error on Booking page does not meet to the expected: " + notFlyingBooking.getBookingError());
+        Assert.assertEquals(searchFlightsService.getBookingError(), notFlyingBooking.getBookingError(), "Error on Booking page does not meet to the expected: " + notFlyingBooking.getBookingError());
     }
 }

@@ -7,20 +7,33 @@ public class TextParseHelper {
 
     private static final String nonDigitsRegex = "\\D+";
 
-    public static Double retrieveDigitsFromText(String text) throws TextParseHelperException {
-        String digits = "";
+    public static Double takePriceFromText(String text) throws TextParseHelperException {
+        String formattedText = "";
+        formattedText = removeNonDigitsCharacters(trimDecimalPartIfPresent(text));
+
+        return covertTextToDouble(formattedText);
+    }
+
+    private static String trimDecimalPartIfPresent(String text) {
+        if (text.length() > 1 && text.contains(".")) {
+            return text.substring(0, text.lastIndexOf("."));
+        }
+        return text;
+    }
+
+    private static String removeNonDigitsCharacters(String text) throws TextParseHelperException {
         if (!text.isEmpty()) {
-            /*Remove decimal part .00 in text if present*/
-            if (text.contains(".")) {
-                text = text.substring(0, text.lastIndexOf("."));
-            }
-            digits = text.replaceAll(nonDigitsRegex, "");
-            if (!digits.isEmpty()) {
-                return Double.valueOf(digits);
-            } else {
-                throw new TextParseHelperException("Text is empty after non-digits characters replacement.");
-            }
+            return text.replaceAll(nonDigitsRegex, "");
         }
         throw new TextParseHelperException("Tried to parse empty text: " + text);
     }
+
+    private static Double covertTextToDouble(String text) throws TextParseHelperException {
+        if (!text.isEmpty()) {
+            return Double.valueOf(text);
+        }
+        throw new TextParseHelperException("Tried to covert empty text: " + text);
+    }
+
+
 }

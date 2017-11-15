@@ -2,17 +2,17 @@ package com.epam.transavia.demo.services;
 
 import com.epam.transavia.demo.business_objects.BookingDetailsInfo;
 import com.epam.transavia.demo.core.driver.Driver;
-import com.epam.transavia.demo.core.driver.DriverDecorator;
 import com.epam.transavia.demo.ui.pages.HomePage;
 import com.epam.transavia.demo.ui.pages.ViewBookingDetailsPage;
 import com.epam.transavia.demo.ui.pages.ViewBookingPage;
 import com.epam.transavia.demo.util.DateTimeHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.WebDriver;
 
 public class ViewBookingService {
 
-    private DriverDecorator driver = new DriverDecorator(Driver.getDefaultDriver());
+    private WebDriver driver = Driver.getDefaultDriver();
     private static Logger logger = LogManager.getLogger();
 
     public void loginToViewBookingWithoutAccountTest(BookingDetailsInfo bookingDetailsInfo) {
@@ -25,7 +25,7 @@ public class ViewBookingService {
         viewBookingPage.openBookingDetails();
     }
 
-    public BookingDetailsInfo fetchBookingInfoFromViewBooking() {
+    public BookingDetailsInfo getBookingInfoFromViewBooking() {
 
         ViewBookingPage viewBookingPage = new ViewBookingPage(driver);
         BookingDetailsInfo actualInfoViewBooking = new BookingDetailsInfo();
@@ -38,7 +38,7 @@ public class ViewBookingService {
         return actualInfoViewBooking;
     }
 
-    public BookingDetailsInfo fetchBookingInfoFromBookingDetails() {
+    public BookingDetailsInfo getBookingInfoFromBookingDetails() {
         ViewBookingDetailsPage viewBookingDetailsPage = new ViewBookingDetailsPage(driver);
         BookingDetailsInfo actualInfoBookingDetails = new BookingDetailsInfo();
         actualInfoBookingDetails.setTotalPaymentAmount(viewBookingDetailsPage.getTotalPaymentValue());

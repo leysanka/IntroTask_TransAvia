@@ -1,19 +1,19 @@
 package com.epam.transavia.demo.services;
 
 import com.epam.transavia.demo.core.driver.Driver;
-import com.epam.transavia.demo.core.driver.DriverDecorator;
 import com.epam.transavia.demo.core.exceptions.TextParseHelperException;
 import com.epam.transavia.demo.ui.pages.BookingPage;
 import com.epam.transavia.demo.util.TextParseHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
 public class BookingService {
 
-    private DriverDecorator driver = new DriverDecorator(Driver.getDefaultDriver());
+    private WebDriver driver = Driver.getDefaultDriver();
     private static Logger logger = LogManager.getLogger();
 
 
@@ -26,12 +26,12 @@ public class BookingService {
         bookingPage.pressNextButton();
     }
 
-    public double fetchPricePerAdult() {
+    public double getPricePerAdult() {
 
         return calculateTotalPricePerPassenger(new BookingPage(driver).getListPricesPerAdultPassenger());
     }
 
-    public double fetchPricePerBaby() {
+    public double getPricePerBaby() {
 
         return calculateTotalPricePerPassenger(new BookingPage(driver).getListPricesPerBabyPassenger());
     }
@@ -44,7 +44,7 @@ public class BookingService {
         BookingPage bookingPage = new BookingPage(driver);
         bookingPage.pressSelectPlusFareBtn();
         try {
-            return TextParseHelper.retrieveDigitsFromText(bookingPage.getPlusFarePriceContainerText());
+            return TextParseHelper.takePriceFromText(bookingPage.getPlusFarePriceContainerText());
         } catch (TextParseHelperException e) {
             logger.error(e.getMessage());
             return 0;
@@ -60,7 +60,7 @@ public class BookingService {
         double totalPrice = 0;
         for (String textItem : textPricesList) {
             try {
-                totalPrice += TextParseHelper.retrieveDigitsFromText(textItem);
+                totalPrice += TextParseHelper.takePriceFromText(textItem);
             } catch (TextParseHelperException e) {
                 logger.error(e.getMessage());
             }
@@ -72,7 +72,7 @@ public class BookingService {
 
     public double fetchTotalAmountPrice() {
         try {
-            return TextParseHelper.retrieveDigitsFromText(new BookingPage(driver).getTotalAmountPriceValue());
+            return TextParseHelper.takePriceFromText(new BookingPage(driver).getTotalAmountPriceValue());
         } catch (TextParseHelperException e) {
             logger.error(e.getMessage());
         }

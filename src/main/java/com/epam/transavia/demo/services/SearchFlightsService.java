@@ -3,7 +3,6 @@ package com.epam.transavia.demo.services;
 import com.epam.transavia.demo.business_objects.NewBooking;
 import com.epam.transavia.demo.business_objects.PassengersTypes;
 import com.epam.transavia.demo.core.driver.Driver;
-import com.epam.transavia.demo.core.driver.DriverDecorator;
 import com.epam.transavia.demo.core.exceptions.InvalidTestDataException;
 import com.epam.transavia.demo.core.exceptions.UnknownPassengerTypeException;
 import com.epam.transavia.demo.tests.BaseTestBeforeClass;
@@ -11,10 +10,11 @@ import com.epam.transavia.demo.ui.pages.BookingPage;
 import com.epam.transavia.demo.ui.pages.HomePage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.WebDriver;
 
 public class SearchFlightsService {
 
-    private DriverDecorator driver = new DriverDecorator(Driver.getDefaultDriver());
+    private WebDriver driver = Driver.getDefaultDriver();
     private static Logger logger = LogManager.getLogger();
     private static final int MAX_PASSENGERS_TO_FILL = 10;
 
@@ -106,17 +106,17 @@ public class SearchFlightsService {
     }
 
 
-    public int fetchAllDateSpinnersShownCount() {
+    public int getAllDateSpinnersCount() {
         BookingPage bookingPage = new BookingPage(driver);
         return bookingPage.getAllDatesShownCount();
     }
 
-    public int fetchDateSpinnersWithFlightsCount() {
+    public int getDateSpinnersWithFlightsCount() {
         BookingPage bookingPage = new BookingPage(driver);
         return bookingPage.getFoundFlightsCount();
     }
 
-    public String fetchBookingError() {
+    public String getBookingError() {
         BookingPage bookingPage = new BookingPage(driver);
         return bookingPage.getSearchFlightError();
     }

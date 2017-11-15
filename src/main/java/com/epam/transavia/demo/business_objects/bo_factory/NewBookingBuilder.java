@@ -13,37 +13,37 @@ public class NewBookingBuilder {
     private int babiesCount;
 
 
-    public NewBookingBuilder setFromDestination(String destination) {
+    public NewBookingBuilder withFromDestination(String destination) {
         this.fromDestination = destination;
         return this;
     }
 
-    public NewBookingBuilder setToDestination(String destination) {
+    public NewBookingBuilder withToDestination(String destination) {
         this.toDestination = destination;
         return this;
     }
 
-    public NewBookingBuilder setDepartDate(String departDate) {
+    public NewBookingBuilder withDepartDate(String departDate) {
         this.departDate = departDate;
         return this;
     }
 
-    public NewBookingBuilder setReturnDate(String returnDate) {
+    public NewBookingBuilder withReturnDate(String returnDate) {
         this.returnDate = returnDate;
         return this;
     }
 
-    public NewBookingBuilder setAdultsCount(int adultsCount) {
+    public NewBookingBuilder withAdultsCount(int adultsCount) {
         this.adultsCount = adultsCount;
         return this;
     }
 
-    public NewBookingBuilder setChildrenCount(int childrenCount) {
+    public NewBookingBuilder withChildrenCount(int childrenCount) {
         this.childrenCount = childrenCount;
         return this;
     }
 
-    public NewBookingBuilder setBabiesCount(int babiesCount) {
+    public NewBookingBuilder withBabiesCount(int babiesCount) {
         this.babiesCount = babiesCount;
         return this;
     }

@@ -21,12 +21,12 @@
 
     <Loggers>
 
-        <Logger name="test" level="all" additivity="true">
+        <Logger name="test" level="all" additivity="false">
             <!--<AppenderRef ref="Console"/>-->
             <AppenderRef ref="testfile"/>
         </Logger>
         <!-- Root Logger -->
-        <Root level="all">
+        <Root level="all" additivity="false">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="file"/>
         </Root>
