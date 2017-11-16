@@ -3,15 +3,12 @@ package com.epam.transavia.demo.core.driver;
 import com.epam.transavia.demo.core.exceptions.NotInstanceOfJavascriptExecutorException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 
 import java.util.List;
 import java.util.Set;
 
-public class DriverDecorator implements WebDriver, JavascriptExecutor {
+public class DriverDecorator implements WebDriver, JavascriptExecutor, TakesScreenshot {
 
     private WebDriver driver;
     private Logger logger = LogManager.getLogger(DriverDecorator.class);
@@ -111,5 +108,10 @@ public class DriverDecorator implements WebDriver, JavascriptExecutor {
         } else {
             throw new NotInstanceOfJavascriptExecutorException("Decorated driver cannot instantiate of the JavascriptExecutor class.");
         }
+    }
+
+    @Override
+    public <X> X getScreenshotAs(OutputType<X> target) throws WebDriverException {
+        return ((TakesScreenshot) driver).getScreenshotAs(target);
     }
 }

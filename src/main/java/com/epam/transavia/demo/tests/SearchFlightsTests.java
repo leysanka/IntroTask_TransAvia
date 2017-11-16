@@ -1,6 +1,7 @@
 package com.epam.transavia.demo.tests;
 
 import com.epam.transavia.demo.business_objects.bo_factory.NewBookingStaticFactory;
+import com.epam.transavia.demo.reporting.TestsLogger;
 import com.epam.transavia.demo.services.SearchFlightsService;
 import org.testng.Assert;
 import org.testng.annotations.BeforeGroups;
@@ -13,7 +14,7 @@ public class SearchFlightsTests extends BaseTestBeforeClass {
 
     @BeforeGroups(groups = {"found_flights"})
     public void searchOneWayBookingWithFlights() {
-        getTestLogger().info("SearchFlights tests have started.");
+        TestsLogger.info("SearchFlights tests have started.");
         foundFlightsService = new SearchFlightsService();
         foundFlightsService.navigateToWhereToGoWindow();
         foundFlightsService.searchDefaultOneWayOneUserFlight(NewBookingStaticFactory.createAlwaysFoundRouteBooking());

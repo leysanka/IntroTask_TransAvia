@@ -1,6 +1,10 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
 <suite name="Transavia Demo Suit_All Tests">
+
+    <listeners>
+        <listener class-name="com.epam.transavia.demo.reporting.CustomTestNGListener"/>
+    </listeners>
     <!--This set is working now as well-->
     <!--    <test name = "ViewExistingBooking test">
             <classes>
@@ -15,19 +19,19 @@
             <class name="com.epam.transavia.demo.tests.ViewBookingWithoutAccountTests"/>
         </classes>
     </test>
-    <test name="Booking Price Calculation tests">
-        <classes>
-            <class name="com.epam.transavia.demo.tests.BookingPriceCalculationTests"/>
-        </classes>
-    </test>
-    <test name="Search Flights tests">
-        <classes>
-            <class name="com.epam.transavia.demo.tests.SearchFlightsTests"/>
-        </classes>
-    </test>
-    <test name="Search Flights with error tests">
-        <classes>
-            <class name="com.epam.transavia.demo.tests.SearchFlightErrorsTests"/>
-        </classes>
-    </test>
+    <!-- <test name="Booking Price Calculation tests">
+         <classes>
+             <class name="com.epam.transavia.demo.tests.BookingPriceCalculationTests"/>
+         </classes>
+     </test>
+     <test name="Search Flights tests">
+         <classes>
+             <class name="com.epam.transavia.demo.tests.SearchFlightsTests"/>
+         </classes>
+     </test>
+     <test name="Search Flights with error tests">
+         <classes>
+             <class name="com.epam.transavia.demo.tests.SearchFlightErrorsTests"/>
+         </classes>
+     </test>-->
 </suite>

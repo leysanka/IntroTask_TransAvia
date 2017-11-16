@@ -15,7 +15,7 @@ import org.openqa.selenium.WebDriver;
 public class SearchFlightsService {
 
     private WebDriver driver = Driver.getDefaultDriver();
-    private static Logger logger = LogManager.getLogger();
+    private static Logger logger = LogManager.getLogger(SearchFlightsService.class.getSimpleName());
     private static final int MAX_PASSENGERS_TO_FILL = 10;
 
     public boolean navigateToWhereToGoWindow() {

@@ -17,7 +17,7 @@ import java.util.List;
 public abstract class CommonPage {
 
     private static final int SECONDS_TO_WAIT = 10;
-    protected Logger logger = LogManager.getLogger(this.getClass());
+    protected Logger logger = LogManager.getLogger(this.getClass().getSimpleName());
     protected WebDriver driver;
 
 
@@ -66,7 +66,9 @@ public abstract class CommonPage {
 
     }
 
-    public String getInnerHTMLValue(WebElement element) {
+    public String getInnerHTMLTrimmedValue(WebElement element) {
+        logger.info("Getting InnerHTM value for element: " + element.toString());
+
         if (element.getAttribute("innerHTML") != null) {
             return element.getAttribute("innerHTML").trim();
         }

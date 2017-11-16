@@ -14,14 +14,14 @@ import java.util.List;
 public class BookingService {
 
     private WebDriver driver = Driver.getDefaultDriver();
-    private static Logger logger = LogManager.getLogger();
+    private static Logger logger = LogManager.getLogger(BookingService.class.getSimpleName());
 
 
     public void selectFirstInboundOutboundFlightsAndNextToFareSelection() {
         BookingPage bookingPage = new BookingPage(driver);
-        selectAvailableFlightByOrder(1, bookingPage.getOutboundFlightsFound());
+        selectAvailableFlightByOrder(1, bookingPage.getFoundOutboundFlights());
         bookingPage.pressSelectOutboundFlight();
-        selectAvailableFlightByOrder(1, bookingPage.getInboundFlightsFound());
+        selectAvailableFlightByOrder(1, bookingPage.getFoundInboundFlights());
         bookingPage.pressSelectInboundFlight();
         bookingPage.pressNextButton();
     }

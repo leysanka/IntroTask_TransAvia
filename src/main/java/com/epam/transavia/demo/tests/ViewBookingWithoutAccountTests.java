@@ -1,6 +1,7 @@
 package com.epam.transavia.demo.tests;
 
 import com.epam.transavia.demo.business_objects.BookingDetailsInfo;
+import com.epam.transavia.demo.reporting.TestsLogger;
 import com.epam.transavia.demo.services.ViewBookingService;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -27,7 +28,7 @@ public class ViewBookingWithoutAccountTests extends BaseTestBeforeClass {
 
     @BeforeClass(description = "Open Manage Booking menu from HomePage, press View Booking and proceed with login without account in opened Login page.")
     public void getActualBookingInfoAfterLogin() {
-        getTestLogger().warn("ViewBookingTests have started.");
+        TestsLogger.warn("ViewBookingTests have started.");
         ViewBookingService viewBookingService = new ViewBookingService();
         viewBookingService.loginToViewBookingWithoutAccountTest(testBookingInfo); //bookingNumber,lastName and flightDate are used for login
         actualViewBookingInfo = viewBookingService.getBookingInfoFromViewBooking();
@@ -37,7 +38,8 @@ public class ViewBookingWithoutAccountTests extends BaseTestBeforeClass {
 
     @Test(description = "Verify that the expected Booking ID is loaded in ViewBooking after login without account,ie. via BookingNumb, LastName and FlightDate.")
     public void viewBookingWithoutAccountBookingIsLoaded() {
-        Assert.assertEquals(actualViewBookingInfo.getBookingNumber(), testBookingInfo.getBookingNumber(), "Not equal");
+        // Assert.assertEquals(actualViewBookingInfo.getBookingNumber(), testBookingInfo.getBookingNumber(), "Not equal");
+        Assert.assertNotEquals(actualViewBookingInfo.getBookingNumber(), testBookingInfo.getBookingNumber(), "Not equal");
     }
 
     @Test(description = "Verify Flying From/To fetched from ViewBooking are the same as expected for testing booking.")

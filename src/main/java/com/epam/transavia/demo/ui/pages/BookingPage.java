@@ -140,7 +140,7 @@ public class BookingPage extends CommonPage {
     private List<String> getStringListOfPrices(List<WebElement> pricesContainer) {
         List<String> rawPrices = new ArrayList<String>();
         for (WebElement element : pricesContainer) {
-            rawPrices.add(getInnerHTMLValue(element));
+            rawPrices.add(getInnerHTMLTrimmedValue(element));
         }
         return rawPrices;
     }
@@ -151,7 +151,7 @@ public class BookingPage extends CommonPage {
         return totalPriceSection.getText();
     }
 
-    public List<WebElement> getOutboundFlightsFound() {
+    public List<WebElement> getFoundOutboundFlights() {
         if (!outboundFlights.isEmpty()) {
             return outboundFlights;
         } else {
@@ -160,7 +160,7 @@ public class BookingPage extends CommonPage {
         }
     }
 
-    public List<WebElement> getInboundFlightsFound() {
+    public List<WebElement> getFoundInboundFlights() {
         if (!inboundFlights.isEmpty()) {
             return inboundFlights;
         } else {

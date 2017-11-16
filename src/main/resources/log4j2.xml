@@ -11,8 +11,8 @@
                 <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
             </Policies>
         </RollingFile>
-        <RollingFile name="testfile" filename="logs/test_logfile.log" filePattern="logs/test_logfile -%d.log">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        <RollingFile name="test_logfile" filename="logs/test_logfile.log" filePattern="logs/test_logfile -%d.log">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} %l - %msg%n"/>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
             </Policies>
@@ -20,17 +20,14 @@
     </Appenders>
 
     <Loggers>
-
-        <Logger name="test" level="all" additivity="false">
-            <!--<AppenderRef ref="Console"/>-->
-            <AppenderRef ref="testfile"/>
+        <Logger name="Test" level="all" additivity="true">
+            <AppenderRef ref="test_logfile"/>
         </Logger>
         <!-- Root Logger -->
-        <Root level="all" additivity="false">
+        <Root level="debug" additivity="true">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="file"/>
         </Root>
-
     </Loggers>
 
 </Configuration>
