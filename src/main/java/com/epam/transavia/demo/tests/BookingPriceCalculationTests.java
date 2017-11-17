@@ -3,7 +3,7 @@ package com.epam.transavia.demo.tests;
 import com.epam.transavia.demo.business_objects.NewBooking;
 import com.epam.transavia.demo.business_objects.bo_factory.BookingCreator;
 import com.epam.transavia.demo.business_objects.bo_factory.NewBookingBuilder;
-import com.epam.transavia.demo.reporting.TestsLogger;
+import com.epam.transavia.demo.reporting.TestLogger;
 import com.epam.transavia.demo.services.BookingService;
 import com.epam.transavia.demo.services.SearchFlightsService;
 import org.testng.Assert;
@@ -34,7 +34,7 @@ public class BookingPriceCalculationTests extends BaseTestBeforeClass {
                         + " select Plus fare class, fetch its price, fetch total price and verify it's calculated properly.")
 
     public void totalPriceCalculationForAllPassengersRoundTripBookingIsCorrect() {
-        TestsLogger.info("BookingPriceCalculation test has started.");
+        TestLogger.info("BookingPriceCalculation test has started.");
 
         flightService.navigateToWhereToGoWindow();
         flightService.searchRoundTripWithParameters(newBooking);

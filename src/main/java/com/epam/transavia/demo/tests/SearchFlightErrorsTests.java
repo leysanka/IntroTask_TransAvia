@@ -2,7 +2,7 @@ package com.epam.transavia.demo.tests;
 
 import com.epam.transavia.demo.business_objects.NewBooking;
 import com.epam.transavia.demo.business_objects.bo_factory.NewBookingStaticFactory;
-import com.epam.transavia.demo.reporting.TestsLogger;
+import com.epam.transavia.demo.reporting.TestLogger;
 import com.epam.transavia.demo.services.SearchFlightsService;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -18,7 +18,7 @@ public class SearchFlightErrorsTests extends BaseTestBeforeClass {
 
     @Test(description = "Verify that error message \"Unfortunately we do not fly from Dubai, United Arab Emirates to...\" is shown for the unsupported flight destination")
     public void doNotFlyDestinationErrorShouldBeDisplayed() {
-        TestsLogger.info("doNotFlyDestinationErrorShouldBeDisplayed test has started.");
+        TestLogger.info("doNotFlyDestinationErrorShouldBeDisplayed test has started.");
         SearchFlightsService searchFlightsService = new SearchFlightsService();
         NewBooking notFlyingBooking = NewBookingStaticFactory.createNotFlyingBooking();
 

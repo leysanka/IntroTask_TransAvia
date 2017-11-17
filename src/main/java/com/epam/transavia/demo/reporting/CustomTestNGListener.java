@@ -1,5 +1,6 @@
 package com.epam.transavia.demo.reporting;
 
+import com.epam.transavia.demo.core.exceptions.ScreenshotHelperException;
 import com.epam.transavia.demo.util.ScreenshotHelper;
 import org.testng.*;
 
@@ -11,20 +12,23 @@ public class CustomTestNGListener implements ITestListener, ISuiteListener {
 
     @Override
     public void onTestSuccess(ITestResult iTestResult) {
-        TestsLogger.info(iTestResult.getInstanceName() + " : " + iTestResult.getName() + " finished successfully.");
+        TestLogger.info("[" + iTestResult.getInstanceName() + "] " + iTestResult.getName() + " finished successfully.");
     }
 
     @Override
     public void onTestFailure(ITestResult iTestResult) {
-        TestsLogger.error("Test failed, trying to take screenshot ...");
-        ScreenshotHelper.takeDriverScreenshot();
-        TestsLogger.info("Screenshot has been taken.");
-
+        TestLogger.error("[" + iTestResult.getInstanceName() + "] " + iTestResult.getName() + " test Failed \n Trying to take screenshot...");
+        try {
+            ScreenshotHelper.takeDriverScreenshot();
+            TestLogger.info("Screenshot has been taken for failed test " + iTestResult.getName());
+        } catch (ScreenshotHelperException e) {
+            TestLogger.warn("Could not take a screenshot on test failure " + iTestResult.getName());
+        }
     }
 
     @Override
     public void onTestSkipped(ITestResult iTestResult) {
-        TestsLogger.warn("[" + iTestResult.getInstanceName() + "] " + iTestResult.getName() + " is skipped. ");
+        TestLogger.warn("[" + iTestResult.getInstanceName() + "] " + iTestResult.getName() + " is skipped.");
     }
 
     @Override
@@ -44,13 +48,13 @@ public class CustomTestNGListener implements ITestListener, ISuiteListener {
 
     @Override
     public void onStart(ISuite iSuite) {
-        TestsLogger.info("Starting suit run: " + iSuite.getName());
+        TestLogger.info("Starting suit run: " + iSuite.getName());
 
     }
 
     @Override
     public void onFinish(ISuite iSuite) {
-        TestsLogger.info("Suit run is finished.");
+        TestLogger.info(iSuite.getName() + " suit run is finished.");
 
     }
 }

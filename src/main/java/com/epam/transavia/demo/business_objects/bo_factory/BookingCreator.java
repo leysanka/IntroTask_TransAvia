@@ -9,8 +9,8 @@ public class BookingCreator {
 
         bookingBuilder.withFromDestination("Edinburgh, United Kingdom");
         bookingBuilder.withToDestination("Paris (Orly South), France");
-        bookingBuilder.withDepartDate(DateTimeHelper.calculateDateNowPlusLag(1));
-        bookingBuilder.withReturnDate(DateTimeHelper.calculateDateNowPlusLag(8));
+        bookingBuilder.withDepartDate(DateTimeHelper.generateBookingInputDateAsNowPlusLag(1));
+        bookingBuilder.withReturnDate(DateTimeHelper.generateBookingInputDateAsNowPlusLag(8));
         bookingBuilder.withAdultsCount(2);
         bookingBuilder.withChildrenCount(1);
         bookingBuilder.withBabiesCount(1);

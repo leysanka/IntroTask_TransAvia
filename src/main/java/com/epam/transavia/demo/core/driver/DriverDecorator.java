@@ -11,7 +11,7 @@ import java.util.Set;
 public class DriverDecorator implements WebDriver, JavascriptExecutor, TakesScreenshot {
 
     private WebDriver driver;
-    private Logger logger = LogManager.getLogger(DriverDecorator.class);
+    private Logger logger = LogManager.getLogger(DriverDecorator.class.getSimpleName());
 
     public DriverDecorator(WebDriver driver) {
         this.driver = driver;

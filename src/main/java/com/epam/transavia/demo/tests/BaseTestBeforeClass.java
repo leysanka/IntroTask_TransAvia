@@ -2,7 +2,7 @@ package com.epam.transavia.demo.tests;
 
 import com.epam.transavia.demo.business_objects.WelcomeScreenLanguages;
 import com.epam.transavia.demo.core.driver.Driver;
-import com.epam.transavia.demo.reporting.TestsLogger;
+import com.epam.transavia.demo.reporting.TestLogger;
 import com.epam.transavia.demo.ui.pages.HomePage;
 import com.epam.transavia.demo.ui.pages.WelcomePage;
 import org.openqa.selenium.WebDriver;
@@ -25,7 +25,7 @@ public class BaseTestBeforeClass {
         driver = Driver.getDriverByName("chrome");
         driver.get(WELCOME_PAGE_URL);
         WelcomePage welcomePage = new WelcomePage(driver);
-        TestsLogger.info("Select Other countries locale: " + defaultLocale);
+        TestLogger.info("Select Other countries locale: " + defaultLocale);
         HomePage homePage = welcomePage.selectLocaleAndOpenHomePage(defaultLocale);
         homePageUrl = driver.getCurrentUrl();
     }
