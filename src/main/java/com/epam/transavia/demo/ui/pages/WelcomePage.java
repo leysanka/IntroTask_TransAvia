@@ -25,9 +25,8 @@ public class WelcomePage extends CommonPage {
     public WelcomePage(WebDriver driver) {
         super(driver);
         if (!WELCOME_PAGE_TITLE.equals(driver.getTitle())) {
+            logger.error("Welcome screen title does not match to the expected: " + WELCOME_PAGE_TITLE + "\n");
             throw new WrongPageException("Welcome screen title does not match to the expected: " + WELCOME_PAGE_TITLE + "\n");
-        } else {
-            logger.info("Welcome page initialized successfully.");
         }
     }
 
@@ -35,6 +34,7 @@ public class WelcomePage extends CommonPage {
         WebElement elementToSelect = getLanguageWebElement(languageToSelect);
         if (elementToSelect != null) {
             elementToSelect.click();
+            logger.info(languageToSelect.name() + " locale selected.");
             return new HomePage(driver);
         } else {
             throw new PageNotCreatedException("Home Page is not created after Language selection in Welcome screen.");
@@ -48,17 +48,17 @@ public class WelcomePage extends CommonPage {
         if (!allLanguagesList.isEmpty()) {
             int i = 0;
             for (WebElement element : allLanguagesList) {
-                /*Fetch each language's text from all languages list on Welcome page and convert it to enum-like format.*/
+                /*Fetch each language's text from all languages list on Welcome page and convert it to enum-like format -replace all spaces with underscore.*/
                 String langName = allLanguagesList.get(i).getText().replaceAll("\\s", "_").toUpperCase();
                 WebElement webElement = allLanguagesList.get(i);
                 languages.put(langName, webElement);
                 i++;
+                logger.debug(langName + " screen language added to webelements' map.");
             }
         }
         return languages;
     }
 
-    //TODO Verify working after transavia is recovered!
     private WebElement getLanguageWebElement(WelcomeScreenLanguages enumLang) {
         WebElement languageWebElement = null;
         languages = populateMapWithLanguagesFromWelcomePage();

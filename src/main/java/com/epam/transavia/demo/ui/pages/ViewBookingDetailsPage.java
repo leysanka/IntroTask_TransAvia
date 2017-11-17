@@ -17,7 +17,8 @@ public class ViewBookingDetailsPage extends CommonPage {
     public ViewBookingDetailsPage(WebDriver driver) throws WrongPageException {
         super(driver);
         if (!driver.getTitle().equals(BOOKING_DETAILS_PAGE_TITLE)) {
-            throw new WrongPageException("Not a BookingDetailsInfo details page is opened: title " + driver.getTitle() + " does not meet to the expected " + BOOKING_DETAILS_PAGE_TITLE);
+           logger.error("Not a BookingDetailsInfo details page is opened: title " + driver.getTitle() + " does not meet to the expected " + BOOKING_DETAILS_PAGE_TITLE);
+           throw new WrongPageException("Not a BookingDetailsInfo details page is opened: title " + driver.getTitle() + " does not meet to the expected " + BOOKING_DETAILS_PAGE_TITLE);
         }
     }
 

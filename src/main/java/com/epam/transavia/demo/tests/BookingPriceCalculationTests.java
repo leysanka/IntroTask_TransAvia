@@ -34,7 +34,6 @@ public class BookingPriceCalculationTests extends BaseTestBeforeClass {
                         + " select Plus fare class, fetch its price, fetch total price and verify it's calculated properly.")
 
     public void totalPriceCalculationForAllPassengersRoundTripBookingIsCorrect() {
-        TestLogger.info("BookingPriceCalculation test has started.");
 
         flightService.navigateToWhereToGoWindow();
         flightService.searchRoundTripWithParameters(newBooking);

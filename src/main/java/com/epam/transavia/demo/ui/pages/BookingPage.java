@@ -57,12 +57,13 @@ public class BookingPage extends CommonPage {
     public BookingPage(WebDriver driver) {
         super(driver);
         if (!driver.getCurrentUrl().contains("book-a-flight")) {
+            logger.error("Not a Booking page is opened: url " + driver.getCurrentUrl() + " does not contain \"book-a-flight\" part. ");
             throw new WrongPageException("Not a Booking page is opened: url " + driver.getCurrentUrl() + " does not contain \"book-a-flight\" part. ");
         }
     }
 
     public String getPlusFarePriceContainerText() {
-        logger.info("Plus Fare price raw text value is: " + pricePlusFareContainer.getText());
+        logger.info("Get Plus Fare price raw text with value of: " + pricePlusFareContainer.getText());
         return pricePlusFareContainer.getText();
     }
 

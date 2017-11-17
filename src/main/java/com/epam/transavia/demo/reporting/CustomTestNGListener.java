@@ -7,6 +7,7 @@ import org.testng.*;
 public class CustomTestNGListener implements ITestListener, ISuiteListener {
     @Override
     public void onTestStart(ITestResult iTestResult) {
+        TestLogger.warn( "[" + iTestResult.getInstanceName() + "] " + iTestResult.getName() + "test has started.");
 
     }
 
@@ -22,13 +23,13 @@ public class CustomTestNGListener implements ITestListener, ISuiteListener {
             ScreenshotHelper.takeDriverScreenshot();
             TestLogger.info("Screenshot has been taken for failed test " + iTestResult.getName());
         } catch (ScreenshotHelperException e) {
-            TestLogger.warn("Could not take a screenshot on test failure " + iTestResult.getName());
+            TestLogger.error("Could not take a screenshot on test failure " + iTestResult.getName());
         }
     }
 
     @Override
     public void onTestSkipped(ITestResult iTestResult) {
-        TestLogger.warn("[" + iTestResult.getInstanceName() + "] " + iTestResult.getName() + " is skipped.");
+        TestLogger.error("[" + iTestResult.getInstanceName() + "] " + iTestResult.getName() + " is skipped.");
     }
 
     @Override

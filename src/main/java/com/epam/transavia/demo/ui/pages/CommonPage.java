@@ -34,27 +34,31 @@ public abstract class CommonPage {
         try {
             return new Annotations(this.getClass().getDeclaredField(fieldName)).buildBy();
         } catch (NoSuchFieldException e) {
-            LogManager.getLogger().fatal("Cannot get By locator for the specified element name.");
+            logger.error("Cannot get By locator for the specified element name.");
             return null;
         }
     }
 
     public void waitForLoadingIsFinished() {
+        logger.info("Waiting for loading is finished.");
         WebDriverWait wait = new WebDriverWait(driver, SECONDS_TO_WAIT);
         wait.until(ExpectedConditions.jsReturnsValue("return jQuery.active == 0;"));
     }
 
     public void waitForElementIsClickable(WebElement element) {
+        logger.info("Waiting for element is clickable.");
         WebDriverWait wait = new WebDriverWait(driver, SECONDS_TO_WAIT);
         wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
     public void waitForElementIsVisible(WebElement element) {
+        logger.info("Waiting for element is visible." );
         WebDriverWait wait = new WebDriverWait(driver, SECONDS_TO_WAIT);
         wait.until(ExpectedConditions.visibilityOf(element));
     }
 
     public void waitForElementsAreVisible(List<WebElement> elements) {
+        logger.info("Waiting for elements are visible." );
         WebDriverWait wait = new WebDriverWait(driver, SECONDS_TO_WAIT);
         wait.until(ExpectedConditions.visibilityOfAllElements(elements));
     }
@@ -67,7 +71,7 @@ public abstract class CommonPage {
     }
 
     public String getInnerHTMLTrimmedValue(WebElement element) {
-        logger.info("Getting InnerHTM value for element: " + element.toString());
+        logger.info("Getting InnerHTM value for element. " );
 
         if (element.getAttribute("innerHTML") != null) {
             return element.getAttribute("innerHTML").trim();

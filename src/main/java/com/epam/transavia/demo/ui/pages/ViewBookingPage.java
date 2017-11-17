@@ -26,9 +26,8 @@ public class ViewBookingPage extends CommonPage {
     public ViewBookingPage(WebDriver driver) throws WrongPageException {
         super(driver);
         if (!VIEW_BOOKING_PAGE_TITLE.equals(driver.getTitle())) {
+            logger.error("View your booking page title does not meet to the expected: " + VIEW_BOOKING_PAGE_TITLE);
             throw new WrongPageException("View your booking page title does not meet to the expected: " + VIEW_BOOKING_PAGE_TITLE);
-        } else {
-            logger.info("View your booking page initialized successfully.");
         }
     }
 

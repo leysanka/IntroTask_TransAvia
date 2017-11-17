@@ -20,21 +20,20 @@ public class DriverDecorator implements WebDriver, JavascriptExecutor, TakesScre
 
     @Override
     public void get(String url) {
-        logger.info("Driver getting the url: " + url);
+        logger.info("Driver gets the url: " + url);
         driver.get(url);
     }
 
     @Override
     public String getCurrentUrl() {
 
-        // logger.info("Driver getting CurrentUrl: " + driver.getCurrentUrl());
         return driver.getCurrentUrl();
     }
 
     @Override
     public String getTitle() {
 
-        logger.info("Driver getting Title: " + driver.getTitle());
+        logger.info("Driver gets title: " + driver.getTitle());
         return driver.getTitle();
     }
 
@@ -83,7 +82,7 @@ public class DriverDecorator implements WebDriver, JavascriptExecutor, TakesScre
     @Override
     public Navigation navigate() {
 
-        logger.info("Driver navigate is being performed");
+        logger.info("Driver navigate is being performed.");
         return driver.navigate();
     }
 
@@ -95,6 +94,7 @@ public class DriverDecorator implements WebDriver, JavascriptExecutor, TakesScre
     @Override
     public Object executeScript(String script, Object... args) {
         if (driver instanceof JavascriptExecutor) {
+            logger.info("Executing javascript " + script + ".");
             return ((JavascriptExecutor) driver).executeScript(script, args);
         } else {
             throw new NotInstanceOfJavascriptExecutorException("Decorated driver cannot instantiate of the JavascriptExecutor class.");
@@ -109,7 +109,7 @@ public class DriverDecorator implements WebDriver, JavascriptExecutor, TakesScre
             throw new NotInstanceOfJavascriptExecutorException("Decorated driver cannot instantiate of the JavascriptExecutor class.");
         }
     }
-
+    //TODO Add highlighting of failed element there??
     @Override
     public <X> X getScreenshotAs(OutputType<X> target) throws WebDriverException {
         return ((TakesScreenshot) driver).getScreenshotAs(target);
