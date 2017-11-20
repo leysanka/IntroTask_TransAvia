@@ -34,7 +34,7 @@ public class ScreenshotHelper {
             logger.error("Driver could not take a screenshot.");
             throw new ScreenshotHelperException("Driver could not take a screenshot.");
         }
-        File screenshotStore = new File(generateTargetPath());
+        File screenshotStore = new File(generateTargetFilePath());
         copyFile(screenshot, screenshotStore);
     }
 
@@ -44,7 +44,7 @@ public class ScreenshotHelper {
         try {
             robot = new Robot();
             BufferedImage screenshot = robot.createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
-            screenshotStore = new File(generateTargetPath().concat("_full"));
+            screenshotStore = new File(generateTargetFilePath());
             writeBufferedImageToSourceFile(screenshot, screenshotStore);
         } catch (AWTException e) {
             logger.error("java.awt robot failed to take a full screen screenshot. System error: " + e.getMessage());
@@ -65,8 +65,11 @@ public class ScreenshotHelper {
         }
     }
 
-    private static String generateTargetPath() {
-
+    private static String generateTargetFilePath() {
+        File directory = new File(SCREENSHOTS_FOLDER_PATH);
+        if (!directory.exists()) {
+            directory.mkdir();
+        }
         return SCREENSHOTS_FOLDER_PATH.concat(DateTimeHelper.formatLocalNow(LOCAL_DATETIME_SEC_MS_FORMATTER))
                 .concat(".").concat(FILE_EXTENSION);
     }
