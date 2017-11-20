@@ -42,7 +42,7 @@ public class BaseTestBeforeClass {
         return homePageUrl;
     }
 
-    @AfterSuite()
+    @AfterSuite(alwaysRun = true)
     protected void tearDownAfterMethod() {
 
         Driver.closeDriver(driver);
