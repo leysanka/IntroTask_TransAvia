@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
+    <properties>
+        <property name="pattern">%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n%throwable</property>
+    </properties>
 
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
@@ -18,7 +21,7 @@
             </Policies>
         </RollingFile>
         <ReportPortalLog4j2Appender name="ReportPortalAppender">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n%throwable" />
+            <PatternLayout pattern="${pattern}" />
         </ReportPortalLog4j2Appender>
     </Appenders>
 
@@ -27,7 +30,7 @@
             <AppenderRef ref="test_logfile"/>
         </Logger>
         <!-- Root Logger -->
-        <Root level="debug" additivity="true">
+        <Root level="all" additivity="true">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="ReportPortalAppender"/>
             <AppenderRef ref="file"/>

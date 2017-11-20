@@ -4,7 +4,6 @@ import com.epam.transavia.demo.core.exceptions.NotInstanceOfJavascriptExecutorEx
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.*;
-
 import java.util.List;
 import java.util.Set;
 

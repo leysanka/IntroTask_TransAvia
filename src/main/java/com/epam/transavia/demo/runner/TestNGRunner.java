@@ -17,7 +17,7 @@ public class TestNGRunner {
         TestNG testNG = new TestNG();
         Settings settings = new Settings();
         CmdLineParser cmdAttributesParser = new CmdLineParser(settings);
-
+//TODO Add Listeners there
         try {
             cmdAttributesParser.parseArgument(args);
             Driver.setDefaultDriver(settings.driver);
