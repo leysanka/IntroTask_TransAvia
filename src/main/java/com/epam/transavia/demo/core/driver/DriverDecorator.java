@@ -32,7 +32,7 @@ public class DriverDecorator implements WebDriver, JavascriptExecutor, TakesScre
     @Override
     public String getTitle() {
 
-        logger.info("Driver gets title: " + driver.getTitle());
+        logger.debug("Driver gets title: " + driver.getTitle());
         return driver.getTitle();
     }
 

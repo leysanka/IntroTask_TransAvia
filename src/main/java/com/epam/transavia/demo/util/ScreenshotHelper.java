@@ -21,8 +21,7 @@ public class ScreenshotHelper {
     private static Logger logger = LogManager.getLogger(ScreenshotHelper.class.getSimpleName());
 
     private static final DateTimeFormatter LOCAL_DATETIME_SEC_MS_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH.mm.ss.ms");
-    private static final String SCREENSHOTS_FOLDER_PATH =
-            "C:\\Users\\Alesia_Kastsiuchenka\\IdeaProjects\\IntroTask_TransAvia\\target\\screenshots\\";
+    private static final String SCREENSHOTS_FOLDER_PATH ="target/screenshots/";
     private static final String FILE_EXTENSION = "png";
 
 

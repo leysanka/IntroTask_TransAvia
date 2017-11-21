@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
-    <properties>
-        <property name="pattern">%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n%throwable</property>
-    </properties>
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%highlight{%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n%throwable}{ERROR=red, WARN=blue, INFO=black, DEBUG=green}"/>
-        </Console>
-        <RollingFile name="file" filename="logs/logfile.log" filePattern="logs/logfile -%d.log">
+            <!--<PatternLayout pattern="%highlight{%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n%throwable}{ERROR=red, WARN=blue, INFO=black, DEBUG=green}"/>-->
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+        <ReportPortalLog4j2Appender name="ReportPortalAppender">
+            <PatternLayout
+                    pattern="%d [%t] %-5level %logger{36} - %msg%n%throwable"/>
+        </ReportPortalLog4j2Appender>
+        <RollingFile name="file" filename="logs/logfile.log" filePattern="logs/logfile -%d.log">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n%throwable"/>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
             </Policies>
@@ -19,17 +21,13 @@
                 <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
             </Policies>
         </RollingFile>
-        <ReportPortalLog4j2Appender name="ReportPortalAppender">
-            <PatternLayout pattern="${pattern}" />
-        </ReportPortalLog4j2Appender>
     </Appenders>
-
     <Loggers>
         <Logger name="Test" level="all" additivity="true">
             <AppenderRef ref="test_logfile"/>
         </Logger>
         <!-- Root Logger -->
-        <Root level="all" additivity="true">
+        <Root level="all">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="ReportPortalAppender"/>
             <AppenderRef ref="file"/>

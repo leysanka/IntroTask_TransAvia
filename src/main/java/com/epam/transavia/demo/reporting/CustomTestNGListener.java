@@ -4,25 +4,32 @@ import com.epam.transavia.demo.core.exceptions.ScreenshotHelperException;
 import com.epam.transavia.demo.util.ScreenshotHelper;
 import org.testng.*;
 
+import static com.epam.transavia.demo.reporting.TestLogger.info;
+
 public class CustomTestNGListener implements ITestListener, ISuiteListener {
+
+    private static final String START_MSG = "[%s] %s test has started.";
+    private static final String SUCCESS_MSG = "[%s] %s finished successfully.";
+    private static final String FAIL_MSG = "[%s] %s test failed.";
+    private static final String SKIP_MSG = "[%s] %s is skipped.";
+
     @Override
     public void onTestStart(ITestResult iTestResult) {
-        TestLogger.warn( "[" + iTestResult.getInstanceName() + "] " + iTestResult.getName() + "test has started.");
+        info( String.format(START_MSG,iTestResult.getInstanceName(),iTestResult.getName()));
 
     }
 
     @Override
     public void onTestSuccess(ITestResult iTestResult) {
-        TestLogger.info("[" + iTestResult.getInstanceName() + "] " + iTestResult.getName() + " finished successfully.");
+        info(String.format(SUCCESS_MSG,iTestResult.getInstanceName(),iTestResult.getName()));
     }
 
     @Override
     public void onTestFailure(ITestResult iTestResult) {
-        TestLogger.error("[" + iTestResult.getInstanceName() + "] " + iTestResult.getName() + " test Failed \n Trying to take screenshot...");
+        TestLogger.error(String.format(FAIL_MSG,iTestResult.getInstanceName(),iTestResult.getName()) +"\n Trying to take screenshot...");
         try {
-           // ScreenshotHelper.takeDriverScreenshot();
             ScreenshotHelper.takeScreenshotFullScreen();
-            TestLogger.info("Screenshot has been taken for failed test " + iTestResult.getName());
+            TestLogger.debug("Screenshot has been taken for failed test " + iTestResult.getName());
         } catch (ScreenshotHelperException e) {
             TestLogger.error("Could not take a screenshot on test failure " + iTestResult.getName());
         }
@@ -30,7 +37,7 @@ public class CustomTestNGListener implements ITestListener, ISuiteListener {
 
     @Override
     public void onTestSkipped(ITestResult iTestResult) {
-        TestLogger.error("[" + iTestResult.getInstanceName() + "] " + iTestResult.getName() + " is skipped.");
+        TestLogger.error(String.format(SKIP_MSG,iTestResult.getInstanceName(),iTestResult.getName()));
     }
 
     @Override
@@ -45,18 +52,19 @@ public class CustomTestNGListener implements ITestListener, ISuiteListener {
 
     @Override
     public void onFinish(ITestContext iTestContext) {
+        TestLogger.debug("OnFinishTextContext called.");
 
     }
 
     @Override
     public void onStart(ISuite iSuite) {
-        TestLogger.info("Starting suit run: " + iSuite.getName());
+        TestLogger.debug("Starting suit run: " + iSuite.getName());
 
     }
 
     @Override
     public void onFinish(ISuite iSuite) {
-        TestLogger.info(iSuite.getName() + " suit run is finished.");
+        info(iSuite.getName() + " suit run is finished.");
 
     }
 }

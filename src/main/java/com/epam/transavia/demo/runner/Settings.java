@@ -11,4 +11,11 @@ public class Settings {
     @Option(name = "--driver", required = true)
     public String driver;
 
+    @Option(name = "--scr.path")
+    public String screenshotsPath;
+
+    @Option(name = "--scr.format")
+    public String screenshotsFormat;
+
+
 }
