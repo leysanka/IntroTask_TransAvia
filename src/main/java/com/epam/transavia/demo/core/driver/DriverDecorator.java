@@ -31,8 +31,7 @@ public class DriverDecorator implements WebDriver, JavascriptExecutor, TakesScre
 
     @Override
     public String getTitle() {
-
-        logger.debug("Driver gets title: " + driver.getTitle());
+        logger.info("Driver gets title: " + driver.getTitle());
         return driver.getTitle();
     }
 
@@ -43,6 +42,7 @@ public class DriverDecorator implements WebDriver, JavascriptExecutor, TakesScre
 
     @Override
     public WebElement findElement(By by) {
+        highlightElement(driver.findElement(by));
         return driver.findElement(by);
     }
 
@@ -93,7 +93,7 @@ public class DriverDecorator implements WebDriver, JavascriptExecutor, TakesScre
     @Override
     public Object executeScript(String script, Object... args) {
         if (driver instanceof JavascriptExecutor) {
-            logger.info("Executing javascript " + script + ".");
+            logger.debug("Executing javascript " + script + ".");
             return ((JavascriptExecutor) driver).executeScript(script, args);
         } else {
             throw new NotInstanceOfJavascriptExecutorException("Decorated driver cannot instantiate of the JavascriptExecutor class.");
@@ -108,9 +108,14 @@ public class DriverDecorator implements WebDriver, JavascriptExecutor, TakesScre
             throw new NotInstanceOfJavascriptExecutorException("Decorated driver cannot instantiate of the JavascriptExecutor class.");
         }
     }
-    //TODO Add highlighting of failed element there??
+
     @Override
     public <X> X getScreenshotAs(OutputType<X> target) throws WebDriverException {
         return ((TakesScreenshot) driver).getScreenshotAs(target);
+    }
+
+    public void highlightElement(WebElement element) {
+        String bg = element.getCssValue("backgroundColor");
+        ((JavascriptExecutor) driver).executeScript("arguments[0].style.backgroundColor = ' " + "yellow" + " ' ", element);
     }
 }
