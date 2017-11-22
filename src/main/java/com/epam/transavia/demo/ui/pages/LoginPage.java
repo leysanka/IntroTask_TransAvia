@@ -26,7 +26,7 @@ public class LoginPage extends CommonPage {
     public LoginPage(WebDriver driver) {
         super(driver);
         if (!LOGIN_PAGE_TITLE.equals(driver.getTitle())) {
-            logger.error("Login page title does not meet to the expected one: " + LOGIN_PAGE_TITLE);
+            logger.error("Login page title does not meet to the expected one: " + LOGIN_PAGE_TITLE + " Found: " + driver.getTitle());
             throw new WrongPageException("Login page title does not meet to the expected one: " + LOGIN_PAGE_TITLE);
         }
     }

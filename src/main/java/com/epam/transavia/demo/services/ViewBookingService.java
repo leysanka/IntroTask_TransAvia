@@ -39,6 +39,7 @@ public class ViewBookingService {
     }
 
     public BookingDetailsInfo getBookingInfoFromBookingDetails() {
+       // logger.info("Getting booking info from Booking Details...");
         ViewBookingDetailsPage viewBookingDetailsPage = new ViewBookingDetailsPage(driver);
         BookingDetailsInfo actualInfoBookingDetails = new BookingDetailsInfo();
         actualInfoBookingDetails.setTotalPaymentAmount(viewBookingDetailsPage.getTotalPaymentValue());

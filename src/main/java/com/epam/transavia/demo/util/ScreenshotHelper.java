@@ -25,7 +25,7 @@ public class ScreenshotHelper {
     private static final String FILE_EXTENSION = "png";
 
 
-    public static void takeDriverScreenshot() throws ScreenshotHelperException {
+    public static File takeDriverScreenshot() throws ScreenshotHelperException {
         File screenshot = null;
         try {
             screenshot = ((TakesScreenshot) Driver.getDefaultDriver()).getScreenshotAs(OutputType.FILE);
@@ -35,9 +35,10 @@ public class ScreenshotHelper {
         }
         File screenshotStore = new File(generateTargetFilePath());
         copyFile(screenshot, screenshotStore);
+        return screenshotStore;
     }
 
-    public static void takeScreenshotFullScreen() throws ScreenshotHelperException {
+    public static File takeScreenshotFullScreen() throws ScreenshotHelperException {
         Robot robot = null;
         File screenshotStore = null;
         try {
@@ -53,6 +54,7 @@ public class ScreenshotHelper {
                          + "\n System error: " + e.getMessage());
             throw new ScreenshotHelperException("Could not write full screen image to the location: " + screenshotStore.getAbsolutePath());
         }
+        return screenshotStore;
     }
 
     private static void writeBufferedImageToSourceFile(BufferedImage screenshot, File screenshotStore) throws IOException, ScreenshotHelperException {
