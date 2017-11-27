@@ -73,7 +73,7 @@ public class ScreenshotHelper {
             directory.mkdir();
         }
         return directory.getAbsolutePath().concat(DateTimeHelper.formatLocalNow(LOCAL_DATETIME_SEC_MS_FORMATTER))
-                .concat(".").concat(FILE_EXTENSION);
+                .concat(".").concat(FILE_EXTENSION).replaceFirst(".", "");
     }
 
     private static void copyFile(File source, File target) throws ScreenshotHelperException {
