@@ -37,8 +37,8 @@ public class ViewBookingWithoutAccountTests extends BaseTestBeforeClass {
     @Test(description = "Verify that the expected Booking ID is loaded in ViewBooking after login without account,ie. via BookingNumb, LastName and FlightDate.")
     public void viewBookingWithoutAccountBookingIsLoaded() {
         //Made test to fail temporally for testing of fail listener.
-        //Assert.assertEquals(actualViewBookingInfo.getBookingNumber(), testBookingInfo.getBookingNumber(), "Not equal");
-        Assert.assertNotEquals(actualViewBookingInfo.getBookingNumber(), testBookingInfo.getBookingNumber(), "Not equal");
+        //Assert.assertEquals(actualViewBookingInfo.getBookingNumber(), testBookingInfo.getBookingNumber(), "Loaded Booking ID does not equal to the expected: " + testBookingInfo.getBookingNumber());
+        Assert.assertNotEquals(actualViewBookingInfo.getBookingNumber(), testBookingInfo.getBookingNumber(), "Loaded Booking ID does not equal to the expected: " + testBookingInfo.getBookingNumber());
     }
 
     @Test(description = "Verify Flying From/To fetched from ViewBooking are the same as expected for testing booking.")

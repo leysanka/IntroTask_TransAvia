@@ -2,15 +2,6 @@
 
 <suite name="Transavia Demo Suit_All Tests">
 
-    <!--This set is working now as well-->
-    <!--    <test name = "ViewExistingBooking test">
-            <classes>
-                <class name="com.epam.transavia.demo.tests.ViewBookingWithoutAccountTests"/>
-                <class name="com.epam.transavia.demo.tests.SearchFlightsTests"/>
-                <class name="com.epam.transavia.demo.tests.BookingPriceCalculationTests"/>
-                <class name="com.epam.transavia.demo.tests.SearchFlightErrorsTests"/>
-            </classes>
-       </test>-->
     <test name="ViewExistingBooking test">
         <classes>
             <class name="com.epam.transavia.demo.tests.ViewBookingWithoutAccountTests"/>

@@ -21,7 +21,7 @@ public class ScreenshotHelper {
     private static Logger logger = LogManager.getLogger(ScreenshotHelper.class.getSimpleName());
 
     private static final DateTimeFormatter LOCAL_DATETIME_SEC_MS_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH.mm.ss.ms");
-    private static final String SCREENSHOTS_FOLDER_PATH ="target/screenshots/";
+    private static final String SCREENSHOTS_FOLDER_PATH = "\\screenshots\\.";
     private static final String FILE_EXTENSION = "png";
 
 
@@ -67,11 +67,12 @@ public class ScreenshotHelper {
     }
 
     private static String generateTargetFilePath() {
-        File directory = new File(SCREENSHOTS_FOLDER_PATH);
+        File currDirectory = new File(System.getProperty("user.dir"));
+        File directory = new File(currDirectory.getAbsolutePath().concat(SCREENSHOTS_FOLDER_PATH));
         if (!directory.exists()) {
             directory.mkdir();
         }
-        return SCREENSHOTS_FOLDER_PATH.concat(DateTimeHelper.formatLocalNow(LOCAL_DATETIME_SEC_MS_FORMATTER))
+        return directory.getAbsolutePath().concat(DateTimeHelper.formatLocalNow(LOCAL_DATETIME_SEC_MS_FORMATTER))
                 .concat(".").concat(FILE_EXTENSION);
     }
 

@@ -16,10 +16,8 @@ public class BookingPage extends CommonPage {
     private List<WebElement> allDatesWithFlights;
     @FindBy(xpath = "//div[(contains(@class, 'notification-error'))]")
     private WebElement searchFlightError;
-    //  @FindBy(xpath = "//input[contains(@value, 'OutboundFlight')]//ancestor::form//span[@class='price']")
     @FindBy(xpath = "//input[contains(@value, 'OutboundFlight')]//ancestor::form//div[contains(@class, 'day-with-availability')]")
     private List<WebElement> outboundFlights;
-    //  @FindBy(xpath = "//input[contains(@value, 'InboundFlight')]//ancestor::form//span[@class='price']")
     @FindBy(xpath = "//input[contains(@value, 'InboundFlight')]//ancestor::form//div[contains(@class, 'day-with-availability')]")
     private List<WebElement> inboundFlights;
     @FindBy(xpath = "//section[@class='flight inbound']//div[@class='panel flight-result active']")
@@ -52,7 +50,6 @@ public class BookingPage extends CommonPage {
     private WebElement nextToFlightFareSelectionButton;
     @FindBy(xpath = "//tr//button[@value = 'B' and text()='Select']")
     private WebElement selectPlusFareBtn; //+20kg luggage
-
 
     public BookingPage(WebDriver driver) {
         super(driver);

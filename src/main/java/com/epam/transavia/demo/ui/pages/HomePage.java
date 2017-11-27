@@ -72,7 +72,7 @@ public class HomePage extends CommonPage {
     public HomePage(WebDriver driver) throws WrongPageException {
         super(driver);
         if (!driver.getCurrentUrl().contains("home")) {
-            logger.error("HomePage url does not meet to the expected containing \"home\". " + driver.getCurrentUrl());
+            logger.error("HomePage url does not meet to the expected containing \"home\". " + "Actual url is: " + driver.getCurrentUrl());
             throw new WrongPageException("HomePage url does not meet to the expected containing \"home\". " + driver.getCurrentUrl());
         }
     }

@@ -17,7 +17,6 @@ public class WelcomePage extends CommonPage {
 
     @FindBy(xpath = "//div[@class = 'component_language-switch']//li//a")
     private List<WebElement> allLanguagesList;
-
     @FindBy(xpath = "//a[@href='/en-EU/home']")
     private WebElement welcomeOtherCountries;
 
