@@ -34,10 +34,10 @@ public class SearchFlightsService {
 
     public void searchDefaultOneWayOneUserFlight(NewBooking newBooking) {
         HomePage homePage = new HomePage(driver);
-        setFlyDestinations(newBooking);
         if (homePage.returnOnIsChecked()) {
             homePage.returnOnCheckBoxClick();
         }
+        setFlyDestinations(newBooking);
         homePage.searchBtnSubmit();
     }
 
