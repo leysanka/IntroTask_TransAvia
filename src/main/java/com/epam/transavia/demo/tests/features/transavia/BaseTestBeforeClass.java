@@ -1,4 +1,4 @@
-package com.epam.transavia.demo.tests;
+package com.epam.transavia.demo.tests.features.transavia;
 
 import com.epam.transavia.demo.business_objects.WelcomeScreenLanguages;
 import com.epam.transavia.demo.core.driver.Driver;

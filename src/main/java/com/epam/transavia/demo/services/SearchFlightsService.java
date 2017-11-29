@@ -5,7 +5,7 @@ import com.epam.transavia.demo.business_objects.PassengersTypes;
 import com.epam.transavia.demo.core.driver.Driver;
 import com.epam.transavia.demo.core.exceptions.InvalidTestDataException;
 import com.epam.transavia.demo.core.exceptions.UnknownPassengerTypeException;
-import com.epam.transavia.demo.tests.BaseTestBeforeClass;
+import com.epam.transavia.demo.tests.features.transavia.BaseTestBeforeClass;
 import com.epam.transavia.demo.ui.pages.BookingPage;
 import com.epam.transavia.demo.ui.pages.HomePage;
 import org.apache.logging.log4j.LogManager;

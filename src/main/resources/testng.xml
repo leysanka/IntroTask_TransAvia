@@ -4,22 +4,29 @@
 
     <test name="ViewExistingBooking test">
         <classes>
-            <class name="com.epam.transavia.demo.tests.ViewBookingWithoutAccountTests"/>
+            <class name="com.epam.transavia.demo.tests.features.transavia.ViewBookingWithoutAccountTests"/>
         </classes>
     </test>
     <test name="Booking Price Calculation tests">
         <classes>
-            <class name="com.epam.transavia.demo.tests.BookingPriceCalculationTests"/>
+            <class name="com.epam.transavia.demo.tests.features.transavia.BookingPriceCalculationTests"/>
         </classes>
     </test>
     <test name="Search Flights tests">
         <classes>
-            <class name="com.epam.transavia.demo.tests.SearchFlightsTests"/>
+            <class name="com.epam.transavia.demo.tests.features.transavia.SearchFlightsTests"/>
         </classes>
     </test>
     <test name="Search Flights with error tests">
         <classes>
-            <class name="com.epam.transavia.demo.tests.SearchFlightErrorsTests"/>
+            <class name="com.epam.transavia.demo.tests.features.transavia.SearchFlightErrorsTests"/>
+        </classes>
+    </test>
+    <!--</suite>
+    <suite name="Api Tests">-->
+    <test name="RestAssured_jsonplaceholder.typicode.com">
+        <classes>
+            <class name="com.epam.transavia.demo.tests.features.api.JSONPlaceHolderRestAssuredTests"/>
         </classes>
     </test>
 </suite>

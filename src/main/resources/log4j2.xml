@@ -26,6 +26,9 @@
         <Logger name="Test" level="all" additivity="true">
             <AppenderRef ref="test_logfile"/>
         </Logger>
+        <Logger name="ApiTests" level="all" additivity="true">
+            <AppenderRef ref="test_logfile"/>
+        </Logger>
         <Root level="info">
             <AppenderRef ref="ReportPortalAppender"/>
             <AppenderRef ref="Console"/>

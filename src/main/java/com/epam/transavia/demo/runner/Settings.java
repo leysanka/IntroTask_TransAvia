@@ -17,5 +17,4 @@ public class Settings {
     @Option(name = "--scr.format")
     public String screenshotsFormat;
 
-
 }

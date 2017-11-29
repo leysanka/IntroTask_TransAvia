@@ -1,9 +1,8 @@
-package com.epam.transavia.demo.tests;
+package com.epam.transavia.demo.tests.features.transavia;
 
 import com.epam.transavia.demo.business_objects.NewBooking;
 import com.epam.transavia.demo.business_objects.bo_factory.BookingCreator;
 import com.epam.transavia.demo.business_objects.bo_factory.NewBookingBuilder;
-import com.epam.transavia.demo.reporting.TestLogger;
 import com.epam.transavia.demo.services.BookingService;
 import com.epam.transavia.demo.services.SearchFlightsService;
 import org.testng.Assert;

@@ -1,4 +1,4 @@
-package com.epam.transavia.demo.tests;
+package com.epam.transavia.demo.tests.features.transavia;
 
 import com.epam.transavia.demo.business_objects.bo_factory.NewBookingStaticFactory;
 import com.epam.transavia.demo.services.SearchFlightsService;

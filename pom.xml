@@ -94,6 +94,13 @@
             <artifactId>selenium-java</artifactId>
             <version>3.6.0</version>
         </dependency>
+        <!--Rest Assured-->
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>3.0.6</version>
+            <!-- <scope>test</scope>-->
+        </dependency>
         <!-- https://mvnrepository.com/artifact/org.testng/testng -->
         <dependency>
             <groupId>org.testng</groupId>
@@ -131,7 +138,6 @@
             <version>2.4</version>
         </dependency>
     </dependencies>
-
     <pluginRepositories>
         <pluginRepository>
             <id>central</id>

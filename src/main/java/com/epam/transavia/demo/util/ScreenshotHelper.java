@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 
 public class ScreenshotHelper {
-
+    //TODO custom logic for screenshot path
     private static Logger logger = LogManager.getLogger(ScreenshotHelper.class.getSimpleName());
 
     private static final DateTimeFormatter LOCAL_DATETIME_SEC_MS_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH.mm.ss.ms");
