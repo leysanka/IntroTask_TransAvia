@@ -33,7 +33,9 @@ public class TestNGRunner {
             List<String> lSuites = Lists.newArrayList();
             Collections.addAll(lSuites, settings.pathToTestngXML);
             testNG.setTestSuites(lSuites);
+
            // testNG.setXmlSuites((List<XmlSuite>) new Parser(settings.pathToTestngXML).parse());
+
          /*   TestListenerAdapter results = new TestListenerAdapter();
             testNG.addListener(results);*/
 
