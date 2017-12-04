@@ -10,11 +10,12 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+
 import static io.restassured.RestAssured.given;
 
 public class JSONPlaceHolderRestAssuredTests {
 
-    private static final String BASE_URI = "http://jsonplaceholder.typicode.com";
+    private static final String BASE_URI = "https://jsonplaceholder.typicode.com";
     private static final Logger apiLogger = LogManager.getLogger("ApiTests");
     private static final String CLASS_NAME = JSONPlaceHolderRestAssuredTests.class.getSimpleName();
     private Response getResponse;
@@ -31,6 +32,7 @@ public class JSONPlaceHolderRestAssuredTests {
     public void initGetResponse() {
         apiLogger.info(CLASS_NAME + ": initializing GET request...");
         getResponse = given().get("/users").andReturn();
+
     }
 
     @Test(description = "post response")

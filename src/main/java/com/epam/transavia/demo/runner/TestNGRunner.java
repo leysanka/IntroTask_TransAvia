@@ -27,6 +27,7 @@ public class TestNGRunner {
             cmdAttributesParser.parseArgument(args);
             Driver.setDefaultDriver(settings.driver);
             System.setProperty("log4j2.debug", "true");
+            System.setProperty("OAUTH_TOKEN", settings.gitToken);
             testNG.addListener((ITestNGListener) reportPortalTestNGListener);
             testNG.addListener(customTestNGListener);
 
