@@ -17,7 +17,7 @@ public class Settings {
     @Option(name = "--scr.format")
     public String screenshotsFormat;
 
-    @Option(name = "--OAUTH_TOKEN", required = true)
+    @Option(name = "--OAUTH_TOKEN")
     public String gitToken;
 
 }
