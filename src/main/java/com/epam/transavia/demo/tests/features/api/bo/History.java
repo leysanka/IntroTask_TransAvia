@@ -2,18 +2,18 @@ package com.epam.transavia.demo.tests.features.api.bo;
 
 public class History {
 
-    private Change_status change_status;
+    private ChangeStatus change_status;
     private String committed_at;
     private User user;
     private String url;
     private String version;
 
-    public Change_status getChange_status ()
+    public ChangeStatus getChange_status ()
     {
         return change_status;
     }
 
-    public void setChange_status (Change_status change_status)
+    public void setChange_status (ChangeStatus change_status)
     {
         this.change_status = change_status;
     }

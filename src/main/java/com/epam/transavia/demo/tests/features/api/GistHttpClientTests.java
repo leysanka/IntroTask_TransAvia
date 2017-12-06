@@ -1,90 +1,117 @@
 package com.epam.transavia.demo.tests.features.api;
 
 import com.epam.transavia.demo.tests.features.api.bo.Gist;
-import com.epam.transavia.demo.tests.features.api.bo.HttpRequestType;
+import com.epam.transavia.demo.tests.features.api.services.GistService;
+import com.epam.transavia.demo.util.GistUtils;
 import org.apache.commons.io.FileUtils;
-import org.apache.http.client.methods.*;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.Assert;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.Test;
 
-import java.io.File;
 import java.util.List;
 
 public class GistHttpClientTests {
 
     private static final String BASE_URI = "https://api.github.com/gists";
     private static final Logger apiLogger = LogManager.getLogger("ApiTests");
-    private static CloseableHttpClient httpClient;
+    private static final String USER_LOGIN = "leysanka";
+    private static final int POST_SUCCESS_CODE = 201;
+    private static final int GET_SUCCESS_CODE = 200;
+    private static final int PATCH_SUCCESS_CODE = 200;
+    CloseableHttpResponse getGistsResponse, getStarResponse, postResponse, putStarResponse, patchResponse, deleteResponse;
+    List<Gist> baseGists;
+    Gist postingGist, postedGist, updateGist, updatedGist;
 
-    @BeforeTest
-    public void initHttpClient() {
-        httpClient = HttpClients.createDefault();
+    private GistService service = new GistService();
+
+    @BeforeGroups(groups = "getBaseUri", description = "Execute authorized GET to BASE_URI, fetch response and list of all gists of the user.")
+    public void getBaseUriResponseAndGists() {
+        getGistsResponse = service.getAuthorizedGetResponse(BASE_URI);
+        baseGists = GistUtils.convertArrayGistsFromJsonResponseToPOJOList(getGistsResponse);
+        service.closeResponse(getGistsResponse);
+        apiLogger.debug("Before method called.");
     }
-
-    @Test
-    public void setUpAuthorizedConnectionWithGet() {
-
-        HttpGet httpGet = (HttpGet) GitService.getHttpTokenAuthorization(BASE_URI, HttpRequestType.GET);
-        CloseableHttpResponse response = GitService.executeResponse(httpClient, httpGet);
-        List<Gist> gists = GitService.convertArrayGistsFromJsonResponseToPOJOList(response);
-        GitService.closeResponse(response);
-
-        apiLogger.info("Response status line: " + response.getStatusLine());
-        apiLogger.info("Count of gists is: " + gists.size());
-
-        Assert.assertEquals(200, response.getStatusLine().getStatusCode(), "Status code of response in not 200.");
-    }
-
-    @Test(priority = 1)
+    //@BeforeGroups(groups = {"postNewGist", "patchGist"})
+    @BeforeGroups(groups = "postNewGist")
     public void postNewGist() {
-        HttpPost httpPost;
-        Gist postingGist = GitService.createNewGist();
-
-        httpPost = (HttpPost) GitService.getHttpTokenAuthorization(BASE_URI, HttpRequestType.POST);
-        httpPost.setEntity(GitService.createJSONEntityFromObject(postingGist));
-        CloseableHttpResponse postResponse = GitService.executeResponse(httpClient, httpPost);
-
-        Gist resultGist = GitService.convertGistFromJsonResponseToPOJO(postResponse);
-        GitService.saveGistIdToFile(resultGist);
-        GitService.closeResponse(postResponse);
-
-        apiLogger.debug("Posted gist id = " + resultGist.getId());
-        apiLogger.info("Response status line: " + postResponse.getStatusLine());
-
-        Assert.assertEquals(201, postResponse.getStatusLine().getStatusCode(), "Status code does not equal 201 after new gist POST.");
-        Assert.assertEquals(postingGist.getDescription(), resultGist.getDescription(), "Description of new posted gist does not equal to the expected.");
+        postingGist = GistService.createNewGist();
+        postResponse = service.getAuthorizedPostResponse(BASE_URI, GistUtils.convertObjToJsonStringEntity(postingGist));
+        postedGist = GistUtils.convertGistFromJsonResponseToPOJO(postResponse);
+        GistUtils.saveGistIdToFile(postedGist);
+        service.closeResponse(postResponse);
+        apiLogger.info("Before postGist method called.");
     }
 
-    @Test(priority = 2)
-    public void updateGistWithPatch() {
-        String updateGistUri = BASE_URI.concat("/").concat(GitService.getCreatedGistIdFromFile());
-        HttpPatch httpPatch;
+    @BeforeGroups(groups = "patchGist")
+    public void updateGistViaPatch() {
+        if(! FileUtils.getFile(GistUtils.getGistIdFilePath()).exists() ) {
+            postNewGist();
+        }
+        String updateGistUri = BASE_URI.concat("/").concat(GistUtils.getCreatedGistIdFromFile());
+        updateGist = GistService.createGistUpdateFileContentAndNewFile();
+        patchResponse = service.getAuthorizedPatchResponse(updateGistUri, GistUtils.convertObjToJsonStringEntity(updateGist));
+        updatedGist = GistUtils.convertGistFromJsonResponseToPOJO(patchResponse);
+        service.closeResponse(patchResponse);
+    }
 
-        httpPatch = (HttpPatch)GitService.getHttpTokenAuthorization(updateGistUri,HttpRequestType.PATCH);
-        httpPatch.setEntity(GitService.createJSONEntityFromObject(GitService.createGistToUpdateFileContentAndNewFile()));
-        CloseableHttpResponse patchResponse = GitService.executeResponse(httpClient, httpPatch);
-        Gist patchedGist = GitService.convertGistFromJsonResponseToPOJO(patchResponse);
-        GitService.closeResponse(patchResponse);
+    @Test(groups = "getBaseUri", description = "Check Status Code is valid.")
+    public void checkGetBaseUriStatusCode() {
+        Assert.assertEquals(GET_SUCCESS_CODE, getGistsResponse.getStatusLine().getStatusCode(), "Status code of response in not 200.");
+        apiLogger.info("checkGetBaseUriStatusCode");
+    }
 
+    @Test(groups = "getBaseUri", description = "Check whether the expected user is authorized.")
+    public void checkGetBaseUriAuthorizedUser() {
+
+        Assert.assertEquals(baseGists.get(0).getOwner().getLogin(), USER_LOGIN, "Authorized Owner login does not equal to the expected " + USER_LOGIN);
+        apiLogger.info("checkGetBaseUriAuthorizedUser");
+    }
+
+    @Test(groups = "postNewGist", description = "Check status code is valid after POST execution")
+    public void checkPostStatusCode() {
+        apiLogger.info("Response status line: " + postResponse.getStatusLine());
+        Assert.assertEquals(POST_SUCCESS_CODE, postResponse.getStatusLine().getStatusCode(), "Status code after new gist POST does not equal " + POST_SUCCESS_CODE);
+    }
+
+    @Test(groups = "postNewGist", description = "Check expected Description of gist equals to the posted after POST execution.")
+    public void checkPostedGistDescription() {
+        apiLogger.debug("Posted gist id = " + postedGist.getId());
+        Assert.assertEquals(postingGist.getDescription(), postedGist.getDescription(), "Description of new posted gist does not equal to the expected.");
+    }
+
+    @Test(groups = "patchGist", description = "")
+    public void checkPatchStatusCode() {
         apiLogger.info("Response status is: " + patchResponse.getStatusLine());
-        apiLogger.debug("Patched gist id: " + patchedGist.getId());
-        apiLogger.debug("Patched gist files: " + patchedGist.getFiles().toString());
-        for (int i = 0; i < patchedGist.getHistory().length; i++) {
-            apiLogger.debug("Patched gist files history: " + patchedGist.getHistory()[i].toString());
+        Assert.assertEquals(PATCH_SUCCESS_CODE, patchResponse.getStatusLine().getStatusCode(), "Status code does not equal " + PATCH_SUCCESS_CODE);
+    }
+
+    @Test(groups = "patchGist", description = "")
+    public void checkPatchedGistIdCorrect() {
+        apiLogger.debug("Patched gist id: " + updatedGist.getId());
+        Assert.assertEquals(updatedGist.getId(), GistUtils.getCreatedGistIdFromFile(), "Unexpected gist updated.");
+    }
+
+    @Test(groups = "patchGist", description = "")
+    public void checkHistoryAfterPatch() {
+        for (int i = 0; i < updatedGist.getHistory().length; i++) {
+            apiLogger.debug("Patched gist files history: " + updatedGist.getHistory()[i].toString());
+            apiLogger.debug("Patched gist files history: " + updatedGist.getHistory()[i].getChange_status().toString());
         }
 
-        Assert.assertEquals(patchedGist.getId(), GitService.getCreatedGistIdFromFile(), "Unexpected gist updated.");
-        Assert.assertEquals(200, patchResponse.getStatusLine().getStatusCode(), "Status code does not equal 200");
-        Assert.assertEquals(2, patchedGist.getFiles().keySet().size(), "Files count must be 2 after update.");
+        Assert.assertEquals(updatedGist.getHistory().length, 2, "History must have 2 records after created and patch.");
+    }
+
+    @Test(groups = "patchGist", description = "")
+    public void checkFilesCountAfterUpdate() {
+        apiLogger.debug("Patched gist files: " + updatedGist.getFiles().toString());
+        Assert.assertEquals(2, updatedGist.getFiles().keySet().size(), "Files count must be 2 after update.");
     }
 
 
-    @Test(priority = 3)
+   /* @Test(priority = 3)
     public void starGistWithPut() {
         String starForGistUri = BASE_URI.concat("/").concat(GitService.getCreatedGistIdFromFile()).concat("/star");
         HttpPut httpPut;
@@ -126,7 +153,6 @@ public class GistHttpClientTests {
 
         Assert.assertEquals(204, deleteResponse.getStatusLine().getStatusCode(), "Status code of Delete does not equal to the expected 204.");
 
-    }
-
+    }*/
 }
 

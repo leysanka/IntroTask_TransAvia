@@ -1,6 +1,6 @@
 package com.epam.transavia.demo.tests.features.api.bo;
 
-public class Change_status {
+public class ChangeStatus {
 
     private int total;
 
@@ -28,12 +28,12 @@ public class Change_status {
         this.additions = additions;
     }
 
-    public int getDeletions ()
+    public int getDeletions()
     {
         return deletions;
     }
 
-    public void setDeletions (int deletions)
+    public void setDeletions(int deletions)
     {
         this.deletions = deletions;
     }
@@ -41,6 +41,6 @@ public class Change_status {
     @Override
     public String toString()
     {
-        return "Change_status [total = "+total+", additions = "+additions+", deletions = "+deletions+"]";
+        return "Change_status [total = " + total + ", additions = " + additions + ", deletions = " + deletions + "]";
     }
 }
