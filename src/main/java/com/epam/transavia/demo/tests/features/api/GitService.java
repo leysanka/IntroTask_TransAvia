@@ -1,34 +1,81 @@
 package com.epam.transavia.demo.tests.features.api;
 
 import com.epam.transavia.demo.core.exceptions.BufferedReaderException;
+import com.epam.transavia.demo.core.exceptions.HttpClientException;
 import com.epam.transavia.demo.tests.features.api.bo.Gist;
+import com.epam.transavia.demo.tests.features.api.bo.HttpRequestType;
 import com.google.gson.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.*;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.*;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-class GitHubService {
+class GitService {
     private static final Logger apiLogger = LogManager.getLogger("ApiTests");
-    private static final String GIST_ID_FILE = "./target/gistId.txt";
+    private static final String GIST_ID_FILE_PATH = "./target/gistId.txt";
 
 
-/*
-    public HttpRequestBase getHttpGetResponseWithTokenAuthorization(String navigationURI, Object requestType) {
-       // CloseableHttpClient httpclient = HttpClients.createDefault();
-        Type type = requestType.getClass().getComponentType();
-        requestType.getClass().getSimpleName() = new HttpPatch(BASE_URI.concat("/").concat(gistIdToUpdate));
-        httpPatch.setHeader("Authorization", "token b60a2cbc780af78f3a2fd9a92c52ba934e302f0b");
+    static HttpRequestBase getHttpTokenAuthorization(String uri, HttpRequestType type) {
+        HttpRequestBase httpRequest;
+        switch (type) {
+            case GET: {
+                httpRequest = new HttpGet(uri);
+                break;
+            }
+            case POST: {
+                httpRequest = new HttpPost(uri);
+                break;
+            }
+            case PATCH: {
+                httpRequest = new HttpPatch(uri);
+                break;
+            }
+            case PUT: {
+                httpRequest = new HttpPut(uri);
+                break;
+            }
+            case DELETE: {
+                httpRequest = new HttpDelete(uri);
+                break;
+            }
+            default: {
+                throw new HttpClientException("Unknown reguest type is specified " + type);
+            }
+        }
+        httpRequest.setHeader("Authorization", System.getenv("OAUTH_TOKEN"));
+        return httpRequest;
     }
-*/
 
+    static CloseableHttpResponse executeResponse(CloseableHttpClient httpClient, HttpRequestBase httpRequest) {
+        CloseableHttpResponse response = null;
+        try {
+            response = httpClient.execute(httpRequest);
+        } catch (IOException e) {
+            apiLogger.error(MessageFormat.format("Execute request {1} failed ", httpRequest.getClass().getSimpleName())
+                            + e.getMessage());
+            throw new HttpClientException(MessageFormat.format("Execute request {1} failed ", httpRequest.getClass().getSimpleName())
+                                          + e.getMessage());
+        }
+        return response;
+    }
+
+    static void closeResponse(CloseableHttpResponse response) {
+        try {
+            response.close();
+        } catch (IOException e) {
+            apiLogger.error("Cannot close the response.");
+        }
+    }
 
     static StringEntity createJSONEntityFromObject(Object object) {
         Gson gson = new GsonBuilder().create();
@@ -55,12 +102,9 @@ class GitHubService {
     /**
      * patch JSON must be of the following format:
      * { "description": "the description for this gist",
-     * "files": {
-     * "file1.txt": { "content": "updated file contents"  },
+     * "files": {"file1.txt": { "content": "updated file contents"  },
      * "old_name.txt": { "filename": "new_name.txt", "content": "modified contents" },
-     * "new_file.txt": {"content": "a new file"},
-     * "delete_this_file.txt": null  }
-     * }
+     * "new_file.txt": {"content": "a new file"},"delete_this_file.txt": null  } }
      */
     static Gist createGistToUpdateFileContentAndNewFile() {
         Gist gist = new Gist();
@@ -116,7 +160,7 @@ class GitHubService {
     static String getCreatedGistIdFromFile() {
         String gistIdToUpdate = "";
         try {
-            gistIdToUpdate = FileUtils.readLines(new File(GIST_ID_FILE), "utf-8").get(0);
+            gistIdToUpdate = FileUtils.readLines(new File(GIST_ID_FILE_PATH), "utf-8").get(0);
         } catch (IOException e) {
             apiLogger.error("Did not get GistId from file " + e.getMessage());
         }
@@ -125,14 +169,14 @@ class GitHubService {
 
     static void saveGistIdToFile(Gist resultGist) {
         try {
-            FileUtils.write(new File(GIST_ID_FILE), resultGist.getId(), "utf-8");
+            FileUtils.write(new File(GIST_ID_FILE_PATH), resultGist.getId(), "utf-8");
         } catch (IOException e) {
             apiLogger.error("Failed to save GistId to file " + e.getMessage());
         }
 
     }
 
-    static String getGistIdFile() {
-        return GIST_ID_FILE;
+    static String getGistIdFilePath() {
+        return GIST_ID_FILE_PATH;
     }
 }
