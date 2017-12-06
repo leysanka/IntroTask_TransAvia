@@ -30,7 +30,7 @@ public class CustomTestNGListener implements ITestListener, ISuiteListener {
     public void onTestFailure(ITestResult iTestResult) {
         TestLogger.error(String.format(FAIL_MSG, iTestResult.getInstanceName(), iTestResult.getName()) + "\n Trying to take screenshot...");
         try {
-            File screenshot = ScreenshotHelper.takeDriverScreenshot();
+            File screenshot = ScreenshotHelper.takeScreenshotFullScreen();
             TestLogger.sendFileToRP(screenshot, "Screenshot has been taken for failed test: ");
         } catch (ScreenshotHelperException e) {
             TestLogger.error("Could not take a screenshot on test failure " + iTestResult.getName());

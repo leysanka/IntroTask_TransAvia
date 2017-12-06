@@ -42,7 +42,7 @@ public class ScreenshotHelper {
         Robot robot = null;
         File screenshotStore = null;
         try {
-            robot = new Robot();
+            robot = new Robot(GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice());
             BufferedImage screenshot = robot.createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
             screenshotStore = new File(generateTargetFilePath());
             writeBufferedImageToSourceFile(screenshot, screenshotStore);
