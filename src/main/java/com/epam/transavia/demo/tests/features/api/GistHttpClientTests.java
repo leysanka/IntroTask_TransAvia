@@ -28,6 +28,14 @@ public class GistHttpClientTests {
     private static final int GET_STAR_SUCCESS_CODE = 204;
     private static final int DELETE_SUCCESS_CODE = 204;
 
+
+
+    private static final String updateGistUriFormat = "%s/%s";
+    private static final String starGistUriFormat = "%s/%s/star";
+
+
+    //Add Formatters!
+
     CloseableHttpResponse getGistsResponse, getStarResponse, postResponse, putResponse, patchResponse, deleteResponse;
     List<Gist> baseGists;
     Gist postingGist, postedGist, updateGist, updatedGist;
@@ -57,7 +65,8 @@ public class GistHttpClientTests {
         if (!FileUtils.getFile(GistUtils.getGistIdFilePath()).exists()) {
             postNewGist();
         }
-        String updateGistUri = BASE_URI.concat("/").concat(GistUtils.getCreatedGistIdFromFile());
+        // String updateGistUri = BASE_URI.concat("/").concat(GistUtils.getCreatedGistIdFromFile());
+        String updateGistUri = String.format(updateGistUriFormat, BASE_URI, GistUtils.getCreatedGistIdFromFile());
         updateGist = GistService.createGistUpdateFileContentAndNewFile();
         patchResponse = service.getAuthorizedPatchResponse(updateGistUri, GistUtils.convertObjToJsonStringEntity(updateGist));
         updatedGist = GistUtils.convertJsonResponseToGist(patchResponse);
@@ -69,7 +78,8 @@ public class GistHttpClientTests {
         if (!FileUtils.getFile(GistUtils.getGistIdFilePath()).exists()) {
             postNewGist();
         }
-        String starForGistUri = BASE_URI.concat("/").concat(GistUtils.getCreatedGistIdFromFile()).concat("/star");
+        //String starForGistUri = BASE_URI.concat("/").concat(GistUtils.getCreatedGistIdFromFile()).concat("/star");
+        String starForGistUri = String.format(starGistUriFormat, BASE_URI, GistUtils.getCreatedGistIdFromFile());
         putResponse = service.getAuthorizedPutResponse(starForGistUri);
         service.closeResponse(putResponse);
         getStarResponse = service.getAuthorizedGetResponse(starForGistUri);
@@ -139,9 +149,8 @@ public class GistHttpClientTests {
     @Test(groups = "starGist")
     public void checkGistIsStarred() {
         apiLogger.info("Status line of GET starred gist is: " + getStarResponse.getStatusLine());
-     /*   Assert.assertEquals(GET_STAR_SUCCESS_CODE, getStarResponse.getStatusLine().getStatusCode(),
-                "Get Starred gist status code does not equal to the expected " + GET_STAR_SUCCESS_CODE);*/
-     Assert.assertEquals("1", "2");
+        Assert.assertEquals(GET_STAR_SUCCESS_CODE, getStarResponse.getStatusLine().getStatusCode(),
+                "Get Starred gist status code does not equal to the expected " + GET_STAR_SUCCESS_CODE);
     }
 
     @Test(priority = 2, description = "DELETE posted gist and verify valid status code is returned after deletion.")
@@ -149,7 +158,7 @@ public class GistHttpClientTests {
         if (!FileUtils.getFile(GistUtils.getGistIdFilePath()).exists()) {
             postNewGist();
         }
-        String gistIdToDeleteUri = BASE_URI.concat("/").concat(GistUtils.getCreatedGistIdFromFile());
+        String gistIdToDeleteUri = String.format(updateGistUriFormat, BASE_URI, GistUtils.getCreatedGistIdFromFile());
         deleteResponse = service.getAuthorizedDeleteResponse(gistIdToDeleteUri);
         service.closeResponse(deleteResponse);
 
