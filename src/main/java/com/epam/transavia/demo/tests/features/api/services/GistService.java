@@ -49,6 +49,16 @@ public class GistService {
         return executeResponse(httpClient, httpDelete);
     }
 
+    public void closeHttpClient() {
+        if (httpClient != null) {
+            try {
+                httpClient.close();
+            } catch (IOException e) {
+                apiLogger.error("Cannot close HTTP Client.");
+            }
+        }
+    }
+
 
    public HttpRequestBase getHttpTokenAuthorization(String uri, HttpRequestType type) {
         HttpRequestBase httpRequest;

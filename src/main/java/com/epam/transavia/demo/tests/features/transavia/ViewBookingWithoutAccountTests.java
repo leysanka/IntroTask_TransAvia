@@ -1,14 +1,12 @@
 package com.epam.transavia.demo.tests.features.transavia;
 
 import com.epam.transavia.demo.business_objects.BookingDetailsInfo;
+import com.epam.transavia.demo.reporting.CustomTestNGListener;
 import com.epam.transavia.demo.services.ViewBookingService;
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Factory;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
-
+@Listeners(CustomTestNGListener.class)
 public class ViewBookingWithoutAccountTests extends BaseTestBeforeClass {
 
     private BookingDetailsInfo testBookingInfo;

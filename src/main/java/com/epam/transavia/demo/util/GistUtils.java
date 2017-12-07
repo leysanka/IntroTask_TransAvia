@@ -14,7 +14,9 @@ import java.util.List;
 
 
 public class GistUtils {
-    private static final String GIST_ID_FILE_PATH = "./target/gistId.txt";
+    //Path for local run
+   // private static final String GIST_ID_FILE_PATH = "./target/gistId.txt";
+    private static final String GIST_ID_FILE_PATH = "/gistId.txt";
 
     public static StringEntity convertObjToJsonStringEntity(Object object) {
         Gson gson = new GsonBuilder().create();
@@ -42,7 +44,7 @@ public class GistUtils {
         return gists;
     }
 
-    public static Gist convertGistFromJsonResponseToPOJO(HttpResponse response) {
+    public static Gist convertJsonResponseToGist(HttpResponse response) {
 
         JsonObject jsonObject = new JsonParser().parse(getBufferedReader(response)).getAsJsonObject();
         return new Gson().fromJson(jsonObject, Gist.class);

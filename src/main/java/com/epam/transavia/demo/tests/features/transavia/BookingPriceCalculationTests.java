@@ -3,12 +3,15 @@ package com.epam.transavia.demo.tests.features.transavia;
 import com.epam.transavia.demo.business_objects.NewBooking;
 import com.epam.transavia.demo.business_objects.bo_factory.BookingCreator;
 import com.epam.transavia.demo.business_objects.bo_factory.NewBookingBuilder;
+import com.epam.transavia.demo.reporting.CustomTestNGListener;
 import com.epam.transavia.demo.services.BookingService;
 import com.epam.transavia.demo.services.SearchFlightsService;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+@Listeners(CustomTestNGListener.class)
 public class BookingPriceCalculationTests extends BaseTestBeforeClass {
 
     private BookingService bookingService;

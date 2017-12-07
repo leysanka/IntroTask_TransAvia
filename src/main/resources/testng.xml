@@ -1,18 +1,18 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="Transavia Demo Suit_All">
+<suite name="Demo Suit_All">
 
-    <test name="ViewExistingBooking test">
+    <test name="ViewExistingBooking Tests">
         <classes>
             <class name="com.epam.transavia.demo.tests.features.transavia.ViewBookingWithoutAccountTests"/>
         </classes>
     </test>
-    <test name="Booking Price Calculation tests">
+    <test name="Booking Price Calculation Tests">
         <classes>
             <class name="com.epam.transavia.demo.tests.features.transavia.BookingPriceCalculationTests"/>
         </classes>
     </test>
-    <test name="Search Flights tests">
+    <test name="Search Flights Tests">
         <classes>
             <class name="com.epam.transavia.demo.tests.features.transavia.SearchFlightsTests"/>
         </classes>
@@ -22,11 +22,15 @@
             <class name="com.epam.transavia.demo.tests.features.transavia.SearchFlightErrorsTests"/>
         </classes>
     </test>
-    <!--</suite>
-    <suite name="Api Tests">-->
-    <test name="RestAssured_jsonplaceholder.typicode.com">
+    <!--Api Tests-->
+    <test name="RestAssured jsonplaceholder.typicode.com Tests">
         <classes>
             <class name="com.epam.transavia.demo.tests.features.api.JSONPlaceHolderRestAssuredTests"/>
+        </classes>
+    </test>
+    <test name="GIST GITHUB HTTP Client Tests">
+        <classes>
+            <class name="com.epam.transavia.demo.tests.features.api.GistHttpClientTests"/>
         </classes>
     </test>
 </suite>
