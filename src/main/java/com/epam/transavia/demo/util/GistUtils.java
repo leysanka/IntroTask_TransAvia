@@ -14,9 +14,12 @@ import java.util.List;
 
 
 public class GistUtils {
+
     //Path for local run
-   // private static final String GIST_ID_FILE_PATH = "./target/gistId.txt";
-    private static final String GIST_ID_FILE_PATH = "/gistId.txt";
+    private static final String GIST_ID_FILE_PATH = "./target/gistId.txt";
+    //private static final String GIST_ID_FILE_PATH = "/gistId.txt";
+    private static final String ENCODING = "utf-8";
+    private static final String CONTENT_TYPE = "application/json";
 
     public static StringEntity convertObjToJsonStringEntity(Object object) {
         Gson gson = new GsonBuilder().create();
@@ -28,25 +31,32 @@ public class GistUtils {
                     .error("Cannot convert object to JSON StringEntity: " + e.getMessage());
         }
         if (postJson != null) {
-            postJson.setContentType("application/json");
+            postJson.setContentType(CONTENT_TYPE);
         }
         return postJson;
     }
 
-    public static List<Gist> convertArrayGistsFromJsonResponseToPOJOList(HttpResponse response) {
+    public static List<Gist> convertJsonGistsArrayToGistsList(HttpResponse response) {
         Gson gson = new Gson();
         List<Gist> gists = new ArrayList<Gist>();
-        JsonArray jsonArray = new JsonParser().parse(getBufferedReader(response)).getAsJsonArray();
+
+        BufferedReader br = getBufferedReader(response);
+        JsonArray jsonArray = new JsonParser().parse(br).getAsJsonArray();
         for (int i = 0; i < jsonArray.size(); i++) {
             Gist gist = gson.fromJson(jsonArray.get(i).getAsJsonObject(), Gist.class);
             gists.add(gist);
         }
+        closeBufferedReader(br);
         return gists;
     }
 
-    public static Gist convertJsonResponseToGist(HttpResponse response) {
 
-        JsonObject jsonObject = new JsonParser().parse(getBufferedReader(response)).getAsJsonObject();
+
+    public static Gist convertJsonResponseToGist(HttpResponse response) {
+        BufferedReader br = getBufferedReader(response);
+        JsonObject jsonObject = new JsonParser().parse(br).getAsJsonObject();
+        closeBufferedReader(br);
+
         return new Gson().fromJson(jsonObject, Gist.class);
     }
 
@@ -61,23 +71,33 @@ public class GistUtils {
         return br;
     }
 
+    private static void closeBufferedReader(BufferedReader br) {
+        try {
+            br.close();
+        } catch (IOException e) {
+            LogManager.getLogger(GistUtils.class.getSimpleName()).error("Could not close the buffered reader stream " + e.getMessage());;
+        }
+    }
+
+
     public static String getCreatedGistIdFromFile() {
         String gistIdToUpdate = "";
         try {
-            gistIdToUpdate = FileUtils.readLines(new File(GIST_ID_FILE_PATH), "utf-8").get(0);
-        } catch (IOException e) {
+            gistIdToUpdate = FileUtils.readLines(new File(GIST_ID_FILE_PATH), ENCODING).get(0);
+        } catch (IOException | IndexOutOfBoundsException e) {
             LogManager.getLogger(GistUtils.class.getSimpleName()).error("Did not get GistId from file " + e.getMessage());
         }
         return gistIdToUpdate;
     }
 
     public static void saveGistIdToFile(Gist resultGist) {
-        try {
-            FileUtils.write(new File(GIST_ID_FILE_PATH), resultGist.getId(), "utf-8");
-        } catch (IOException e) {
-            LogManager.getLogger(GistUtils.class.getSimpleName()).error("Failed to save GistId to file " + e.getMessage());
+        if( resultGist.getId() != null){
+            try {
+                FileUtils.write(new File(GIST_ID_FILE_PATH), resultGist.getId(), ENCODING);
+            } catch (IOException e) {
+                LogManager.getLogger(GistUtils.class.getSimpleName()).error("Failed to save GistId to file " + e.getMessage());
+            }
         }
-
     }
 
     public static String getGistIdFilePath() {

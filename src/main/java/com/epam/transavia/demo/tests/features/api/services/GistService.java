@@ -1,7 +1,6 @@
 package com.epam.transavia.demo.tests.features.api.services;
 
 import com.epam.transavia.demo.core.exceptions.HttpClientException;
-import com.epam.transavia.demo.tests.features.api.bo.Gist;
 import com.epam.transavia.demo.tests.features.api.bo.HttpRequestType;
 import org.apache.http.client.methods.*;
 import org.apache.http.entity.StringEntity;
@@ -12,12 +11,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.text.MessageFormat;
-import java.util.HashMap;
-import java.util.Map;
 
 public class GistService {
 
-    private static final Logger apiLogger = LogManager.getLogger("ApiTests");
+    private static final Logger API_LOGGER = LogManager.getLogger("ApiTests");
+    public static final String ENV_VARIABLE = "OAUTH_TOKEN";
     private CloseableHttpClient httpClient = HttpClients.createDefault();
 
 
@@ -54,7 +52,7 @@ public class GistService {
             try {
                 httpClient.close();
             } catch (IOException e) {
-                apiLogger.error("Cannot close HTTP Client.");
+                API_LOGGER.error("Cannot close HTTP Client.");
             }
         }
     }
@@ -84,10 +82,10 @@ public class GistService {
                 break;
             }
             default: {
-                throw new HttpClientException("Unknown reguest type is specified " + type);
+                throw new HttpClientException("Unknown request type is specified " + type);
             }
         }
-        httpRequest.setHeader("Authorization", System.getenv("OAUTH_TOKEN"));
+        httpRequest.setHeader("Authorization", System.getenv(ENV_VARIABLE));
         return httpRequest;
     }
 
@@ -96,8 +94,8 @@ public class GistService {
         try {
             response = httpClient.execute(httpRequest);
         } catch (IOException e) {
-            apiLogger.error(MessageFormat.format("Execute request {1} failed ", httpRequest.getClass().getSimpleName())
-                            + e.getMessage());
+            API_LOGGER.error(MessageFormat.format("Execute request {1} failed ", httpRequest.getClass().getSimpleName())
+                             + e.getMessage());
             throw new HttpClientException(MessageFormat.format("Execute request {1} failed ", httpRequest.getClass().getSimpleName())
                                           + e.getMessage());
         }
@@ -109,48 +107,8 @@ public class GistService {
             try {
                 response.close();
             } catch (IOException e) {
-                apiLogger.error("Cannot close the response.");
+                API_LOGGER.error("Cannot close the response.");
             }
         }
     }
-
-
-
-    public static Gist createNewGist() {
-        Gist gist = new Gist();
-        gist.setDescription("test gist description");
-        gist.setIsPublic(true);
-        gist.setFiles(createFileWithContent("fileTest.txt", "Test content!"));
-        return gist;
-    }
-
-    /**
-     * patch JSON must be of the following format:
-     * { "description": "the description for this gist",
-     * "files": {"file1.txt": { "content": "updated file contents"  },
-     * "old_name.txt": { "filename": "new_name.txt", "content": "modified contents" },
-     * "new_file.txt": {"content": "a new file"},"delete_this_file.txt": null  } }
-     */
-    public static Gist createGistUpdateFileContentAndNewFile() {
-        Gist gist = new Gist();
-        gist.setDescription("updated gist description");
-        Map<String, String> newFileContent = new HashMap<String, String>() {{
-            put("content", "New Updated File Content");
-        }};
-        Map<String, Map<String, String>> files = createFileWithContent("fileTest.txt", "Updated File Content!!!!");
-        ;
-        files.put("fileNew2.txt", newFileContent);
-        gist.setFiles(files);
-        return gist;
-    }
-
-    private static Map<String, Map<String, String>> createFileWithContent(String fileName, String content) {
-        Map<String, String> fileContent = new HashMap<String, String>() {{
-            put("content", content);
-        }};
-        Map<String, Map<String, String>> files = new HashMap<>();
-        files.put(fileName, fileContent);
-        return files;
-    }
-
 }

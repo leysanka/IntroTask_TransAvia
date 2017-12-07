@@ -68,6 +68,5 @@ public class CustomTestNGListener implements ITestListener, ISuiteListener {
     @Override
     public void onFinish(ISuite iSuite) {
         TestLogger.info(iSuite.getName() + " suit run is finished.");
-
     }
 }
