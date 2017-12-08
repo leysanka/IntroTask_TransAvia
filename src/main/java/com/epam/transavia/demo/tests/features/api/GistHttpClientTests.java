@@ -44,7 +44,6 @@ public class GistHttpClientTests {
         getGistsResponse = service.getAuthorizedGetResponse(BASE_URI);
         baseGists = GistUtils.convertJsonGistsArrayToGistsList(getGistsResponse);
         service.closeResponse(getGistsResponse);
-        apiLogger.debug("Before method called.");
     }
 
     @BeforeGroups("postNewGist")
@@ -54,7 +53,6 @@ public class GistHttpClientTests {
         postedGist = GistUtils.convertJsonResponseToGist(postResponse);
         GistUtils.saveGistIdToFile(postedGist);
         service.closeResponse(postResponse);
-        apiLogger.info("Before postGist method called.");
     }
 
     @BeforeGroups("patchGist")
@@ -154,6 +152,19 @@ public class GistHttpClientTests {
                 "Status code of Delete does not equal to the expected " + DELETE_SUCCESS_CODE);
 
         FileUtils.deleteQuietly(new File(GistUtils.getGistIdFilePath()));
+    }
+
+    @Test(enabled = false, description = "Intended to delete all gists in repo")
+    public void cleanAllPublicGistsInRepo() {
+        getGistsResponse = service.getAuthorizedGetResponse(BASE_URI);
+        baseGists = GistUtils.convertJsonGistsArrayToGistsList(getGistsResponse);
+        for (int i = 0; i < baseGists.size(); i++) {
+            String gistId = baseGists.get(i).getId();
+            deleteResponse = service.getAuthorizedDeleteResponse(String.format(updateGistUriFormat, BASE_URI, gistId));
+            apiLogger.info("Deleted gist" + i + " with id " + gistId);
+            service.closeResponse(deleteResponse);
+        }
+        service.closeResponse(getGistsResponse);
     }
 
     @AfterClass(alwaysRun = true)

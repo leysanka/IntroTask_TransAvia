@@ -16,8 +16,8 @@ import java.util.List;
 public class GistUtils {
 
     //Path for local run
-    private static final String GIST_ID_FILE_PATH = "./target/gistId.txt";
-    //private static final String GIST_ID_FILE_PATH = "/gistId.txt";
+    //private static final String GIST_ID_FILE_PATH = "./target/gistId.txt";
+    private static final String GIST_ID_FILE_PATH = "/gistId.txt";
     private static final String ENCODING = "utf-8";
     private static final String CONTENT_TYPE = "application/json";
 
@@ -39,7 +39,6 @@ public class GistUtils {
     public static List<Gist> convertJsonGistsArrayToGistsList(HttpResponse response) {
         Gson gson = new Gson();
         List<Gist> gists = new ArrayList<Gist>();
-
         BufferedReader br = getBufferedReader(response);
         JsonArray jsonArray = new JsonParser().parse(br).getAsJsonArray();
         for (int i = 0; i < jsonArray.size(); i++) {
