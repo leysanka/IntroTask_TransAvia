@@ -9,7 +9,7 @@ public class TestListsSpeed {
     }
 
 
-    private static String[] createStringArray(int ofSize) {
+    public static String[] createStringArray(int ofSize) {
         String[] s = new String[ofSize];
         int i = 0;
         while (i < ofSize) {
