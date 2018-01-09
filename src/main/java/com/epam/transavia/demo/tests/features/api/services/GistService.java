@@ -16,6 +16,7 @@ public class GistService {
 
     private static final Logger API_LOGGER = LogManager.getLogger("ApiTests");
     public static final String ENV_VARIABLE = "OAUTH_TOKEN";
+
     private CloseableHttpClient httpClient = HttpClients.createDefault();
 
 

@@ -16,7 +16,6 @@ public class BookingService {
     private WebDriver driver = Driver.getDefaultDriver();
     private static Logger logger = LogManager.getLogger(BookingService.class.getSimpleName());
 
-
     public void selectFirstInboundOutboundFlightsAndNextToFareSelection() {
         BookingPage bookingPage = new BookingPage(driver);
         selectAvailableFlightByOrder(1, bookingPage.getFoundOutboundFlights());
@@ -24,6 +23,7 @@ public class BookingService {
         selectAvailableFlightByOrder(1, bookingPage.getFoundInboundFlights());
         bookingPage.pressSelectInboundFlight();
         bookingPage.pressNextButton();
+
     }
 
     public double getPricePerAdult() {

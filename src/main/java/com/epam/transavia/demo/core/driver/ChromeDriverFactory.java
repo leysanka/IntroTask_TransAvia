@@ -7,7 +7,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 public class ChromeDriverFactory implements WebDriverFactory {
 
     @Override
-    public WebDriver getDriverOf(WebDriverType webDriverType) {
+    public WebDriver createDriver() {
 
         return new ChromeDriver(setIncognitoMode());
     }

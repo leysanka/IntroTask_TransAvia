@@ -25,7 +25,6 @@ public class DriverDecorator implements WebDriver, JavascriptExecutor, TakesScre
 
     @Override
     public String getCurrentUrl() {
-
         return driver.getCurrentUrl();
     }
 

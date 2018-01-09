@@ -30,7 +30,7 @@ public class Driver {
                 throw new UnknownDriverTypeException("The specified driver does not exist in the WebDriverType: " + webDriverType);
             }
         }
-        WebDriver driver = driverFactory.getDriverOf(webDriverType);
+        WebDriver driver = driverFactory.createDriver();
         driver.manage().deleteAllCookies();
         driver.manage().timeouts().implicitlyWait(TIMEOUT_IN_SEC, TimeUnit.SECONDS);
         driver.manage().window().maximize();

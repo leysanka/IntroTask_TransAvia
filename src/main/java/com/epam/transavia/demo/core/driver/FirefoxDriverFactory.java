@@ -6,7 +6,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 public class FirefoxDriverFactory implements WebDriverFactory {
 
     @Override
-    public WebDriver getDriverOf(WebDriverType webDriverType) {
+    public WebDriver createDriver() {
         return new FirefoxDriver();
     }
 }
