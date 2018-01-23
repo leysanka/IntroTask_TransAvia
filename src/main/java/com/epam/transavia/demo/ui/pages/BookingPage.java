@@ -62,6 +62,7 @@ public class BookingPage extends CommonPage {
     public String getPlusFarePriceContainerText() {
         logger.info("Get Plus Fare price raw text with value of: " + pricePlusFareContainer.getText());
         return pricePlusFareContainer.getText();
+
     }
 
     public void pressNextButton() {

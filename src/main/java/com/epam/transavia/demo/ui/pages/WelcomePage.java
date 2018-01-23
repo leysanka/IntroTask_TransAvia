@@ -40,6 +40,15 @@ public class WelcomePage extends CommonPage {
         }
     }
 
+    private WebElement getLanguageWebElement(WelcomeScreenLanguages enumLang) {
+        WebElement languageWebElement = null;
+        languages = populateMapWithLanguagesFromWelcomePage();
+        if (WelcomeScreenLanguages.isEnumLangPresentInMap(enumLang, languages)) {
+            languageWebElement = languages.get(enumLang.toString());
+        }
+        return languageWebElement;
+    }
+
     private HashMap<String, WebElement> populateMapWithLanguagesFromWelcomePage() {
         if (languages != null) {
             languages.clear();
@@ -56,15 +65,6 @@ public class WelcomePage extends CommonPage {
             }
         }
         return languages;
-    }
-
-    private WebElement getLanguageWebElement(WelcomeScreenLanguages enumLang) {
-        WebElement languageWebElement = null;
-        languages = populateMapWithLanguagesFromWelcomePage();
-        if (WelcomeScreenLanguages.isEnumLangPresentInMap(enumLang, languages)) {
-            languageWebElement = languages.get(enumLang.toString());
-        }
-        return languageWebElement;
     }
 
 }

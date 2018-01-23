@@ -1,4 +1,4 @@
-package com.epam.transavia.demo.tests.features.transavia;
+package com.epam.transavia.demo.tests;
 
 import com.epam.transavia.demo.business_objects.NewBooking;
 import com.epam.transavia.demo.business_objects.bo_factory.BookingCreator;

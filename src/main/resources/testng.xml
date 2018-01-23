@@ -2,35 +2,24 @@
 
 <suite name="Demo Suit_All" parallel="classes" thread-count="6">
 
-    <test name="ViewExistingBooking Tests">
-        <classes>
-            <class name="com.epam.transavia.demo.tests.features.transavia.ViewBookingWithoutAccountTests"/>
-        </classes>
-    </test>
-    <test name="Booking Price Calculation Tests">
-        <classes>
-            <class name="com.epam.transavia.demo.tests.features.transavia.BookingPriceCalculationTests"/>
-        </classes>
-    </test>
-    <test name="Search Flights Tests">
-        <classes>
-            <class name="com.epam.transavia.demo.tests.features.transavia.SearchFlightsTests"/>
-        </classes>
-    </test>
-    <test name="Search Flights with error tests">
-        <classes>
-            <class name="com.epam.transavia.demo.tests.features.transavia.SearchFlightErrorsTests"/>
-        </classes>
-    </test>
-    <!--Api Tests-->
-    <test name="RestAssured jsonplaceholder.typicode.com Tests">
-        <classes>
-            <class name="com.epam.transavia.demo.tests.features.api.JSONPlaceHolderRestAssuredTests"/>
-        </classes>
-    </test>
-    <test name="GIST GITHUB HTTP Client Tests">
-        <classes>
-            <class name="com.epam.transavia.demo.tests.features.api.GistHttpClientTests"/>
-        </classes>
-    </test>
+<test name="ViewExistingBooking Tests">
+    <classes>
+        <class name="com.epam.transavia.demo.tests.ViewBookingWithoutAccountTests"/>
+    </classes>
+</test>
+<test name="Booking Price Calculation Tests">
+    <classes>
+        <class name="com.epam.transavia.demo.tests.BookingPriceCalculationTests"/>
+    </classes>
+</test>
+<test name="Search Flights Tests">
+    <classes>
+        <class name="com.epam.transavia.demo.tests.SearchFlightsTests"/>
+    </classes>
+</test>
+<test name="Search Flights with error tests">
+    <classes>
+        <class name="com.epam.transavia.demo.tests.SearchFlightErrorsTests"/>
+    </classes>
+</test>
 </suite>
