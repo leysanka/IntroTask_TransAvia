@@ -8,7 +8,7 @@ import java.io.File;
 import java.io.IOException;
 
 
-public class CustomTestNGListener implements ITestListener, ISuiteListener {
+public class CustomTestNGListener implements ITestListener, ISuiteListener, IConfigurationListener{
 
     private static final String START_MSG = "[%s] %s test has started.";
     private static final String SUCCESS_MSG = "[%s] %s finished successfully.";
@@ -28,15 +28,9 @@ public class CustomTestNGListener implements ITestListener, ISuiteListener {
 
     @Override
     public void onTestFailure(ITestResult iTestResult) {
+//        TODO one method in TestLogger errorWithScreenshot
         TestLogger.error(String.format(FAIL_MSG, iTestResult.getInstanceName(), iTestResult.getName()) + "\n Trying to take screenshot...");
-        try {
-            File screenshot = ScreenshotHelper.takeDriverScreenshot();
-            TestLogger.sendFileToRP(screenshot, "Screenshot has been taken for failed test: ");
-        } catch (ScreenshotHelperException e) {
-            TestLogger.error("Could not take a screenshot on test failure " + iTestResult.getName());
-        } catch (IOException e) {
-            TestLogger.error("Could not send the screenshot to ReportPortal." + e.getMessage());
-        }
+        screenshotRpError(iTestResult);
     }
 
     @Override
@@ -68,5 +62,32 @@ public class CustomTestNGListener implements ITestListener, ISuiteListener {
     @Override
     public void onFinish(ISuite iSuite) {
         TestLogger.info(iSuite.getName() + " suit run is finished.");
+    }
+
+    @Override
+    public void onConfigurationSuccess(ITestResult iTestResult) {
+
+    }
+
+    @Override
+    public void onConfigurationFailure(ITestResult iTestResult) {
+        TestLogger.error(String.format(FAIL_MSG, iTestResult.getInstanceName(), iTestResult.getName()) + "\n Trying to take screenshot...");
+        screenshotRpError(iTestResult);
+    }
+
+    private void screenshotRpError(ITestResult iTestResult) {
+        try {
+            File screenshot = ScreenshotHelper.takeDriverScreenshot();
+            TestLogger.sendFileToRP(screenshot, "Screenshot has been taken for failed test: ");
+        } catch (ScreenshotHelperException e) {
+            TestLogger.error("Could not take a screenshot on test failure " + iTestResult.getName());
+        } catch (IOException e) {
+            TestLogger.error("Could not send the screenshot to ReportPortal." + e.getMessage());
+        }
+    }
+
+    @Override
+    public void onConfigurationSkip(ITestResult iTestResult) {
+
     }
 }

@@ -3,6 +3,7 @@ package com.epam.transavia.demo.reporting;
 import com.epam.reportportal.message.ReportPortalMessage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -29,6 +30,15 @@ public class TestLogger {
 
     public static void error(String message) {
         ReportPortalMessage rpMessage = new ReportPortalMessage(message);
+//        testLogger.error(message);
+      /*  try {
+            File screenshot = ScreenshotHelper.takeDriverScreenshot();
+            TestLogger.sendFileToRP(screenshot,message);
+        } catch (ScreenshotHelperException e) {
+            TestLogger.error("Could not take a screenshot after Error: " + message);
+        } catch (IOException e) {
+            TestLogger.error("Could not send the screenshot to ReportPortal." + e.getMessage());
+        }*/
         testLogger.error(message);
 
     }

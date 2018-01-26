@@ -15,7 +15,7 @@ public class Driver {
     private Driver() {
     }
 
-    private static WebDriver getDriverOfType(WebDriverType webDriverType) {
+    private synchronized static WebDriver getDriverOfType(WebDriverType webDriverType) {
         WebDriverFactory driverFactory;
         switch (webDriverType) {
             case CHROME: {
@@ -38,7 +38,7 @@ public class Driver {
         return driver;
     }
 
-    private static WebDriver getDriverSingleInstance(WebDriverType webDriverType) {
+    private synchronized static WebDriver getDriverSingleInstance(WebDriverType webDriverType) {
         DriverDecorator decoratedDriver;
         String name = webDriverType.toString();
 

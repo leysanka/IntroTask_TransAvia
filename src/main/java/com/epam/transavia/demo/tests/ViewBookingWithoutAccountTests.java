@@ -1,17 +1,20 @@
 package com.epam.transavia.demo.tests;
 
 import com.epam.transavia.demo.business_objects.BookingDetailsInfo;
-import com.epam.transavia.demo.reporting.CustomTestNGListener;
 import com.epam.transavia.demo.services.ViewBookingService;
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Factory;
+import org.testng.annotations.Test;
 
-@Listeners(CustomTestNGListener.class)
+//@Listeners(CustomTestNGListener.class)
 public class ViewBookingWithoutAccountTests extends BaseTestBeforeClass {
 
     private BookingDetailsInfo testBookingInfo;
     private BookingDetailsInfo actualViewBookingInfo;
     private BookingDetailsInfo actualBookingDetailsInfo;
+
 
     @Factory(dataProvider = "bookingAndFlightInfoProvider")
     public ViewBookingWithoutAccountTests(String bookingNumber, String lastName, String flightDate, String flyingFrom, String flyingTo) {
@@ -22,6 +25,7 @@ public class ViewBookingWithoutAccountTests extends BaseTestBeforeClass {
         testBookingInfo.setFlyingFrom(flyingFrom);
         testBookingInfo.setFlyingTo(flyingTo);
     }
+
 
     @BeforeClass(description = "Open Manage Booking menu from HomePage, press View Booking and proceed with login without account in opened Login page.")
     public void getActualBookingInfoAfterLogin() {
@@ -34,9 +38,7 @@ public class ViewBookingWithoutAccountTests extends BaseTestBeforeClass {
 
     @Test(description = "Verify that the expected Booking ID is loaded in ViewBooking after login without account,ie. via BookingNumb, LastName and FlightDate.")
     public void viewBookingWithoutAccountBookingIsLoaded() {
-        //Made test to fail temporally for testing of fail listener.
-        //Assert.assertEquals(actualViewBookingInfo.getBookingNumber(), testBookingInfo.getBookingNumber(), "Loaded Booking ID does not equal to the expected: " + testBookingInfo.getBookingNumber());
-        Assert.assertNotEquals(actualViewBookingInfo.getBookingNumber(), testBookingInfo.getBookingNumber(), "Loaded Booking ID does not equal to the expected: " + testBookingInfo.getBookingNumber());
+        Assert.assertEquals(actualViewBookingInfo.getBookingNumber(), testBookingInfo.getBookingNumber(), "Loaded Booking ID does not equal to the expected: " + testBookingInfo.getBookingNumber());
     }
 
     @Test(description = "Verify Flying From/To fetched from ViewBooking are the same as expected for testing booking.")
@@ -66,3 +68,5 @@ public class ViewBookingWithoutAccountTests extends BaseTestBeforeClass {
     }
 
 }
+
+

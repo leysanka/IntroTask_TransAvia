@@ -11,7 +11,7 @@ import org.testng.annotations.BeforeSuite;
 
 public class BaseTestBeforeClass {
 
-    protected WebDriver driver;
+    protected  WebDriver driver;
 
     private static final String WELCOME_PAGE_URL = "https://www.transavia.com/";
     private static String homePageUrl;

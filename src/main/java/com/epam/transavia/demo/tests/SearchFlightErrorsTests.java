@@ -2,14 +2,12 @@ package com.epam.transavia.demo.tests;
 
 import com.epam.transavia.demo.business_objects.NewBooking;
 import com.epam.transavia.demo.business_objects.bo_factory.NewBookingStaticFactory;
-import com.epam.transavia.demo.reporting.CustomTestNGListener;
 import com.epam.transavia.demo.services.SearchFlightsService;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-@Listeners(CustomTestNGListener.class)
+//@Listeners(CustomTestNGListener.class)
 public class SearchFlightErrorsTests extends BaseTestBeforeClass {
 
     @BeforeMethod()
