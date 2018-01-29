@@ -1,6 +1,6 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<!--<suite name="Demo Suit_All" parallel="classes" thread-count="3">-->
+<!--<suite name="Demo Suit_All" parallel="tests" thread-count="3">-->
 <suite name="Demo Suit_All">
 
 <test name="ViewExistingBooking Tests">

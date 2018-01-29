@@ -15,21 +15,38 @@ public class Driver {
     private Driver() {
     }
 
-    private synchronized static WebDriver getDriverOfType(WebDriverType webDriverType) {
+    private static WebDriver getDriverOfType(WebDriverType webDriverType) {
         WebDriverFactory driverFactory;
+        /**Use this code to run in SeleniumGrid*/
+        /*DesiredCapabilities caps = new DesiredCapabilities();
+        URL gridHubUrl = null;*/
         switch (webDriverType) {
             case CHROME: {
                 driverFactory = new ChromeDriverFactory();
+                /**Use this code to run in SeleniumGrid*/
+                /*caps.setBrowserName("chrome");
+                caps.setCapability(ChromeOptions.CAPABILITY, new ChromeOptions().addArguments("incognito"));*/
                 break;
             }
             case FIREFOX: {
                 driverFactory = new FirefoxDriverFactory();
+                /**Use this code to run in SeleniumGrid*/
+                /*caps.setBrowserName("firefox");
+                caps.setCapability(FirefoxOptions.FIREFOX_OPTIONS, new FirefoxOptions().addArguments("private"));*/
                 break;
             }
             default: {
                 throw new UnknownDriverTypeException("The specified driver does not exist in the WebDriverType: " + webDriverType);
             }
         }
+        /**Use this code to run in SeleniumGrid*/
+        /*try {
+            gridHubUrl = new URL("http://localhost:4444/wd/hub");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        WebDriver driver = new RemoteWebDriver(gridHubUrl, caps);*/
+
         WebDriver driver = driverFactory.createDriver();
         driver.manage().deleteAllCookies();
         driver.manage().timeouts().implicitlyWait(TIMEOUT_IN_SEC, TimeUnit.SECONDS);
@@ -38,7 +55,7 @@ public class Driver {
         return driver;
     }
 
-    private synchronized static WebDriver getDriverSingleInstance(WebDriverType webDriverType) {
+    private static WebDriver getDriverSingleInstance(WebDriverType webDriverType) {
         DriverDecorator decoratedDriver;
         String name = webDriverType.toString();
 

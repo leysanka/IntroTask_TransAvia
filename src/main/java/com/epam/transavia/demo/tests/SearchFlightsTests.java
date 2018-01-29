@@ -6,7 +6,6 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.Test;
 
-//@Listeners(CustomTestNGListener.class)
 public class SearchFlightsTests extends BaseTestBeforeClass {
 
     private SearchFlightsService foundFlightsService;

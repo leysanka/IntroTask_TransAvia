@@ -12,14 +12,14 @@ import org.testng.annotations.BeforeSuite;
 public class BaseTestBeforeClass {
 
     protected  WebDriver driver;
-
     private static final String WELCOME_PAGE_URL = "https://www.transavia.com/";
     private static String homePageUrl;
     private static WelcomeScreenLanguages defaultLocale = WelcomeScreenLanguages.OTHER_COUNTRY;
 
-    @BeforeSuite
-    protected void setUpInitial() {
 
+
+    @BeforeSuite
+    protected  void setUpInitial() {
         driver = Driver.getDriverByName("chrome");
         driver.get(WELCOME_PAGE_URL);
         WelcomePage welcomePage = new WelcomePage(driver);
@@ -28,7 +28,7 @@ public class BaseTestBeforeClass {
     }
 
     @BeforeClass
-    protected void navigateToHomePage() {
+    protected  void navigateToHomePage() {
 
         driver = Driver.getDefaultDriver();
         if (!driver.getCurrentUrl().equals(homePageUrl)) {
@@ -43,7 +43,7 @@ public class BaseTestBeforeClass {
     }
 
     @AfterSuite(alwaysRun = true)
-    protected void tearDownAfterMethod() {
+    protected  void tearDownAfterMethod() {
 
         Driver.closeDriver(driver);
     }
