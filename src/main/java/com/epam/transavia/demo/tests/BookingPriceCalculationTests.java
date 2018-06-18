@@ -49,7 +49,7 @@ public class BookingPriceCalculationTests extends BaseTestBeforeClass {
                  + (newBooking.getBabiesCount()) * actualPricePerBaby), "Total price calculated does not equal to the Total Amount price from page.");
     }
 
-    //TODO: TC has to be implemented.
+    //TODO: TC has to be implemented. Test comment.
     @Test(enabled = false)
     public void totalPriceCalculationMultiCityRoundTripIsCorrect() {
 
